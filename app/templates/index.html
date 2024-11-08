@@ -1,1 +1,83 @@
-Hello World
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exta - Expense Tracker</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../static/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="bg-light py-3 shadow-sm">
+    <nav class="container d-flex justify-content-between align-items-center">
+      <h1 class="text-primary">Expense Tracker</h1>
+      <ul class="nav">
+        <li class="nav-item"><a href="#documentation" class="nav-link text-dark">Documentation</a></li>
+        <li class="nav-item"><a href="#blog" class="nav-link text-dark">Blog</a></li>
+        <li class="nav-item"><a href="#contact" class="nav-link text-dark">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="container py-5">
+    <section class="text-center mb-5">
+      <h2>Welcome to Exta!</h2>
+      <p class="lead text-muted">Track smart, spend wise.</p>
+      <p class="mb-4">
+        Exta makes expense tracking easy with automated tagging, insightful analytics, and dynamic visualizations. Begin by uploading your statement in CSV format. Your data will remain private and expire after each session.
+      </p>
+    </section>
+
+    <section class="mb-5">
+      <div class="upload-section text-center">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+            {% endif %}
+        {% endwith %}
+        <h3>Upload Your Statement</h3>
+        <form action="{{ url_for('main.upload_file') }}" method="post" enctype="multipart/form-data" class="d-flex justify-content-center align-items-center gap-2">
+          <input type="file" class="form-control-file" id="file" name="file" required>
+          <button type="submit" class="btn btn-primary ml-2">Upload</button>
+        </form>
+
+        <h4 class="mt-4">Upload Product Tags</h4>
+        <p class="text-muted">Optionally, upload a CSV file with product tags for more precise categorization.</p>
+        <form action="{{ url_for('main.upload_tags') }}" method="post" enctype="multipart/form-data" class="d-flex justify-content-center align-items-center gap-2">
+          <input type="file" class="form-control-file" id="pdtFile" name="pdtFile" required>
+          <button type="submit" class="btn btn-primary ml-2">Upload</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="text-center mb-5">
+      <h4>Sample Datasets</h4>
+      <p class="text-muted">Try out our sample datasets if you want to explore Exta without using your own data.</p>
+      <div class="sample-buttons d-flex justify-content-center gap-3">
+        <a href="{{ url_for('static', filename='sample_data1.csv') }}" download="SampleData1.csv" class="btn btn-secondary">Sample Data 1</a>
+        <a href="{{ url_for('static', filename='sample_data2.csv') }}" download="SampleData2.csv" class="btn btn-secondary">Sample Data 2</a>
+      </div>
+    </section>
+
+    <section class="text-center">
+      <h4>Get AI Assistance</h4>
+      <p class="text-muted">Leverage AI to organize and categorize your expenses with ease.</p>
+      <button class="btn btn-outline-primary" onclick="location.href='/ai-categorization'">Chat with AI for Categorization</button>
+    </section>
+  </main>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
