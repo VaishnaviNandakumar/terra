@@ -15,14 +15,15 @@ db.init_app(app)
 
 # Register blueprint
 app.register_blueprint(main, url_prefix='/')
-CORS(app)  # Enable CORS for all routes
+app.secret_key = 'your_secret_key'  # Required for session handling
+CORS(app, supports_credentials=True)
+
 # Configure logging
 def configure_logging(app):
     if app.logger.handlers:
         for handler in app.logger.handlers:
             app.logger.removeHandler(handler)
 
-    # Set log level based on DEBUG setting
     if app.config['DEBUG']:
         app.logger.setLevel(logging.DEBUG)
     else:
