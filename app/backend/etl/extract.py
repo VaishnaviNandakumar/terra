@@ -27,7 +27,7 @@ def extract_data(file_content):
 def extract_product_data(file_content, session_id):
     df = pd.read_csv(StringIO(file_content), on_bad_lines='warn')  
     current_app.logger.info(f"Total number of products - {len(df)}")
-    db_service.save_uploaded_pdt_tags(df)
+    db_service.save_uploaded_product_tags(df, session_id)
     
 
 

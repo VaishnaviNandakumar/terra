@@ -104,90 +104,36 @@ def upload_file():
 
 @main.route('/upload_tags', methods=['GET', 'POST'])
 def upload_tags():
-    if not session.get('current_session_id'):
-        flash('No active session. Please provide username first')
-        return redirect(url_for('main.index'))
-
+    sessionId = request.form.get('sessionId')
     try:
         if request.method == 'POST':
             if 'pdtFile' not in request.files:
                 current_app.logger.info('No file uploaded')
-                flash('No file part')
-                return redirect(request.url)
+                return jsonify({'error': 'No File Uploaded'}), 400
 
             file = request.files['pdtFile']
-            
-            if file.filename == '':
-                current_app.logger.info('No selected file')
-                flash('No selected file')
-                return redirect(request.url)
 
             if not allowed_file(file.filename):
                 current_app.logger.info('File not in CSV format')
-                flash('File is not in CSV format')
-                return redirect('/')
+                return jsonify({'error': 'File not in CSV form'}), 400
 
             file.seek(0, 2)
             file_length = file.tell()
             if file_length > 10 * 1024 * 1024:
-                flash('File size exceeds the maximum limit of 10 MB')
-                return redirect('/')
+                return jsonify({'error': 'Exceeds size limit of 10MB'}), 400
             file.seek(0)
 
             try:
                 file_content = file.read().decode('utf-8')
-                extract_product_data(file_content, session['current_session_id'])
+                extract_product_data(file_content, sessionId)
                 current_app.logger.info('File successfully processed and saved to the product_tags database')
-                return redirect(url_for('main.index'))
+                return jsonify({'message': 'File uploaded successfully'}), 200
             except Exception as e:
                 current_app.logger.error(f'{e}')
-                flash(f'Error processing file')
-                return redirect('/')
+                return jsonify({'error': 'Internal Error Processing File'}), 400
     except Exception as e:
         current_app.logger.error(f"An error occurred while processing the upload: {e}")
-        flash("An internal error occurred. Please try again.")
-        return redirect('/')
-    
-    return render_template('upload.html')
-
-
-@main.route('/tags', methods=['GET', 'POST'])
-def view_tags():
-    session_id = session.get('current_session_id')
-    if not session_id:
-        flash('No active session. Please provide username first')
-        return redirect(url_for('main.index'))
-
-    current_app.logger.info(f"At session views tag {session_id}")
-    page = request.args.get('page', 1, type=int) 
-    search_tag = request.args.get('search_tag', '', type=str) 
-
-    if search_tag:
-        tags = ProductTag.query.filter(
-            ProductTag.tag.ilike(f'%{search_tag}%'),
-            ProductTag.session_id == session_id
-        ).paginate(page=page, per_page=30)
-    else:
-        tags = ProductTag.query.filter(
-            ProductTag.session_id == session_id
-        ).paginate(page=page, per_page=30)
-
-    if request.method == 'POST':
-        tag_id = request.form['tag_id']
-        new_product = request.form['product']
-        new_tags = request.form['tag']
-        tag_record = ProductTag.query.get(tag_id)
-        if tag_record:
-            tag_record.product = new_product
-            tag_record.tag = new_tags
-            db_service.commit_changes()
-            flash('Tag updated successfully!', 'success')
-        else:
-            flash('Record not found!', 'error')
-
-        return redirect(url_for('main.view_tags', page=page, search_tag=search_tag))
-
-    return render_template('tags.html', tags=tags, search_tag=search_tag)
+        return jsonify({'error': 'Internal Error Processing File'}), 400
 
 @main.route('/expenses')
 def view_expenses():
@@ -221,39 +167,22 @@ def get_transactions():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@main.route('/api/transactions/update-tag', methods=['POST'])
+@main.route('/update-tag', methods=['POST'])
 def update_transaction_tag():
     try:
         data = request.json
-        transaction_id = data.get('transactionId')
-        new_tag = data.get('newTag')
-        apply_to_all = data.get('applyToAll')
+        session_id = data.get('sessionId')
         product = data.get('product')
+        new_tag = data.get('newTag')
 
-        if apply_to_all:
-            # Update all transactions with the same product
-            transactions = Transactions.query.filter_by(product=product).all()
-            for transaction in transactions:
-                transaction.tag = new_tag
+        existing_entry = ProductTag.query.filter_by(session_id=session_id, product=product).first()
+        if existing_entry:
+            existing_entry.tag = new_tag
+            db_service.commit_changes()
         else:
-            # Update single transaction
-            transaction = Transactions.query.get(transaction_id)
-            if transaction:
-                transaction.tag = new_tag
-
-        db.session.commit()
-
-        # Return updated transactions
-        transactions = Transaction.query.all()
-        return jsonify([{
-            'id': t.id,
-            'date': t.date.isoformat(),
-            'narration': t.narration,
-            'product': t.product,
-            'amount': float(t.amount),
-            'tag': t.tag,
-            'mode': t.mode
-        } for t in transactions])
+            new_entry = ProductTag(session_id=session_id, product=product, tag=new_tag)
+            db_service._commit(new_entry)
+        return jsonify({'message': 'Tag updated successfully'}), 200
     except Exception as e:
-        db.session.rollback()
+        current_app.logger.error(f"An error occurred while processing the upload: {e}")
         return jsonify({'error': str(e)}), 500

@@ -66,25 +66,45 @@ class DatabaseService:
             self.logger.error(f"Error saving distinct products: {e}")
             db.session.rollback()
 
-    def save_uploaded_product_tags(self, df) -> None:
-        """Save product tags uploaded via CSV."""
-        session_id = session.get('current_session_id')
+    def save_uploaded_product_tags(self, df, session_id) -> None:
+        """Save product tags uploaded via CSV, updating existing tags or inserting new ones."""
         self.logger.info("Saving uploaded product tags.")
         try:
             df = df.dropna(subset=['Product', 'Tag']).drop_duplicates(subset=['Product'])
-            product_tags = [
-                ProductTag(session_id=session_id, product=row['Product'], tag=row['Tag'])
-                for _, row in df.iterrows()
-            ]
-            if product_tags:
-                db.session.bulk_save_objects(product_tags)
-                self.commit_changes()
-                self.logger.info(f"Inserted {len(product_tags)} product tags.")
+
+            # Fetch existing products for the session
+            existing_tags = {
+                tag.product: tag for tag in ProductTag.query.filter_by(session_id=session_id).all()
+            }
+
+            new_entries = []
+            update_count = 0
+
+            for _, row in df.iterrows():
+                product = row['Product']
+                new_tag = row['Tag']
+
+                if product in existing_tags:
+                    # Update existing tag
+                    existing_tags[product].tag = new_tag
+                    update_count += 1
+                else:
+                    # Insert new entry
+                    new_entries.append(ProductTag(session_id=session_id, product=product, tag=new_tag))
+
+            # Commit changes
+            if update_count > 0 or new_entries:
+                if new_entries:
+                    db.session.bulk_save_objects(new_entries)
+                db.session.commit()
+                self.logger.info(f"Updated {update_count} product tags and inserted {len(new_entries)} new tags.")
             else:
-                self.logger.info("No new product tags to insert.")
+                self.logger.info("No new product tags to insert or update.")
+
         except Exception as e:
             self.logger.error(f"Error saving product tags: {e}")
             db.session.rollback()
+
 
     def get_missing_products(self) -> list:
         """Fetch products with NULL tags."""
@@ -100,7 +120,6 @@ class DatabaseService:
 
     def update_product_tags(self, tag_list: list) -> None:
         """Update product tags in the database."""
-        session_id = session.get('current_session_id')
         self.logger.info(f"Updating product tags for session ID: {session_id}")
         try:
             for item in tag_list:
