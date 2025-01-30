@@ -46,6 +46,66 @@ function App() {
     }
   }, [state.currentStep, state.processingComplete]);
 
+  const checkUsernameExists = async (username: string): Promise<boolean> => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/check_username`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username }),
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to check username');
+      }
+      
+      const data = await response.json();
+      return data.exists;
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  };
+
+  const handleUsernameGenerate = () => {
+    const username = generateRandomUsername();
+    setState(prev => ({ ...prev, username }));
+  };
+
+  const handleGetStarted = async () => {
+    if (!state.username.trim()) {
+      setState(prev => ({ ...prev, error: 'Please enter a username first!' }));
+      return;
+    }
+
+    const usernameExists = await checkUsernameExists(state.username);
+    if (usernameExists) {
+      setState(prev => ({ ...prev, error: 'Username already exists.' }));
+      return;
+    }
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username: state.username }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to create session');
+      }
+
+      const data = await response.json();
+      setState(prev => ({ ...prev, showUploadSection: true, sessionId: data.sessionId, error: null }));
+      navigate('/upload');
+    } catch (error) {
+      setState(prev => ({ ...prev, error: 'Failed to create session. Please try again.' }));
+    }
+  };
+
   const handleFileSelect = useCallback(async (file: File) => {
     if (!state.sessionId) {
       setState(prev => ({
@@ -103,50 +163,6 @@ function App() {
       }));
     }
   }, [state.sessionId]);
-
-  const handleUsernameGenerate = () => {
-    const username = generateRandomUsername();
-    setState(prev => ({ ...prev, username }));
-  };
-
-  const handleGetStarted = async () => {
-    if (!state.username.trim()) {
-      setState(prev => ({ 
-        ...prev, 
-        error: 'Please enter a username first!' 
-      }));
-      return;
-    }
-
-    try {
-      const response = await fetch(`${API_BASE_URL}/`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username: state.username }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to create session');
-      }
-
-      const data = await response.json();
-      
-      setState(prev => ({ 
-        ...prev, 
-        showUploadSection: true,
-        sessionId: data.sessionId,
-        error: null 
-      }));
-      navigate('/upload');
-    } catch (error) {
-      setState(prev => ({ 
-        ...prev, 
-        error: 'Failed to create session. Please try again.' 
-      }));
-    }
-  };
 
   const handleBack = () => {
     navigate(-1);

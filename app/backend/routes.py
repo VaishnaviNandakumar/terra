@@ -9,13 +9,26 @@ from io import StringIO
 from flask import jsonify
 import hashlib
 import uuid
-from models import Transactions,Expense
+from models import Transactions,Expense,Session
 from datetime import datetime
 
 # Define the Blueprint for routes
 main = Blueprint('main', __name__)
 db_service = DatabaseService()
 
+
+@main.route('/check_username', methods=['POST'])
+def check_username():
+    data = request.json
+    username = data.get("username")
+
+    if not username:
+        return jsonify({"error": "Username is required"}), 400
+
+    existing_session = Session.query.filter_by(username=username).first()
+    return jsonify({"exists": existing_session is not None})
+    
+    
 
 def generate_unique_session_id(username: str) -> str:
     """
