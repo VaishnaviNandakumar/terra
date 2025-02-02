@@ -5,7 +5,7 @@ import { EditDashboard } from './pages/EditDashboard';
 import { UploadPage } from './pages/UploadPage';
 import { WelcomePage } from './pages/WelcomePage';
 import { AnalyticsDashboard } from './pages/AnalyticsDashboard';
-import { uploadFile, loadSampleData, generateRandomUsername, uploadTagMapping } from './api';
+import { uploadFile, loadSampleData, loadSampleTagData, generateRandomUsername, uploadTagMapping } from './api';
 import type { UploadState } from './types';
 
 const API_BASE_URL = 'http://127.0.0.1:5000';
@@ -147,10 +147,10 @@ function App() {
     setState(prev => ({ ...prev, isUploading: true, error: null }));
     
     try {
-      const response = await loadSampleData();
+      const response = await loadSampleData(state.sessionId);
       setState(prev => ({
         ...prev,
-        currentStep: 2,
+        currentStep: 1,
         success: 'Sample data loaded successfully!',
         isUploading: false,
         processingComplete: true
@@ -197,15 +197,24 @@ function App() {
     }
   }, [state.sessionId]);
 
-  const handleSampleTagMapping = async () => {
+  const handleSampleTagMapping = useCallback(async () => {
+    if (!state.sessionId) {
+      setState(prev => ({
+        ...prev,
+        error: 'No active session. Please try again.',
+      }));
+      return;
+    }
+
     setState(prev => ({ ...prev, isUploading: true, error: null }));
     try {
-      await loadSampleData();
+      const response = await loadSampleTagData(state.sessionId);
       setState(prev => ({
         ...prev,
         success: 'Sample tag mapping loaded!',
         isUploading: false,
-        currentStep: prev.currentStep + 1
+        currentStep: prev.currentStep + 1,
+        processingComplete: true
       }));
     } catch (error) {
       setState(prev => ({
@@ -214,7 +223,7 @@ function App() {
         isUploading: false,
       }));
     }
-  };
+  }, [state.sessionId]);
 
   const handleSkipTagMapping = () => {
     setState(prev => ({
@@ -227,7 +236,7 @@ function App() {
     if (type === 'edit') {
       navigate(`/edit?sessionId=${state.sessionId}`);
     } else {
-      window.location.href = `${API_BASE_URL}/expenses?sessionId=${state.sessionId}`;
+      navigate(`/dashboard`);
     }
   };
   

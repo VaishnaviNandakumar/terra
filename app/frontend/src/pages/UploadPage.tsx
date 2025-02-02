@@ -57,7 +57,7 @@ export function UploadPage({
                 disabled={state.isUploading}
                 className="ml-2 text-blue-500 hover:text-blue-700 font-medium"
               >
-                Try with sample data
+                try with sample data
               </button>
             </div>
           </div>
@@ -79,7 +79,7 @@ export function UploadPage({
                 className="text-blue-500 hover:text-blue-700 font-medium"
               >
                 Use sample tag mapping
-              </button>
+              </button> <br></br>
               <button
                 onClick={onSkipTagMapping}
                 className="text-gray-500 hover:text-gray-700 text-sm"

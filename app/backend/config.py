@@ -20,6 +20,7 @@ class Config:
     CHAT_GPT_API_KEY=os.environ.get('CHAT_GPT_API_KEY')
     USE_CHATGPT=os.environ.get('USE_CHATGPT')
     BATCH_SIZE=os.environ.get('BATCH_SIZE')
+    UPLOADS_FOLDER=os.environ.get('UPLOADS_FOLDER')
 
 class ProductionConfig(Config):
     DEBUG = False

@@ -56,11 +56,28 @@ export async function uploadFile(file: File, enableAI: boolean, sessionId: strin
   }
 }
 
-export async function loadSampleData(): Promise<UploadResponse> {
+export async function loadSampleData(sessionId: string): Promise<UploadResponse> {
   try {
-    const response = await fetch(`${API_BASE_URL}/sample-data`, {
-      method: 'POST',
-      ...defaultFetchOptions,
+    const response = await fetch(`${API_BASE_URL}/upload?sample_file=true&sessionId=${sessionId}`, {
+      method: "GET",
+  })
+
+    const data = await response.json();
+    
+    if (!response.ok) {
+      throw new Error(data.error || 'Failed to load sample data');
+    }
+    
+    return data;
+  } catch (error) {
+    throw new Error(error instanceof Error ? error.message : 'Failed to load sample data');
+  }
+}
+
+export async function loadSampleTagData(sessionId: string): Promise<UploadResponse> {
+  try {
+    const response = await fetch(`${API_BASE_URL}//upload_tags?sample_file=true&sessionId=${sessionId}`, {
+      method: 'GET',
     });
     
     const data = await response.json();
