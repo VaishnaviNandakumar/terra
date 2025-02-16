@@ -17,7 +17,7 @@ class Config:
     ALLOWED_EXTENSIONS = {'csv'}  # Allowed file extensions for uploads
     MAX_CONTENT_LENGTH = 16 * 1024 * 1024  # Maximum file upload size: 16MB
     SQLALCHEMY_TRACK_MODIFICATIONS = False  # To disable FSADeprecationWarning
-    CHAT_GPT_API_KEY=os.environ.get('CHAT_GPT_API_KEY')
+    ENABLE_AI=os.environ.get('ENABLE_AI')
     USE_CHATGPT=os.environ.get('USE_CHATGPT')
     BATCH_SIZE=os.environ.get('BATCH_SIZE')
     UPLOADS_FOLDER=os.environ.get('UPLOADS_FOLDER')

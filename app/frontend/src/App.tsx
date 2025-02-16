@@ -28,23 +28,8 @@ function App() {
     error: null,
     success: null,
     username: '',
-    showUploadSection: false,
-    processingComplete: false
+    showUploadSection: false
   });
-
-  useEffect(() => {
-    if (state.currentStep === 3 && state.processingComplete) {
-      const timer = setTimeout(() => {
-        setState(prev => ({
-          ...prev,
-          currentStep: 4,
-          success: 'Processing complete!'
-        }));
-      }, 2000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [state.currentStep, state.processingComplete]);
 
   const checkUsernameExists = async (username: string): Promise<boolean> => {
     try {
@@ -124,7 +109,6 @@ function App() {
         currentStep: 1,
         success: 'File uploaded successfully!',
         isUploading: false,
-        processingComplete: true
       }));
     } catch (error) {
       setState(prev => ({
@@ -152,8 +136,7 @@ function App() {
         ...prev,
         currentStep: 1,
         success: 'Sample data loaded successfully!',
-        isUploading: false,
-        processingComplete: true
+        isUploading: false
       }));
     } catch (error) {
       setState(prev => ({
@@ -214,7 +197,6 @@ function App() {
         success: 'Sample tag mapping loaded!',
         isUploading: false,
         currentStep: prev.currentStep + 1,
-        processingComplete: true
       }));
     } catch (error) {
       setState(prev => ({
@@ -237,6 +219,74 @@ function App() {
       navigate(`/edit?sessionId=${state.sessionId}`);
     } else {
       navigate(`/dashboard`);
+    }
+  };
+  
+  const triggerPopulateExpenseData = async (sessionId: string) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/populate-expenses`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sessionId }),
+      });
+
+      const data = await response.json();
+
+      if (data.status === "completed") {
+        setState(prev => ({
+          ...prev,
+          currentStep: prev.currentStep + 1, // Go to next step after completion
+          success: "Processing complete!",
+        }));
+      }
+
+      if (!response.ok) throw new Error('Failed to trigger expense data population');
+    } catch (error) {
+      console.error('Error triggering expense data:', error);
+      setState(prev => ({ ...prev, error: 'Failed to process expense data' }));
+    }
+  };
+
+  const handleStepChange = async () => {
+    if (state.currentStep === 2 ) {
+      // Assuming AI Categorization is successful or being skipped
+      setState(prev => ({ ...prev, currentStep: 3 }));
+    }
+
+    if (state.currentStep === 3 && state.sessionId) {
+      // Trigger expense population when reaching step 3
+      await triggerPopulateExpenseData(state.sessionId);
+    }
+  };
+
+  useEffect(() => {
+    // Trigger step change logic automatically when the currentStep changes
+    if (state.currentStep === 3) {
+      handleStepChange();
+    }
+  }, [state.currentStep, state.sessionId]); // Ensure the effect runs on sessionId change
+
+
+  const handleEnableAI = async (enabled: boolean) => {
+    setState((prev) => ({ ...prev, enableAI: enabled })); // Update state
+  
+    try {
+      const response = await fetch(`${API_BASE_URL}/ai-trigger`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          sessionId: state.sessionId,  // Ensure sessionId is present in state
+          enableAI: enabled,
+        }),
+      });
+  
+      if (!response.ok) {
+        console.error('Failed to trigger AI');
+      }
+    } catch (error) {
+      console.error('Error triggering AI:', error);
     }
   };
   
@@ -282,7 +332,7 @@ function App() {
                   onTagMappingUpload={handleTagMappingUpload}
                   onSampleTagMapping={handleSampleTagMapping}
                   onSkipTagMapping={handleSkipTagMapping}
-                  onEnableAI={(enabled) => setState(prev => ({ ...prev, enableAI: enabled }))}
+                  onEnableAI={handleEnableAI}                  
                   onBack={handleBack}
                   navigateToDashboard={navigateToDashboard}
                 />

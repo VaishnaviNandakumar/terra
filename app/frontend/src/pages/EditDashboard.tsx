@@ -27,11 +27,17 @@ export function EditDashboard() {
   const [filters, setFilters] = useState<FilterState>({});
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editedTag, setEditedTag] = useState('');
+  const [editedProduct, setEditedProduct] = useState('');
   const [sortConfig, setSortConfig] = useState<SortConfig>({ key: null, direction: 'asc' });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  
-  // Get session ID from URL parameters
+  const [editMode, setEditMode] = useState<'product' | 'tag' | null>(null);
+  const [showReplaceDialog, setShowReplaceDialog] = useState(false);
+  const [pendingProductUpdate, setPendingProductUpdate] = useState<{
+    transactionId: string;
+    newProduct: string;
+  } | null>(null);
+
   const sessionId = new URLSearchParams(window.location.search).get('sessionId');
 
   useEffect(() => {
@@ -65,7 +71,6 @@ export function EditDashboard() {
 
   const sortedTransactions = useMemo(() => {
     if (!sortConfig.key) return transactions;
-
     return [...transactions].sort((a, b) => {
       if (a[sortConfig.key!] < b[sortConfig.key!]) {
         return sortConfig.direction === 'asc' ? -1 : 1;
@@ -79,16 +84,12 @@ export function EditDashboard() {
 
   const filteredTransactions = useMemo(() => {
     return sortedTransactions.filter(transaction => {
-      // Apply search
       const matchesSearch = Object.values(transaction).some(value =>
         String(value).toLowerCase().includes(searchTerm.toLowerCase())
       );
-
-      // Apply filters
       const matchesFilters = Object.entries(filters).every(([key, value]) =>
         String(transaction[key as keyof Transaction]).toLowerCase().includes(value.toLowerCase())
       );
-
       return matchesSearch && matchesFilters;
     });
   }, [sortedTransactions, searchTerm, filters]);
@@ -110,8 +111,36 @@ export function EditDashboard() {
       if (!response.ok) throw new Error('Failed to update tag');
       await fetchTransactions();
       setEditingId(null);
+      setEditMode(null);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to update tag');
+    }
+  };
+
+  const handleEditProduct = async (transactionId: string, newProduct: string, replaceAll: boolean) => {
+    try {
+      const currentTransaction = transactions.find(t => t.id === transactionId);
+      const response = await fetch('http://127.0.0.1:5000/update-product', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          sessionId,
+          transactionId,
+          oldProduct: currentTransaction?.product,
+          newProduct,
+          replaceAll,
+          tag: currentTransaction?.tag
+        })
+      });
+
+      if (!response.ok) throw new Error('Failed to update product');
+      await fetchTransactions();
+      setEditingId(null);
+      setEditMode(null);
+      setShowReplaceDialog(false);
+      setPendingProductUpdate(null);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to update product');
     }
   };
 
@@ -120,6 +149,21 @@ export function EditDashboard() {
       ...prev,
       [column]: value
     }));
+  };
+
+  const startEditing = (transaction: Transaction) => {
+    setEditingId(transaction.id);
+    setEditedTag(transaction.tag);
+    setEditedProduct(transaction.product);
+  };
+
+  const handleSave = (transactionId: string) => {
+    if (editMode === 'tag') {
+      handleEditTag(transactionId, editedTag, false);
+    } else if (editMode === 'product') {
+      setPendingProductUpdate({ transactionId, newProduct: editedProduct });
+      setShowReplaceDialog(true);
+    }
   };
 
   if (!sessionId) {
@@ -135,9 +179,37 @@ export function EditDashboard() {
 
   return (
     <div className="container mx-auto px-4 py-8">
+      {/* Replace All Dialog */}
+      {showReplaceDialog && pendingProductUpdate && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+            <h3 className="text-lg font-semibold mb-4">Update Product</h3>
+            <p className="mb-6">Would you like to replace all occurrences of this product or just this record?</p>
+            <div className="flex justify-end gap-4">
+              <button
+                className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-md"
+                onClick={() => {
+                  handleEditProduct(pendingProductUpdate.transactionId, pendingProductUpdate.newProduct, false);
+                }}
+              >
+                Just This Record
+              </button>
+              <button
+                className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-md"
+                onClick={() => {
+                  handleEditProduct(pendingProductUpdate.transactionId, pendingProductUpdate.newProduct, true);
+                }}
+              >
+                Replace All
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="mb-8 space-y-4">
         <h1 className="text-3xl font-bold text-gray-900">Transaction Dashboard</h1>
-        
+
         {/* Search and Filters */}
         <div className="flex flex-wrap gap-4">
           <div className="flex-1 min-w-[300px]">
@@ -152,7 +224,7 @@ export function EditDashboard() {
               />
             </div>
           </div>
-          
+
           {/* Column Filters */}
           {['date', 'mode', 'tag'].map(column => (
             <div key={column} className="relative">
@@ -197,56 +269,64 @@ export function EditDashboard() {
                   {format(new Date(transaction.date), 'MMM d, yyyy')}
                 </td>
                 <td className="px-6 py-4 text-sm text-gray-900">{transaction.narration}</td>
-                <td className="px-6 py-4 text-sm text-gray-900">{transaction.product}</td>
+                <td className="px-6 py-4 text-sm text-gray-900">
+                  {editingId === transaction.id ? (
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="text"
+                        className={`border rounded px-2 py-1 text-sm ${editMode === 'product' ? 'bg-white' : 'bg-gray-100'}`}
+                        value={editedProduct}
+                        onChange={(e) => setEditedProduct(e.target.value)}
+                        disabled={editMode === 'tag'}
+                        onClick={() => setEditMode('product')}
+                        placeholder="Click to edit product"
+                      />
+                    </div>
+                  ) : (
+                    transaction.product
+                  )}
+                </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                ₹{transaction.amount.toFixed(2)}
+                  ₹{transaction.amount.toFixed(2)}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                   {editingId === transaction.id ? (
-                    <input
-                      type="text"
-                      className="border rounded px-2 py-1 text-sm"
-                      value={editedTag}
-                      onChange={(e) => setEditedTag(e.target.value)}
-                      onKeyPress={(e) => {
-                        if (e.key === 'Enter') {
-                          handleEditTag(editingId!, editedTag, false);
-                        }
-                      }}
-                    />
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="text"
+                        className={`border rounded px-2 py-1 text-sm ${editMode === 'tag' ? 'bg-white' : 'bg-gray-100'}`}
+                        value={editedTag}
+                        onChange={(e) => setEditedTag(e.target.value)}
+                        disabled={editMode === 'product'}
+                        onClick={() => setEditMode('tag')}
+                        placeholder="Click to edit tag"
+                      />
+                    </div>
                   ) : (
                     transaction.tag
                   )}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{transaction.mode}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                <td className="px-6 py-4 text-sm text-gray-900">{transaction.mode}</td>
+                <td className="px-6 py-4 text-sm font-medium">
                   {editingId === transaction.id ? (
                     <div className="flex gap-2">
-                      <button
+                      <Check
+                        className="w-5 h-5 text-green-500 cursor-pointer"
+                        onClick={() => handleSave(transaction.id)}
+                      />
+                      <X
+                        className="w-5 h-5 text-red-500 cursor-pointer"
                         onClick={() => {
-                          handleEditTag(editingId!, editedTag, false);
+                          setEditingId(null);
+                          setEditMode(null);
                         }}
-                        className="text-green-600 hover:text-green-900"
-                      >
-                        <Check className="w-4 h-4" />
-                      </button>
-                      <button
-                        onClick={() => setEditingId(null)}
-                        className="text-red-600 hover:text-red-900"
-                      >
-                        <X className="w-4 h-4" />
-                      </button>
+                      />
                     </div>
                   ) : (
-                    <button
-                      onClick={() => {
-                        setEditingId(transaction.id);
-                        setEditedTag(transaction.tag);
-                      }}
-                      className="text-blue-600 hover:text-blue-900"
-                    >
-                      <Edit2 className="w-4 h-4" />
-                    </button>
+                    <Edit2
+                      className="w-5 h-5 text-blue-500 cursor-pointer hover:text-blue-600"
+                      onClick={() => startEditing(transaction)}
+                    />
                   )}
                 </td>
               </tr>
@@ -257,3 +337,5 @@ export function EditDashboard() {
     </div>
   );
 }
+
+export default EditDashboard;

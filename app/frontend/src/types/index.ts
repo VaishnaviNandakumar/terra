@@ -14,7 +14,6 @@ export interface UploadState {
   success: string | null;
   username: string;
   showUploadSection: boolean;
-  processingComplete: boolean;
 }
 
 export interface UsernameResponse {

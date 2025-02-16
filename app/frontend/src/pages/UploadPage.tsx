@@ -78,7 +78,7 @@ export function UploadPage({
                 disabled={state.isUploading}
                 className="text-blue-500 hover:text-blue-700 font-medium"
               >
-                Use sample tag mapping
+               Use sample tag mapping
               </button> <br></br>
               <button
                 onClick={onSkipTagMapping}
@@ -110,7 +110,7 @@ export function UploadPage({
             <button
               onClick={() => setState((prevState) => ({ 
                 ...prevState, 
-                currentStep: prevState.currentStep + 1 
+                currentStep: prevState.currentStep + 1
               }))} 
               className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
             >
