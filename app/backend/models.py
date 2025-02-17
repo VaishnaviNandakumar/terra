@@ -26,7 +26,7 @@ class Transactions(db.Model):
 
 
 class Expense(db.Model):
-    __tablename__ = 'expense_data_view'  
+    __tablename__ = 'expense_data'  
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     session_id = db.Column(db.String(36), db.ForeignKey('sessions.session_id'))
     transaction_date = db.Column(db.Date, nullable=False, default=datetime.utcnow)

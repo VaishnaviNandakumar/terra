@@ -1,35 +1,46 @@
 import pandas as pd
-from openai import OpenAI
 from flask import current_app
 from db_handler import DatabaseService
-from flask import session
+from .ai_service import ai_service  # Import AIService instance
 
 db_service = DatabaseService()
 
 
-def transform(df):
-    current_app.logger.info(f"Inside transform module")
+def transform(df, sessionId):
+    """Main transformation pipeline: Extracts product/mode, updates DB, and assigns tags."""
+    current_app.logger.info("Inside transform module")
+    
     df = getProductAndMode(df)
     current_app.logger.info("Finished product processing, starting with tags")
     
-    # Save distinct products using DatabaseService
+    # Save distinct products in DB
     current_app.logger.info("Adding distinct products to tag database")
-    db_service.save_distinct_products(df['Product'].unique())
+    db_service.save_distinct_products(df['Product'].unique(), sessionId)
+    return df 
 
-    # Query the product_tags table for products with NULL tags
-    missing_products_query = db_service.get_missing_products()
-    if current_app.config.get('USE_CHATGPT', 'false').lower() == 'true':
-        if missing_products_query:
-            current_app.logger.info("Use ChatGPT set to true, handling missing tags")
-            handleMissingTags(missing_products_query)
+
+def ai_trigger(sessionId, enable_ai):
+    """Triggers AI categorization only if enabled by the user."""
+    
+    if not enable_ai:
+        current_app.logger.info("AI categorization is disabled by the user.")
+        return
     else:
-        current_app.logger.info("Use ChatGPT set to false or no null tags left")
-    return df
+        # Query for products with missing tags
+        missing_products_query = db_service.get_missing_products(sessionId)
+        current_app.logger.info("Using AI for missing tags")
+        handleMissingTags(missing_products_query, sessionId)
+
+
+
 
 def getProductAndMode(df):
-    current_app.logger.info(f"Getting product and modes")
+    """Extracts product names and payment modes from narration."""
+    current_app.logger.info("Extracting product and modes")
+
     product_values = []
     mode_values = []
+
     for narration in df['Narration']:
         if 'UPI' in narration:
             pdt = narration.split('-')[1].strip()
@@ -46,6 +57,9 @@ def getProductAndMode(df):
         elif 'SI' in narration:
             pdt = "".join(narration.split(' ')[2:]).strip()
             mode = "Automated Payment"
+        elif 'CC' in narration:
+            pdt = "".join(narration.split(' ')[2:]).strip()
+            mode = "Credit Card"
         else:
             pdt = narration.split('-')[0].strip()
             mode = "Other"
@@ -58,57 +72,30 @@ def getProductAndMode(df):
 
     return df
 
-  
-def handleMissingTags(missing_products_query):
-    client = OpenAI(
-    api_key = current_app.config.get('CHAT_GPT_API_KEY')
-    )
-    # Convert the query result to a pandas DataFrame
-    missing_products = [str(product[0])+"-"+product[1] for product in missing_products_query]
-    
-    if len(missing_products)==0:
-        current_app.logger.info("No products with missing tags found.")
 
-    current_app.logger.info(f"Found {len(missing_products)} products with missing tags.")
+def handleMissingTags(missing_products_query, sessionId):
+    try:
+        """Handles missing tags by using embeddings or GPT-4 if necessary."""
+        current_app.logger.info(f"Enabling AI Categorisation")
+        # Format the missing products correctly (product name and average spend)
+        missing_products = [
+            {"product": product[0], "avg_spend": float(product[1])} for product in missing_products_query
+        ]
 
-    batch_size=int(current_app.config.get('BATCH_SIZE'))
-    for i in range(0, len(missing_products), batch_size):
-        batch = missing_products[i:i+batch_size]
-        batch_suggestions = get_tag_suggestions(str(batch), client)
-        db_service.update_product_tags_in_db(batch_suggestions)
-        current_app.logger.info(f"Successfully written for batch {int(i/batch_size + 1)}")
+        if not missing_products:
+            current_app.logger.info("No products with missing tags found.")
+            return
 
-def get_tag_suggestions(products, client):
-    prompt = """
-        Task: Categorize the following products into one of the given tags based on the descriptions below.
-        Available Tags: Rent, Bills, Groceries, Salon, Shopping, Contact, Investments, Travel, Dineout, Food, Fun, TBD (use TBD if no suitable category applies).
-        Guidelines:
-        This prompt is for an Indian context, so consider Indian names, locations, and common usage scenarios when assigning tags.
-        Specific criteria for other tags:
-        Rent: Monthly rent payments or housing-related expenses.
-        Bills: Utility payments (electricity, water, internet).
-        Groceries: Food and household supplies purchased from grocery stores.
-        Salon: Expenses related to personal grooming and beauty services.
-        Shopping: General retail purchases not categorized elsewhere.
-        Investments: Any transaction related to financial investments.
-        Travel: Transportation costs or travel-related services. Also, descriptions containing contact names and amounts between ₹80 and ₹550, classify them under Travel.
-        Food: Dining expenses at restaurants or food delivery services.
-        Contact: Any personal names with amounts lesser than 80 or greater than 550
-        Fun: Entertainment-related expenses (movies, events, etc.).
-        Dineout - This category can cover cafes, restaurants, restobars, bars and any other related activities.
-        If no suitable tag can be determined, assign "TBD".
-        The input is in the form of a list - ['1-A','2-B','3-C'] where the first number indicates the primary ID.
-        Output: Please provide the output as Product-Tag combinations without any additional text or prefixes exactly as shown in the example below: 
-        Example: 1-Movies-Fun, 2-Airtel-Bill, 3-Zomato-Food
+        batch_size = int(current_app.config.get('BATCH_SIZE', 10))  # Default batch size to 10
+        current_app.logger.info(f"Found {len(missing_products)} products with missing tags.")
 
-        Input:
-    """
-    prompt = prompt + products
-    response = client.chat.completions.create(
-        model="gpt-3.5-turbo",  # Specify the model for chat completions
-        messages=[{"role": "user", "content": prompt}],  # Format prompt as a message
-        temperature=0.7
-    )
-    suggestions = response.choices[0].message.content.replace("Output:","").split(",")
-    return suggestions
+        for i in range(0, len(missing_products), batch_size):
+            batch = missing_products[i:i + batch_size]
 
+            # Ensure batch is not empty before calling AI
+            if batch:
+                batch_suggestions = ai_service.get_tag_suggestions(batch, sessionId)  # Calls AI service
+                ai_service.update_product_tags_in_db(batch_suggestions, sessionId)  # Updates DB
+                current_app.logger.info(f"Updated batch {int(i / batch_size + 1)}")
+    except Exception as e:
+        current_app.logger.error(f"Error populating expense data: {e}")
