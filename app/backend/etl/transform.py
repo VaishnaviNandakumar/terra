@@ -75,7 +75,7 @@ def getProductAndMode(df):
 
 def handleMissingTags(missing_products_query, sessionId):
     try:
-        """Handles missing tags by using embeddings or GPT-4 if necessary."""
+        """Handles missing tags using GPT."""
         current_app.logger.info(f"Enabling AI Categorisation")
         # Format the missing products correctly (product name and average spend)
         missing_products = [

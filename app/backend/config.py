@@ -12,7 +12,7 @@ class Config:
         f"@{os.environ.get('DB_HOST')}:{os.environ.get('DB_PORT')}/{os.environ.get('DB_NAME')}"
     )
     print("SQL = " + SQLALCHEMY_DATABASE_URI)
-    CHAT_GPT_API_KEY = os.getenv('CHAT_GPT_API_KEY')
+    OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
     LOG_TO_STDOUT = os.environ.get('LOG_TO_STDOUT')
     ALLOWED_EXTENSIONS = {'csv'}  # Allowed file extensions for uploads
     MAX_CONTENT_LENGTH = 16 * 1024 * 1024  # Maximum file upload size: 16MB

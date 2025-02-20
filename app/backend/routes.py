@@ -111,7 +111,7 @@ def populate_expense_data():
 
     try:
         query = """
-            INSERT INTO expense_data (session_id, transaction_date, narration, debit_amount, product, mode, month_year, tag)
+            INSERT INTO expense_data (session_id, transaction_date, narration, debit_amount, product, mode, tag)
             SELECT 
                 t.session_id,
                 t.transaction_date,
@@ -119,7 +119,6 @@ def populate_expense_data():
                 t.debit_amount,
                 t.product,
                 t.mode,
-                DATE_FORMAT(t.transaction_date, '%%Y-%%m') AS month_year,
                 pt.tag
             FROM transactions t
             LEFT JOIN product_tags pt 

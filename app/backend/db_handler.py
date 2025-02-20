@@ -81,8 +81,6 @@ class DatabaseService:
                 self.logger.info(f"Inserted {len(new_products)} new products.")
             else:
                 self.logger.info("No new products to insert.")
-            from etl.ai_service import ai_service
-            ai_service.process_and_store_embeddings(session_id, products)
         except Exception as e:
             self.logger.error(f"Error saving distinct products: {e}")
             db.session.rollback()
