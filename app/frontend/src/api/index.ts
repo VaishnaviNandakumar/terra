@@ -1,3 +1,10 @@
+interface UploadResponse {
+  success: boolean;
+  message?: string;
+  error?: string;
+  // Add any other properties that the API returns
+}
+
 const API_BASE_URL = 'http://127.0.0.1:5000';
 
 const adjectives = [

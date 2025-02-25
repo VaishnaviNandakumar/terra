@@ -10,7 +10,7 @@ import type { UploadState } from './types';
 
 const API_BASE_URL = 'http://127.0.0.1:5000';
 
-const STEPS = [
+const STEPS = [ 
   'Upload Statement',
   'Upload Tag Mapping',
   'Configure Options',
@@ -295,17 +295,17 @@ function App() {
     if (!state.sessionId) {
       return <Navigate to="/" replace />;
     }
-    return <>{children}</>;
+    return <div className="bg-[#000000]">{children}</div>;
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[#000000]">
       <NavigationHeader 
         sessionId={state.sessionId} 
         username={state.username}
       />
       
-      <main className="pt-4">
+      <main className="pt-4 bg-[#000000] text-white">
         <Routes>
           <Route 
             path="/" 

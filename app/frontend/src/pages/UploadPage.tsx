@@ -3,9 +3,19 @@ import { FileUpload } from '../components/FileUpload';
 import { ProgressSteps } from '../components/ProgressSteps';
 import { AlertCircle, CheckCircle2, ArrowLeft, Edit3, BarChart3 } from 'lucide-react';
 
+interface UploadState {
+  currentStep: number;
+  steps: string[];
+  error: string | null;
+  success: string | null;
+  isUploading: boolean;
+  showUploadSection: boolean;
+  enableAI: boolean;
+}
+
 interface UploadPageProps {
-  state: any;
-  setState: React.Dispatch<React.SetStateAction<any>>; 
+  state: UploadState;
+  setState: React.Dispatch<React.SetStateAction<UploadState>>; 
   onFileSelect: (file: File) => Promise<void>;
   onSampleData: () => Promise<void>;
   onTagMappingUpload: (file: File) => Promise<void>;
@@ -32,7 +42,7 @@ export function UploadPage({
     <div className="max-w-3xl mx-auto py-8 px-4">
       <ProgressSteps currentStep={state.currentStep} steps={state.steps} />
 
-      <div className="bg-white shadow rounded-lg p-6 mb-6">
+      <div className="bg-[#111111] border border-[#222222] shadow rounded-lg p-6 mb-6">
         {state.error && (
           <div className="mb-4 p-4 bg-red-50 rounded-md flex items-center text-red-700">
             <AlertCircle className="w-5 h-5 mr-2" />
@@ -108,7 +118,7 @@ export function UploadPage({
               </label>
             </div>
             <button
-              onClick={() => setState((prevState) => ({ 
+              onClick={() => setState((prevState: UploadState) => ({ 
                 ...prevState, 
                 currentStep: prevState.currentStep + 1
               }))} 
@@ -129,7 +139,7 @@ export function UploadPage({
         {state.currentStep === 4 && (
           <div className="space-y-8">
             <div className="text-center">
-              <h3 className="text-xl font-medium text-gray-900 mb-2">Processing Complete!</h3>
+              <h3 className="text-xl font-medium text-gray-100 mb-2">Processing Complete!</h3>
               <p className="text-gray-600 mb-8">Your financial data has been processed successfully.</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -139,7 +149,7 @@ export function UploadPage({
               >
                 <Edit3 className="w-6 h-6 text-gray-400 group-hover:text-blue-500" />
                 <div className="text-left">
-                  <h4 className="font-medium text-gray-900 group-hover:text-blue-600">Edit Transactions</h4>
+                  <h4 className="font-medium text-gray-100 group-hover:text-blue-600">Edit Transactions</h4>
                   <p className="text-sm text-gray-500">Review and modify transaction tags</p>
                 </div>
               </button>
@@ -149,7 +159,7 @@ export function UploadPage({
               >
                 <BarChart3 className="w-6 h-6 text-gray-400 group-hover:text-blue-500" />
                 <div className="text-left">
-                  <h4 className="font-medium text-gray-900 group-hover:text-blue-600">Analytics Dashboard</h4>
+                  <h4 className="font-medium text-gray-100 group-hover:text-blue-600">Analytics Dashboard</h4>
                   <p className="text-sm text-gray-500">View detailed expense analytics</p>
                 </div>
               </button>
@@ -159,7 +169,7 @@ export function UploadPage({
 
         {(state.currentStep > 0 || state.showUploadSection) && (
           <div className="mt-6 flex justify-start">
-            <button onClick={() => setState((prevState) => ({ 
+            <button onClick={() => setState((prevState: UploadState) => ({ 
                 ...prevState, 
                 currentStep: prevState.currentStep - 1 
               }))}  className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors">

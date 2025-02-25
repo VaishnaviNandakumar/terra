@@ -208,7 +208,7 @@ export function EditDashboard() {
       )}
 
       <div className="mb-8 space-y-4">
-        <h1 className="text-3xl font-bold text-gray-900">Transaction Dashboard</h1>
+        <h1 className="text-3xl font-bold text-green-500">Transaction Dashboard</h1>
 
         {/* Search and Filters */}
         <div className="flex flex-wrap gap-4">
@@ -218,7 +218,7 @@ export function EditDashboard() {
               <input
                 type="text"
                 placeholder="Search transactions..."
-                className="w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-gray-50 text-black"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -231,7 +231,7 @@ export function EditDashboard() {
               <input
                 type="text"
                 placeholder={`Filter ${column}...`}
-                className="pl-4 pr-8 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                className="pl-4 pr-8 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 bg-gray-50 text-black"
                 value={filters[column] || ''}
                 onChange={(e) => handleFilterChange(column, e.target.value)}
               />
@@ -242,14 +242,14 @@ export function EditDashboard() {
       </div>
 
       {/* Transactions Table */}
-      <div className="overflow-x-auto bg-white rounded-lg shadow">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
+      <div className="overflow-x-auto bg-[#111111] rounded-lg shadow border border-[#222222]">
+        <table className="min-w-full divide-y divide-[#222222]">
+          <thead className="bg-black/50">
             <tr>
               {['Date', 'Narration', 'Product', 'Amount', 'Tag', 'Mode', 'Actions'].map(header => (
                 <th
                   key={header}
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider cursor-pointer hover:bg-[#111111]"
                   onClick={() => header !== 'Actions' && handleSort(header.toLowerCase() as keyof Transaction)}
                 >
                   <div className="flex items-center gap-2">
@@ -262,19 +262,19 @@ export function EditDashboard() {
               ))}
             </tr>
           </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
+          <tbody className="bg-transparent divide-y divide-[#222222]">
             {filteredTransactions.map(transaction => (
-              <tr key={transaction.id} className="hover:bg-gray-50">
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+              <tr key={transaction.id} className="hover:bg-black/30">
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
                   {format(new Date(transaction.date), 'MMM d, yyyy')}
                 </td>
-                <td className="px-6 py-4 text-sm text-gray-900">{transaction.narration}</td>
-                <td className="px-6 py-4 text-sm text-gray-900">
+                <td className="px-6 py-4 text-sm text-gray-300">{transaction.narration}</td>
+                <td className="px-6 py-4 text-sm text-gray-300">
                   {editingId === transaction.id ? (
                     <div className="flex items-center gap-2">
                       <input
                         type="text"
-                        className={`border rounded px-2 py-1 text-sm ${editMode === 'product' ? 'bg-white' : 'bg-gray-100'}`}
+                        className="border border-[#333333] rounded px-2 py-1 text-sm bg-gray-100 text-black focus:border-green-500 focus:ring-green-500"
                         value={editedProduct}
                         onChange={(e) => setEditedProduct(e.target.value)}
                         disabled={editMode === 'tag'}
@@ -286,15 +286,15 @@ export function EditDashboard() {
                     transaction.product
                   )}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
                   ₹{transaction.amount.toFixed(2)}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                <td className="px-6 py-4 text-sm text-gray-300">
                   {editingId === transaction.id ? (
                     <div className="flex items-center gap-2">
                       <input
                         type="text"
-                        className={`border rounded px-2 py-1 text-sm ${editMode === 'tag' ? 'bg-white' : 'bg-gray-100'}`}
+                        className="border border-[#333333] rounded px-2 py-1 text-sm bg-gray-100 text-black focus:border-green-500 focus:ring-green-500"
                         value={editedTag}
                         onChange={(e) => setEditedTag(e.target.value)}
                         disabled={editMode === 'product'}
@@ -306,16 +306,16 @@ export function EditDashboard() {
                     transaction.tag
                   )}
                 </td>
-                <td className="px-6 py-4 text-sm text-gray-900">{transaction.mode}</td>
+                <td className="px-6 py-4 text-sm text-gray-300">{transaction.mode}</td>
                 <td className="px-6 py-4 text-sm font-medium">
                   {editingId === transaction.id ? (
                     <div className="flex gap-2">
                       <Check
-                        className="w-5 h-5 text-green-500 cursor-pointer"
+                        className="w-5 h-5 text-green-500 cursor-pointer hover:text-green-400"
                         onClick={() => handleSave(transaction.id)}
                       />
                       <X
-                        className="w-5 h-5 text-red-500 cursor-pointer"
+                        className="w-5 h-5 text-red-500 cursor-pointer hover:text-red-400"
                         onClick={() => {
                           setEditingId(null);
                           setEditMode(null);
@@ -324,7 +324,7 @@ export function EditDashboard() {
                     </div>
                   ) : (
                     <Edit2
-                      className="w-5 h-5 text-blue-500 cursor-pointer hover:text-blue-600"
+                      className="w-5 h-5 text-green-500 cursor-pointer hover:text-green-400"
                       onClick={() => startEditing(transaction)}
                     />
                   )}
