@@ -11,6 +11,7 @@
 - [ ] Refine Grafana Visuals
 - [ ] Add functionality for multiple statements
 - [ ] Make the website responsive
+- [ ] Implement better page navigation
 
 
 ## Project Overview
