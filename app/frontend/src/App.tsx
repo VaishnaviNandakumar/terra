@@ -306,10 +306,26 @@ function App() {
   useEffect(() => {
     const testAPI = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/`);
-        console.log('API Test Response:', response.ok, await response.text());
+        console.log('Attempting to connect to:', API_BASE_URL);
+        
+        const response = await fetch(`${API_BASE_URL}/`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          credentials: 'include'
+        });
+        
+        console.log('API Response Status:', response.status);
+        const data = await response.text();
+        console.log('API Response Data:', data);
       } catch (error) {
-        console.error('API Test Error:', error);
+        console.error('API Test Error Details:', {
+          message: error.message,
+          error: error,
+          apiUrl: API_BASE_URL
+        });
       }
     };
     
