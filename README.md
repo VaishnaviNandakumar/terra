@@ -1,17 +1,16 @@
-# Expense Tracker Project - Technical Documentation
+## Terra - An Expense Tracker Project
+### Technical Documentation
 
 > **Note**: This is an ongoing personal project, and contributions are welcome.
 
 ### Tasks
-1. Add data sources for testing
-2. Set up deployment configuration
-3. Add functionality for multiple statement uploads
-4. Improve code performance
-5. Refine frontend design and user experience
-6. Expand Grafana visualizations
-7. Optimize AI prompt handling
-8. Generate additional sample test data
-9. Implement a scheduler for session ID management
+- [ ] Setup depoloyment configuration
+- [ ] Complete documentation
+- [ ] Generate scheduler for session ID management
+- [ ] Create better sample data
+- [ ] Refine Grafana Visuals
+- [ ] Add functionality for multiple statements 
+
 
 ## Project Overview
 
@@ -52,27 +51,53 @@ The primary data source is bank statements formatted in CSV, structured with the
 ---
 
 ## Data Modeling
-![Exta_ER](https://github.com/user-attachments/assets/0e0ffb32-812e-4040-8f83-2815b76f28e6)
+<img src="https://github.com/user-attachments/assets/95becb30-13be-4c59-834e-f7341cdd6c31" alt="Terra-ER drawio" width="50%">
 
 ## Data Visualisation 
 
 ### Schema Design
 
-- **Transactions Table**: 
-  - Fields: `id`, `transaction_date`, `narration`, `debit_amount`, `product`, `mode`, `tag`.
-  
-- **Product Tags Table**:
-  - Fields: `product`, `tags`.
+#### Sessions Table (`sessions`)
+- Represents user sessions in the application.  
+- Uses `session_id` as a unique identifier to link all user-related data.  
+- Ensures session expiration tracking via `expires_at`.  
+- Indexed for fast lookups on session expiry.  
+
+#### Transactions Table (`transactions`)
+- Stores financial transactions associated with a session.  
+- Captures essential details: `transaction_date`, `narration`, `debit_amount`, `product`, `mode`.  
+- Uses `session_id` as a foreign key to link transactions to a specific session.  
+- Maintains timestamps (`created_ts`, `last_updated_ts`) for auditing changes.  
+- Indexed on `session_id` for quick retrieval.  
+
+#### Product Tags Table (`product_tags`)
+- Maps products to tags (categories) within a session.  
+- Helps classify transactions by assigning meaningful categories to products.  
+- Uses `session_id` to keep tag associations session-specific.  
+- The foreign key constraint ensures that deleting a session removes associated tags.  
+
+#### Expense Data Table (`expense_data`)
+- A processed version of transactions that includes a `month_year` column for reporting.  
+- Stores tagged transactions, allowing category-based analysis.  
+- The **GENERATED COLUMN** `month_year` helps in monthly aggregations.  
+- Uses `session_id` to maintain user-specific expense data.  
+- Indexed for faster retrieval based on sessions.  
+
+#### Trigger (`update_expense_data_tag`)
+- Automatically updates `expense_data` when a tag in `product_tags` is modified.  
+- Ensures that tag changes reflect in previously stored expense records.  
+- Helps maintain data consistency across tables.  
+
+#### Indexes
+- Improve query performance on key fields like `session_id` and `expires_at`.  
+- Ensure fast lookups when retrieving transactions or filtering expenses.  
+
 
 ### Data Warehousing & Storage
-Data is denormalized to prioritize read efficiency due to the application’s read-heavy nature.
-
----
-
-## Performance & Optimization
-
-- **Bottlenecks**: Currently managed through data denormalization to speed up read operations.
-- **Scalability**: Scales by using load-balanced servers and cache optimization; testing under various loads ensures stable performance.
+- Normalization: The model follows 3NF (Third Normal Form) by separating transactions, product tags, and expense data to reduce redundancy.
+- Referential Integrity: Foreign key constraints ensure data consistency when deleting sessions.
+- Performance Optimization: Indexing on frequently queried fields (session_id, expires_at) ensures fast lookups.
+- Automation with Triggers: The update_expense_data_tag trigger ensures synchronized updates when product tags are modified.
 
 ---
 
