@@ -1,3 +1,5 @@
+import { environment } from '../config/environment';
+
 interface UploadResponse {
   success: boolean;
   message?: string;
@@ -5,13 +7,14 @@ interface UploadResponse {
   // Add any other properties that the API returns
 }
 
-const API_BASE_URL = 'http://127.0.0.1:5000';
+// Replace the hardcoded API_BASE_URL with the environment variable
+const API_BASE_URL = environment.API_BASE_URL;
 
 const adjectives = [
-  'Mystic', 'Cosmic', 'Digital', 'Quantum', 'Cyber', 'Epic', 'Golden', 'Silver',
-  'Crystal', 'Shadow', 'Neon', 'Stellar', 'Thunder', 'Lightning', 'Pixel', 'Ninja',
-  'Dragon', 'Phoenix', 'Omega', 'Ultra', 'Hyper', 'Super', 'Mega', 'Astro',
-  'Techno', 'Retro', 'Turbo', 'Power', 'Laser', 'Plasma'
+  'Verdant', 'Rustic', 'Earthen', 'Rooted', 'Wild', 'Ancient', 'Sacred', 'Bountiful',
+  'Flourishing', 'Lush', 'Fertile', 'Blooming', 'Majestic', 'Evergreen', 'Amber',
+  'Cedar', 'Clay', 'Stone', 'Mossy', 'Willow', 'Forest', 'River', 'Oceanic',
+  'Mountain', 'Summit', 'Valley', 'Dawn', 'Dusk', 'Terra', 'Gaia'
 ];
 
 const nouns = [

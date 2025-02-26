@@ -91,7 +91,7 @@ export function WelcomePage({
 
       {/* Links Section */}
       <div className="mt-12 text-center text-white/80 text-sm">
-        <a href="https://github.com/your-repo" className="text-green-400 hover:underline mr-4">GitHub</a>
+        <a href="https://github.com/VaishnaviNandakumar/terra/" className="text-green-400 hover:underline mr-4">GitHub</a>
         <a href="https://your-blog.com" className="text-green-400 hover:underline">Blog</a>
       </div>
     </div>

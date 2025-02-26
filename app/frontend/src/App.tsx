@@ -7,8 +7,10 @@ import { WelcomePage } from './pages/WelcomePage';
 import { AnalyticsDashboard } from './pages/AnalyticsDashboard';
 import { uploadFile, loadSampleData, loadSampleTagData, generateRandomUsername, uploadTagMapping } from './api';
 import type { UploadState } from './types';
+import { environment } from './config/environment';
+import ErrorBoundary from './components/ErrorBoundary';
 
-const API_BASE_URL = 'http://127.0.0.1:5000';
+const API_BASE_URL = environment.API_BASE_URL;
 
 const STEPS = [ 
   'Upload Statement',
@@ -30,6 +32,9 @@ function App() {
     username: '',
     showUploadSection: false
   });
+
+  // Add console log to debug API URL
+  console.log('Using API URL:', API_BASE_URL);
 
   const checkUsernameExists = async (username: string): Promise<boolean> => {
     try {
@@ -298,68 +303,83 @@ function App() {
     return <div className="bg-[#000000]">{children}</div>;
   };
 
+  useEffect(() => {
+    const testAPI = async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/`);
+        console.log('API Test Response:', response.ok, await response.text());
+      } catch (error) {
+        console.error('API Test Error:', error);
+      }
+    };
+    
+    testAPI();
+  }, []);
+
   return (
-    <div className="min-h-screen bg-[#000000]">
-      <NavigationHeader 
-        sessionId={state.sessionId} 
-        username={state.username}
-      />
-      
-      <main className="pt-4 bg-[#000000] text-white">
-        <Routes>
-          <Route 
-            path="/" 
-            element={
-              <WelcomePage
-                username={state.username}
-                error={state.error}
-                onUsernameChange={(username) => setState(prev => ({ ...prev, username }))}
-                onUsernameGenerate={handleUsernameGenerate}
-                onGetStarted={handleGetStarted}
-              />
-            } 
-          />
-          
-          <Route 
-            path="/upload" 
-            element={
-              <ProtectedRoute>
-                <UploadPage
-                  state={{ ...state, steps: STEPS }}
-                  setState={setState}
-                  onFileSelect={handleFileSelect}
-                  onSampleData={handleSampleData}
-                  onTagMappingUpload={handleTagMappingUpload}
-                  onSampleTagMapping={handleSampleTagMapping}
-                  onSkipTagMapping={handleSkipTagMapping}
-                  onEnableAI={handleEnableAI}                  
-                  onBack={handleBack}
-                  navigateToDashboard={navigateToDashboard}
+    <ErrorBoundary>
+      <div className="min-h-screen bg-[#000000]">
+        <NavigationHeader 
+          sessionId={state.sessionId} 
+          username={state.username}
+        />
+        
+        <main className="pt-4 bg-[#000000] text-white">
+          <Routes>
+            <Route 
+              path="/" 
+              element={
+                <WelcomePage
+                  username={state.username}
+                  error={state.error}
+                  onUsernameChange={(username) => setState(prev => ({ ...prev, username }))}
+                  onUsernameGenerate={handleUsernameGenerate}
+                  onGetStarted={handleGetStarted}
                 />
-              </ProtectedRoute>
-            } 
-          />
-          
-          <Route 
-            path="/edit" 
-            element={
-              <ProtectedRoute>
-                <EditDashboard />
-              </ProtectedRoute>
-            } 
-          />
-          
-          <Route 
-            path="/dashboard" 
-            element={
-              <ProtectedRoute>
-                <AnalyticsDashboard sessionId={state.sessionId} />
-              </ProtectedRoute>
-            } 
-          />
-        </Routes>
-      </main>
-    </div>
+              } 
+            />
+            
+            <Route 
+              path="/upload" 
+              element={
+                <ProtectedRoute>
+                  <UploadPage
+                    state={{ ...state, steps: STEPS }}
+                    setState={setState}
+                    onFileSelect={handleFileSelect}
+                    onSampleData={handleSampleData}
+                    onTagMappingUpload={handleTagMappingUpload}
+                    onSampleTagMapping={handleSampleTagMapping}
+                    onSkipTagMapping={handleSkipTagMapping}
+                    onEnableAI={handleEnableAI}                  
+                    onBack={handleBack}
+                    navigateToDashboard={navigateToDashboard}
+                  />
+                </ProtectedRoute>
+              } 
+            />
+            
+            <Route 
+              path="/edit" 
+              element={
+                <ProtectedRoute>
+                  <EditDashboard />
+                </ProtectedRoute>
+              } 
+            />
+            
+            <Route 
+              path="/dashboard" 
+              element={
+                <ProtectedRoute>
+                  <AnalyticsDashboard sessionId={state.sessionId} />
+                </ProtectedRoute>
+              } 
+            />
+          </Routes>
+        </main>
+      </div>
+    </ErrorBoundary>
   );
 }
 
