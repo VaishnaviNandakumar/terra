@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap') layer(fonts);
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Layer base to ensure these styles take precedence */
+@layer base {
+  * {
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Oxygen, Ubuntu, Cantarell, sans-serif !important;
+    letter-spacing: -0.02em; /* Slight negative letter-spacing for that modern tech look */
+  }
+}
+
+:root {
+  --terra-primary: #22c55e;    /* Vibrant green */
+  --terra-primary-dark: #16a34a; /* Darker green for hover states */
+  --terra-black: #000000;      /* Pure black */
+  --terra-dark: #111111;       /* Slightly lighter black */
+  --terra-gray: #333333;       /* Dark gray */
+  --terra-light-gray: #666666; /* Light gray for text */
+}
+
+main{
+  background-color: var(--terra-black);
+}
+
+body {
+  background-color: var(--terra-black);
+  color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: 0.2px;  /* Added for better readability with Roboto */
+}
+
+@keyframes scaleCheck {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animate-scale-check {
+  animation: scaleCheck 0.5s ease-out;
+}
+
+.bg-gradient-radial {
+  background-image: radial-gradient(circle at center, var(--terra-primary-dark) 0%, transparent 70%);
+  opacity: 0.1;
+}
+
+/* Dark mode table styles */
+.dark-table {
+  @apply bg-[#111111] border-[#222222];
+}
+
+.dark-table th {
+  @apply bg-black/50 text-gray-300 border-[#222222];
+}
+
+.dark-table tr {
+  @apply border-[#222222];
+}
+
+.dark-table tr:hover {
+  @apply bg-black/30;
+}

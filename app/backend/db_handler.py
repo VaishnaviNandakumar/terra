@@ -1,14 +1,34 @@
-from models import Transactions, Session, ProductTag
+from models import Transactions, Session, ProductTag, Expense
 from models import db
 import uuid
 from datetime import datetime, timedelta
 import logging
-from flask import session
 
+from flask import session
+from sqlalchemy import text
 
 class DatabaseService:
     def __init__(self):
         self.logger = logging.getLogger(__name__)
+
+    def execute_query(self, query, params=None):
+        """Execute a raw SQL query using SQLAlchemy."""
+        try:
+            result = db.session.execute(text(query), params or {})
+            db.session.commit()  # Commit the transaction if required
+            return result
+        except Exception as e:
+            db.session.rollback()
+            self.logger.error(f"Error executing query: {e}")
+            raise e
+        
+    def get_all_embeddings(self, session_id):
+        """Fetch all stored embeddings from the database."""
+        query = "SELECT product, tag, embedding FROM product_tags WHERE session_id = :session_id AND embedding IS NOT NULL and tag IS NOT NULL"
+        results = self.execute_query(query, {"session_id":session_id})
+
+        return [(row[0], row[1], row[2]) for row in results] 
+
 
     def session_exists(self, session_id: str) -> bool:
         """Check if a session ID already exists in the database."""
@@ -42,9 +62,8 @@ class DatabaseService:
             self.logger.error(f"Error writing transactions: {e}")
             db.session.rollback()
 
-    def save_distinct_products(self, products: list) -> None:
+    def save_distinct_products(self, products: list, session_id) -> None:
         """Save unique products to the product_tags table with NULL tags."""
-        session_id = session.get('current_session_id')
         self.logger.info(f"Saving distinct products for session ID: {session_id}")
         try:
             existing_products = {
@@ -77,6 +96,7 @@ class DatabaseService:
                 tag.product: tag for tag in ProductTag.query.filter_by(session_id=session_id).all()
             }
 
+            products = df['Product'].tolist()
             new_entries = []
             update_count = 0
 
@@ -100,23 +120,28 @@ class DatabaseService:
                 self.logger.info(f"Updated {update_count} product tags and inserted {len(new_entries)} new tags.")
             else:
                 self.logger.info("No new product tags to insert or update.")
-
         except Exception as e:
             self.logger.error(f"Error saving product tags: {e}")
             db.session.rollback()
 
 
-    def get_missing_products(self) -> list:
-        """Fetch products with NULL tags."""
-        session_id = session.get('current_session_id')
-        self.logger.info(f"Fetching products with NULL tags for session ID: {session_id}")
-        try:
-            return db.session.query(ProductTag.id, ProductTag.product).filter(
-                ProductTag.tag.is_(None), ProductTag.session_id == session_id
-            ).all()
-        except Exception as e:
-            self.logger.error(f"Error fetching missing products: {e}")
-            return []
+    def get_missing_products(self, session_id) -> list:
+        """Fetch products with NULL tags along with their average debit amount."""
+        query = f"""
+            SELECT product, 
+                COALESCE(AVG(debit_amount), 0) AS avg_spend 
+            FROM expense_data 
+            WHERE session_id = '{session_id}' AND tag IS NULL
+            GROUP BY product;
+        """
+        result = self.execute_query(query)
+        data = result.fetchall()  # Fetch actual data
+        return data
+
+
+    def update_product_embedding(self, product_id, embedding_json):
+        query = "UPDATE product_tags SET embedding = %s WHERE id = %s"
+        self.execute_query(query, (embedding_json, product_id))
 
     def update_product_tags(self, tag_list: list) -> None:
         """Update product tags in the database."""
@@ -135,6 +160,8 @@ class DatabaseService:
         except Exception as e:
             self.logger.error(f"Error updating product tags: {e}")
             db.session.rollback()
+
+            
 
     def commit_changes(self) -> None:
         """Commit pending changes to the database."""
