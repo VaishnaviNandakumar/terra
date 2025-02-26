@@ -24,7 +24,8 @@ Starting with a single data source (bank statements in CSV format), this project
 ---
 
 ## Architecture Diagram
-![Exta](https://github.com/user-attachments/assets/7e0448a7-cc5f-47d7-9dec-e9d47ac8abde)
+![Terra](https://github.com/user-attachments/assets/faacac6d-9bf6-4192-8977-586eac7e13ad)
+
 
 
 ## Data Sources
@@ -53,6 +54,7 @@ The primary data source is bank statements formatted in CSV, structured with the
 ## Data Modeling
 ![Exta_ER](https://github.com/user-attachments/assets/0e0ffb32-812e-4040-8f83-2815b76f28e6)
 
+## Data Visualisation 
 
 ### Schema Design
 
