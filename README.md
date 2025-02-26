@@ -9,7 +9,8 @@
 - [ ] Generate scheduler for session ID management
 - [ ] Create better sample data
 - [ ] Refine Grafana Visuals
-- [ ] Add functionality for multiple statements 
+- [ ] Add functionality for multiple statements
+- [ ] Make the website responsive
 
 
 ## Project Overview
