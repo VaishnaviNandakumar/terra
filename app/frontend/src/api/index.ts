@@ -8,7 +8,7 @@ interface UploadResponse {
 }
 
 // Replace the hardcoded API_BASE_URL with the environment variable
-const API_BASE_URL = environment.API_BASE_URL;
+const API_BASE_URL = environment.API_BASE_URL + '/api';
 
 const adjectives = [
   'Verdant', 'Rustic', 'Earthen', 'Rooted', 'Wild', 'Ancient', 'Sacred', 'Bountiful',
@@ -125,7 +125,7 @@ export const uploadTagMapping = async (file: File, sessionId: string) => {
   formData.append('pdtFile', file);
   formData.append('sessionId', sessionId);
 
-  const response = await fetch(`${API_BASE_URL}/upload_tags`, {
+  const response = await fetch(`${API_BASE_URL}/upload_tags?sample_file=true&sessionId=${sessionId}`, {
     method: 'POST',
     body: formData,
   });

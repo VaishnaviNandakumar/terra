@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Search, Filter, Edit2, Check, X, ChevronDown, ChevronUp } from 'lucide-react';
 import { format } from 'date-fns';
+import { environment } from '../config/environment';
 
 interface Transaction {
   id: string;
@@ -20,6 +21,8 @@ interface SortConfig {
 interface FilterState {
   [key: string]: string;
 }
+
+const API_BASE_URL = environment.API_BASE_URL + '/api';
 
 export function EditDashboard() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
@@ -51,7 +54,7 @@ export function EditDashboard() {
 
   const fetchTransactions = async () => {
     try {
-      const response = await fetch(`http://127.0.0.1:5000/edit?sessionId=${sessionId}`);
+      const response = await fetch(`${API_BASE_URL}/edit?sessionId=${sessionId}`);
       if (!response.ok) throw new Error('Failed to fetch transactions');
       const data = await response.json();
       setTransactions(data);
@@ -96,7 +99,7 @@ export function EditDashboard() {
 
   const handleEditTag = async (transactionId: string, newTag: string, applyToAll: boolean) => {
     try {
-      const response = await fetch('http://127.0.0.1:5000/update-tag', {
+      const response = await fetch(`${API_BASE_URL}/update-tag`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -120,7 +123,7 @@ export function EditDashboard() {
   const handleEditProduct = async (transactionId: string, newProduct: string, replaceAll: boolean) => {
     try {
       const currentTransaction = transactions.find(t => t.id === transactionId);
-      const response = await fetch('http://127.0.0.1:5000/update-product', {
+      const response = await fetch(`${API_BASE_URL}/update-product`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -183,8 +186,8 @@ export function EditDashboard() {
       {showReplaceDialog && pendingProductUpdate && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
-            <h3 className="text-lg font-semibold mb-4">Update Product</h3>
-            <p className="mb-6">Would you like to replace all occurrences of this product or just this record?</p>
+            <h3 className="text-lg font-semibold mb-4 text-green-500">Update Product</h3>
+            <p className="mb-6 text-black">Would you like to replace all occurrences of this product or just this record?</p>
             <div className="flex justify-end gap-4">
               <button
                 className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-md"

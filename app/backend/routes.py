@@ -13,7 +13,7 @@ main = Blueprint('main', __name__)
 db_service = DatabaseService()
 
 
-@main.route('/check_username', methods=['POST'])
+@main.route('/check_username', methods=['GET', 'POST'])
 def check_username():
     data = request.json
     username = data.get("username")
@@ -241,3 +241,5 @@ def update_product():
     except Exception as e:
         current_app.logger.info(e)
         return jsonify({'error': str(e)}), 500
+
+
