@@ -4,6 +4,9 @@ interface AnalyticsDashboardProps {
   sessionId: string | null;
 }
 
+const GRAFANA_SERVER = import.meta.env.VITE_GRAFANA_SERVER;
+const GRAFANA_DASHBOARD = import.meta.env.VITE_GRAFANA_DASHBOARD;
+
 export function AnalyticsDashboard({ sessionId }: AnalyticsDashboardProps) {
   if (!sessionId) {
     return (
@@ -18,9 +21,10 @@ export function AnalyticsDashboard({ sessionId }: AnalyticsDashboardProps) {
   return (
     <div className="w-screen h-screen dark:bg-gray-900">
       <iframe
-        src={`http://localhost:3000/d/ee1qpf9d1jgn4d/expense-tracker?from=now-5y&to=now&timezone=browser&var-session_id=${sessionId}`}
+        src={`${GRAFANA_SERVER}/d/${GRAFANA_DASHBOARD}?from=now-1y&to=now&timezone=browser&var-session_id=${sessionId}`}
         className="w-full h-full border-0"
       ></iframe>
     </div>
   );
 }
+

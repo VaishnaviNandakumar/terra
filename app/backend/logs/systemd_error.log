@@ -1,0 +1,738 @@
+2025-03-30 10:11:08,666 - INFO - run - configure_logging - Logging is configured.
+2025-03-30 10:13:42,753 - INFO - routes - index - Request JSON: {'username': 'test_user'}
+2025-03-30 10:18:55,037 - INFO - routes - index - Request JSON: {'username': 'test_user'}
+2025-03-30 10:27:52,397 - INFO - run - configure_logging - Logging is configured.
+2025-03-30 10:28:58,410 - INFO - routes - index - Request JSON: {'username': 'TerraAdventurer604'}
+2025-03-30 10:31:38,595 - INFO - routes - index - Request JSON: {'username': 'RusticMerchant410'}
+2025-03-30 10:31:57,361 - INFO - extract - extract_data - Inside extract module
+/home/ubuntu/app/backend/etl/extract.py:12: ParserWarning: Skipping line 68: expected 7 fields, saw 8
+
+  csv_data = pd.read_csv(StringIO(file_content), on_bad_lines='warn')
+2025-03-30 10:31:58,115 - INFO - extract - extract_data - Total number of records - 353
+/home/ubuntu/app/backend/etl/extract.py:21: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  df['Debit Amount'] = pd.to_numeric(df['Debit Amount'], errors='coerce')
+2025-03-30 10:31:58,395 - INFO - extract - extract_data - Total number of debit records - 339
+2025-03-30 10:31:58,396 - INFO - transform - transform - Inside transform module
+2025-03-30 10:31:58,401 - INFO - transform - getProductAndMode - Extracting product and modes
+2025-03-30 10:31:58,421 - INFO - transform - transform - Finished product processing, starting with tags
+2025-03-30 10:31:58,421 - INFO - transform - transform - Adding distinct products to tag database
+2025-03-30 10:31:58,960 - INFO - routes - upload_file - File successfully processed and saved to the database
+2025-03-30 10:33:12,848 - INFO - routes - index - Request JSON: {'username': 'vnk'}
+2025-03-30 10:33:54,182 - INFO - routes - index - Request JSON: {'username': 'user7'}
+2025-03-30 10:34:09,473 - INFO - extract - extract_data - Inside extract module
+/home/ubuntu/app/backend/etl/extract.py:12: ParserWarning: Skipping line 68: expected 7 fields, saw 8
+
+  csv_data = pd.read_csv(StringIO(file_content), on_bad_lines='warn')
+2025-03-30 10:34:09,483 - INFO - extract - extract_data - Total number of records - 353
+/home/ubuntu/app/backend/etl/extract.py:21: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  df['Debit Amount'] = pd.to_numeric(df['Debit Amount'], errors='coerce')
+2025-03-30 10:34:09,486 - INFO - extract - extract_data - Total number of debit records - 339
+2025-03-30 10:34:09,486 - INFO - transform - transform - Inside transform module
+2025-03-30 10:34:09,486 - INFO - transform - getProductAndMode - Extracting product and modes
+2025-03-30 10:34:09,492 - INFO - transform - transform - Finished product processing, starting with tags
+2025-03-30 10:34:09,492 - INFO - transform - transform - Adding distinct products to tag database
+2025-03-30 10:34:09,666 - INFO - routes - upload_file - File successfully processed and saved to the database
+2025-03-30 10:37:38,236 - INFO - routes - index - Request JSON: {'username': 'MossyRanger211'}
+2025-03-30 10:38:08,967 - INFO - extract - extract_data - Inside extract module
+/home/ubuntu/app/backend/etl/extract.py:12: ParserWarning: Skipping line 68: expected 7 fields, saw 8
+
+  csv_data = pd.read_csv(StringIO(file_content), on_bad_lines='warn')
+2025-03-30 10:38:08,971 - INFO - extract - extract_data - Total number of records - 353
+/home/ubuntu/app/backend/etl/extract.py:21: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  df['Debit Amount'] = pd.to_numeric(df['Debit Amount'], errors='coerce')
+2025-03-30 10:38:08,974 - INFO - extract - extract_data - Total number of debit records - 339
+2025-03-30 10:38:08,975 - INFO - transform - transform - Inside transform module
+2025-03-30 10:38:08,975 - INFO - transform - getProductAndMode - Extracting product and modes
+2025-03-30 10:38:08,978 - INFO - transform - transform - Finished product processing, starting with tags
+2025-03-30 10:38:08,978 - INFO - transform - transform - Adding distinct products to tag database
+2025-03-30 10:38:09,118 - INFO - routes - upload_file - File successfully processed and saved to the database
+2025-03-30 10:42:00,424 - INFO - routes - index - Request JSON: {'username': 'OceanicTrader900'}
+2025-03-30 10:42:14,657 - INFO - extract - extract_data - Inside extract module
+/home/ubuntu/app/backend/etl/extract.py:12: ParserWarning: Skipping line 68: expected 7 fields, saw 8
+
+  csv_data = pd.read_csv(StringIO(file_content), on_bad_lines='warn')
+2025-03-30 10:42:14,660 - INFO - extract - extract_data - Total number of records - 353
+/home/ubuntu/app/backend/etl/extract.py:21: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  df['Debit Amount'] = pd.to_numeric(df['Debit Amount'], errors='coerce')
+2025-03-30 10:42:14,661 - INFO - extract - extract_data - Total number of debit records - 339
+2025-03-30 10:42:14,662 - INFO - transform - transform - Inside transform module
+2025-03-30 10:42:14,662 - INFO - transform - getProductAndMode - Extracting product and modes
+2025-03-30 10:42:14,663 - INFO - transform - transform - Finished product processing, starting with tags
+2025-03-30 10:42:14,663 - INFO - transform - transform - Adding distinct products to tag database
+2025-03-30 10:42:18,103 - INFO - routes - upload_file - File successfully processed and saved to the database
+2025-03-30 10:45:27,978 - INFO - routes - populate_expense_data - Populating Expense Data for 1289a1c98aab42a80b3b84963f20a41a
+2025-03-30 10:45:28,272 - INFO - transform - ai_trigger - Using AI for missing tags
+2025-03-30 10:45:28,272 - INFO - transform - handleMissingTags - Enabling AI Categorisation
+2025-03-30 10:45:28,272 - INFO - transform - handleMissingTags - Found 174 products with missing tags.
+2025-03-30 10:45:30,491 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['RAJALAKSHMI NANDAKU-Contact', 'NANDAKUMAR V V-Contact', '50400292038639-Investments', 'AUTOPAYSI-TAD-TBD', 'K MADHAVI-TBD', 'ICCLGROWW-TBD', 'SWIGGY-Dineout', 'BUNDL TECHNOLOGIES P-Shopping', 'RAM BHADHUR-TBD', 'VAISHNAVI NANDAKUMAR-TBD', 'SWIGGY LIMITED-Dineout', 'M FAYAZ-TBD', 'PLAYO-Fun', 'RAVI-TBD', 'SPORTSARC ENTERPRISE-TBD', 'MOUNESH M-TBD', '50400329652447-Investments', 'SUBWAY BAGMANE-Dineout', 'HEALTHY HABIT DREAM-TBD', 'GROFERS INDIA PRIVAT-Groceries']
+Invalid format in suggestion: AUTOPAYSI-TAD-TBD
+2025-03-30 10:45:30,677 - INFO - transform - handleMissingTags - Updated batch 1
+2025-03-30 10:45:32,702 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['CHAI FUSION CAFE-Food', 'SHIVAKUMARA S-Contact', 'AIRTEL-12/07/24- Bills', 'SURYANARAYANA A-Travel', 'CLINTON CHAKMA-Contact', 'R NAGABUSHAN-TBD', 'TONI AND GUY BROOKFI-Salon', 'APROZONE ENTERPRISES-TBD', 'EVERSTYLISH LIFESTYL-TBD', 'N BOOKS-Shopping', 'MADHU C S-TBD', 'UBER INDIA SYSTEMS P-Travel', 'NAYAZ PASHA-TBD', 'SRI GANESH FRUIT JUI-Groceries', 'BASAVARAJU H P-TBD', 'JIOCINEMA-TBD', 'ELIOR BANKUET-Dineout', 'GOOGLE INDIA DIGITAL-TBD', 'JAYADEV V M-Contact', 'CHIKKEGOWDA-TBD']
+Invalid format in suggestion: AIRTEL-12/07/24- Bills
+2025-03-30 10:45:32,880 - INFO - transform - handleMissingTags - Updated batch 2
+2025-03-30 10:45:34,492 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['BLINKIT-Travel', 'NIVEDITHA S-Contact', 'PAY*EAT GOOD TEC-Dineout', 'GOOGLE PLAY-Fun', 'TROPELET TECHNOLOGIE-TBD', 'SHATRUDHAN MAHTO-Contact', 'MR MOHAN KUMAR KG-Contact', 'MANJE GOWDA S S-Contact', 'VIDYUT RAJWAR-Travel', 'BMRCL-Travel', 'VENKATESAN R-TBD', 'KRISHNA M H-Contact', 'KENGERI BUS TERMINAL-Travel', 'SYED MUBARAK-Contact', 'RAVI M-Contact', 'OAM INDUSTRIES I PVT-TBD', 'WISHVISH FOODS PRIVA-Groceries', 'RANJEET KUMAR-Contact', 'M N ANKARAJU-Contact', 'SYED MASOOD-Contact']
+2025-03-30 10:45:34,661 - INFO - transform - handleMissingTags - Updated batch 3
+2025-03-30 10:45:36,406 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['INDRA JIT KUMAR-Contact', 'DEVARAJ N S-Contact', 'PRABHA DEVI-Contact', 'VINAY RAY-TBD', 'PUNITH H C-Contact', 'VIDUSHI SANJAY GANER-TBD', 'NAVEEN  S-Contact', 'MANOJ KUMAR K A-Contact', 'MALLESHA B J-Contact', 'BIERGARTEN DEVARABEE-TBD', 'PERIYANATAKI-TBD', 'MADHU M R-Contact', 'SUHAS RAJASEKAR-Contact', 'AIRTEL-13/08/24-Bills', 'VIGHNESH K P-TBD', 'KAJRAKH-TBD', 'THE SOULED STORE-Shopping', 'BOOKMYSHOW-Fun', 'REDBUS INDIA PRIVATE-Travel', 'CINEPOLIS GOKULAM GA-Dineout']
+Invalid format in suggestion: AIRTEL-13/08/24-Bills
+2025-03-30 10:45:36,637 - INFO - transform - handleMissingTags - Updated batch 4
+2025-03-30 10:45:38,670 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['ELAN BEAUTY PARLOUR-Salon', 'SHUHAIB T P-Contact', 'MYNTRA DESIGNS PRIVA-Shopping', 'SAGAR H M-Contact', 'DECATHLON SPORTS-Shopping', 'NYKAA-Beauty', 'MANJUNATH-Contact', 'AMAZON PAY GIFT CARD-TBD', 'BALAKRISHNAN R-TBD', 'AAKRITI KESARWANI-TBD', 'KORRA SREEDEVIBAI-Contact', 'PAVAN M-TBD', 'APOLLO CLINIC MARATH-Bills', 'SMART BAZAAR  BENGAL-TBD', 'MAHESHA G-TBD', 'CHANDRA SHEKHAR R-Contact', 'EATGOOD TECHNOLO-TBD', 'RAJESH P-Contact', 'VAAYU INTERNATIONAL-Travel', 'ARPA  BANERJEE-Contact']
+2025-03-30 10:45:38,931 - INFO - transform - handleMissingTags - Updated batch 5
+2025-03-30 10:45:40,752 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['NAZEEM KHAN-Contact', 'UMARFAROOQ CHANDASHA-Contact', 'GOOGLE PLAY SER CYBS S-TBD', 'APOORVA ATUL MISHRA-Contact', 'PAARTH SWAR DAND-TBD', 'ARUN KUMAR V-TBD', 'BALU BALU-TBD', 'APOLLO PHARMACY-Groceries', 'MANJUNATHA V-TBD', 'IB BILLPAY DR-Bills', 'AIRTEL-12/09/24-Bills', 'ZEPTO-TBD', 'SUMAIYA-Contact', 'SWAMY SON OF MANJE G-Contact', 'XXXPGN KOTAK 811 OTP-TBD', 'AVANTIKAS FASHION MA-Shopping', 'SADIK PASHA-Contact', 'VARSHA NANDAKUMAR-TBD', 'GODADDY INDIA DOMAIN-TBD', 'IMRAN PASHA-Contact']
+Invalid format in suggestion: AIRTEL-12/09/24-Bills
+2025-03-30 10:45:40,955 - INFO - transform - handleMissingTags - Updated batch 6
+2025-03-30 10:45:42,437 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['BEERAPPA GARBHAGUDI-Contact', 'MADRI AJAY-Contact', 'HUNGERBOX-Food', 'GANDHI-Contact', 'DUNZO-Travel', 'MANJUNATHA-Travel', 'SOMASHEKAR S-Travel', 'KUNDAN KUMAR-Contact', 'PALAK RAJESH MUNSHI-TBD', '50100442876684-TBD', 'HARISH GOWDA-Contact', 'SHRI GAJANANA JUICE-Food', 'PAVAN MEDICALS-Groceries', 'SHARIFF AHMED-Contact', 'PRAKASH K N-Contact', 'CRAFTMATE-TBD', '416021XXXXXX6709 CHBLR020 BANGALORE-TBD', 'RANGANATHA-Contact', 'CHAKALA VENU-Contact', 'CHIKKEGOWDA S O THAM-Contact']
+2025-03-30 10:45:42,635 - INFO - transform - handleMissingTags - Updated batch 7
+2025-03-30 10:45:44,190 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['MAGNOLIA BAKERY THE-Food', 'SANZEER HASSAN A-Contact', 'MR IRFAN BASHA-Contact', 'PRABHU V-Contact', 'BHAVANA S-Contact', 'MEGHANA S M-Contact', 'WELLBEINGNUTRITION-TBD', 'AMAZON INDIA-Shopping', 'POTAFO PRIVATE LIMIT-TBD', 'AIRTEL-12/10/24- Bills', 'PARAGON VENTURES PRI-TBD', 'COCOTTEE-Food', 'B MAHAMMAD RAFEEK-Contact', 'PAVITRA HOME APPLIAN-Shopping', 'PATIL CHAITANYA-Contact', 'SHANTKUMAR-Contact', 'MAUNESH-Contact', 'GANGADHARA-Contact', 'SHASHIKUMAR R KO-Contact', 'BIG BASKET-Groceries']
+Invalid format in suggestion: AIRTEL-12/10/24- Bills
+2025-03-30 10:45:44,391 - INFO - transform - handleMissingTags - Updated batch 8
+2025-03-30 10:45:45,665 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['RAGHAVENDRA ANAND NA-Contact', 'MUNIRAJU-Contact', 'AMARESH-Travel', 'SHANKARALING SAGANUR-Contact', 'VAIDHESWARI SELVAM-Contact', 'KHURSAID MIYA-Contact', 'SRI GAJANANA FRUIT J-Groceries', 'PARVATHI   V-Contact', 'APPLE MEDIA SERVICES-TBD', 'MR THIRUMURUGAN  A-TBD', 'HPGAS-Bills', 'DINESH-Contact', 'KALAVATI-Travel', 'AMIT PARIYAR-TBD']
+2025-03-30 10:45:45,820 - INFO - transform - handleMissingTags - Updated batch 9
+2025-03-30 10:48:43,139 - INFO - run - configure_logging - Logging is configured.
+2025-03-30 10:48:51,811 - INFO - routes - index - Request JSON: {'username': 'OceanicMerchant981'}
+2025-03-30 10:48:59,895 - INFO - extract - extract_data - Inside extract module
+/home/ubuntu/app/backend/etl/extract.py:12: ParserWarning: Skipping line 68: expected 7 fields, saw 8
+
+  csv_data = pd.read_csv(StringIO(file_content), on_bad_lines='warn')
+2025-03-30 10:48:59,900 - INFO - extract - extract_data - Total number of records - 353
+/home/ubuntu/app/backend/etl/extract.py:21: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  df['Debit Amount'] = pd.to_numeric(df['Debit Amount'], errors='coerce')
+2025-03-30 10:48:59,903 - INFO - extract - extract_data - Total number of debit records - 339
+2025-03-30 10:48:59,903 - INFO - transform - transform - Inside transform module
+2025-03-30 10:48:59,903 - INFO - transform - getProductAndMode - Extracting product and modes
+2025-03-30 10:48:59,905 - INFO - transform - transform - Finished product processing, starting with tags
+2025-03-30 10:48:59,906 - INFO - transform - transform - Adding distinct products to tag database
+2025-03-30 10:49:00,059 - INFO - routes - upload_file - File successfully processed and saved to the database
+2025-03-30 10:49:08,197 - INFO - utils - validate_file - No file uploaded
+2025-03-30 11:09:56,610 - INFO - routes - index - Request JSON: {'username': 'RiverSentinel7'}
+2025-03-30 11:10:00,976 - INFO - extract - extract_data - Inside extract module
+/home/ubuntu/app/backend/etl/extract.py:12: ParserWarning: Skipping line 68: expected 7 fields, saw 8
+
+  csv_data = pd.read_csv(StringIO(file_content), on_bad_lines='warn')
+2025-03-30 11:10:01,050 - INFO - extract - extract_data - Total number of records - 353
+/home/ubuntu/app/backend/etl/extract.py:21: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  df['Debit Amount'] = pd.to_numeric(df['Debit Amount'], errors='coerce')
+2025-03-30 11:10:01,092 - INFO - extract - extract_data - Total number of debit records - 339
+2025-03-30 11:10:01,092 - INFO - transform - transform - Inside transform module
+2025-03-30 11:10:01,092 - INFO - transform - getProductAndMode - Extracting product and modes
+2025-03-30 11:10:01,094 - INFO - transform - transform - Finished product processing, starting with tags
+2025-03-30 11:10:01,094 - INFO - transform - transform - Adding distinct products to tag database
+2025-03-30 11:10:01,277 - INFO - routes - upload_file - File successfully processed and saved to the database
+2025-03-30 11:10:04,018 - INFO - routes - upload_tags - No file uploaded
+2025-03-30 11:11:35,133 - INFO - routes - index - Request JSON: {'username': 'ClayDefender25'}
+2025-03-30 11:11:38,732 - INFO - extract - extract_data - Inside extract module
+/home/ubuntu/app/backend/etl/extract.py:12: ParserWarning: Skipping line 68: expected 7 fields, saw 8
+
+  csv_data = pd.read_csv(StringIO(file_content), on_bad_lines='warn')
+2025-03-30 11:11:38,735 - INFO - extract - extract_data - Total number of records - 353
+/home/ubuntu/app/backend/etl/extract.py:21: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  df['Debit Amount'] = pd.to_numeric(df['Debit Amount'], errors='coerce')
+2025-03-30 11:11:38,737 - INFO - extract - extract_data - Total number of debit records - 339
+2025-03-30 11:11:38,737 - INFO - transform - transform - Inside transform module
+2025-03-30 11:11:38,737 - INFO - transform - getProductAndMode - Extracting product and modes
+2025-03-30 11:11:38,738 - INFO - transform - transform - Finished product processing, starting with tags
+2025-03-30 11:11:38,738 - INFO - transform - transform - Adding distinct products to tag database
+2025-03-30 11:11:38,880 - INFO - routes - upload_file - File successfully processed and saved to the database
+2025-03-30 11:11:42,401 - INFO - routes - upload_tags - No file uploaded
+2025-03-30 11:12:27,719 - INFO - run - configure_logging - Logging is configured.
+2025-03-30 11:12:32,782 - INFO - routes - index - Request JSON: {'username': 'MountainScholar463'}
+2025-03-30 11:12:35,940 - INFO - extract - extract_data - Inside extract module
+/home/ubuntu/app/backend/etl/extract.py:12: ParserWarning: Skipping line 68: expected 7 fields, saw 8
+
+  csv_data = pd.read_csv(StringIO(file_content), on_bad_lines='warn')
+2025-03-30 11:12:35,948 - INFO - extract - extract_data - Total number of records - 353
+/home/ubuntu/app/backend/etl/extract.py:21: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  df['Debit Amount'] = pd.to_numeric(df['Debit Amount'], errors='coerce')
+2025-03-30 11:12:35,951 - INFO - extract - extract_data - Total number of debit records - 339
+2025-03-30 11:12:35,951 - INFO - transform - transform - Inside transform module
+2025-03-30 11:12:35,951 - INFO - transform - getProductAndMode - Extracting product and modes
+2025-03-30 11:12:35,952 - INFO - transform - transform - Finished product processing, starting with tags
+2025-03-30 11:12:35,953 - INFO - transform - transform - Adding distinct products to tag database
+2025-03-30 11:12:36,090 - INFO - routes - upload_file - File successfully processed and saved to the database
+2025-03-30 11:12:39,096 - INFO - extract - extract_product_data - Total number of products - 13
+2025-03-30 11:12:39,161 - INFO - routes - upload_tags - File successfully processed and saved to the product_tags database
+2025-03-30 11:12:43,163 - INFO - routes - populate_expense_data - Populating Expense Data for fa851d56934f9f5aa45dbc77ec560db7
+2025-03-30 11:12:43,845 - INFO - transform - ai_trigger - AI categorization is disabled by the user.
+2025-03-30 12:01:19,479 - INFO - routes - index - Request JSON: {'username': 'FertileWarrior433'}
+2025-03-30 12:01:24,401 - INFO - extract - extract_data - Inside extract module
+/home/ubuntu/app/backend/etl/extract.py:12: ParserWarning: Skipping line 68: expected 7 fields, saw 8
+
+  csv_data = pd.read_csv(StringIO(file_content), on_bad_lines='warn')
+2025-03-30 12:01:25,119 - INFO - extract - extract_data - Total number of records - 353
+/home/ubuntu/app/backend/etl/extract.py:21: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  df['Debit Amount'] = pd.to_numeric(df['Debit Amount'], errors='coerce')
+2025-03-30 12:01:25,371 - INFO - extract - extract_data - Total number of debit records - 339
+2025-03-30 12:01:25,373 - INFO - transform - transform - Inside transform module
+2025-03-30 12:01:25,376 - INFO - transform - getProductAndMode - Extracting product and modes
+2025-03-30 12:01:25,402 - INFO - transform - transform - Finished product processing, starting with tags
+2025-03-30 12:01:25,402 - INFO - transform - transform - Adding distinct products to tag database
+2025-03-30 12:01:26,071 - INFO - routes - upload_file - File successfully processed and saved to the database
+2025-03-30 12:01:34,564 - INFO - extract - extract_product_data - Total number of products - 13
+2025-03-30 12:01:34,702 - INFO - routes - upload_tags - File successfully processed and saved to the product_tags database
+2025-03-30 12:01:36,714 - INFO - routes - populate_expense_data - Populating Expense Data for 77666acd80acffc5d677c04dd0437e6d
+2025-03-30 12:01:37,088 - INFO - transform - ai_trigger - Using AI for missing tags
+2025-03-30 12:01:37,089 - INFO - transform - handleMissingTags - Enabling AI Categorisation
+2025-03-30 12:01:37,091 - INFO - transform - handleMissingTags - Found 169 products with missing tags.
+2025-03-30 12:01:41,310 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['NANDAKUMAR V V-Contact', '50400292038639-Contact', 'AUTOPAYSI-TAD-TBD', 'K MADHAVI-TBD', 'ICCLGROWW-TBD', 'BUNDL TECHNOLOGIES P-Shopping', 'VAISHNAVI NANDAKUMAR-Contact', 'SWIGGY LIMITED-Dineout', 'M FAYAZ-Food', 'PLAYO-Fun', 'RAVI-TBD', 'SPORTSARC ENTERPRISE-TBD', 'MOUNESH M-TBD', '50400329652447-TBD', 'SUBWAY BAGMANE-Dineout', 'HEALTHY HABIT DREAM-TBD', 'GROFERS INDIA PRIVAT-Groceries', 'SHIVAKUMARA S-TBD', 'AIRTEL-12/07/24-Bills', 'SURYANARAYANA A-Travel']
+Invalid format in suggestion: AUTOPAYSI-TAD-TBD
+Invalid format in suggestion: AIRTEL-12/07/24-Bills
+2025-03-30 12:01:41,580 - INFO - transform - handleMissingTags - Updated batch 1
+2025-03-30 12:01:43,153 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['CLINTON CHAKMA-Contact', 'R NAGABUSHAN-Contact', 'TONI AND GUY BROOKFI-Salon', 'APROZONE ENTERPRISES-TBD', 'EVERSTYLISH LIFESTYL-Travel', 'N BOOKS-TBD', 'MADHU C S-Contact', 'UBER INDIA SYSTEMS P-Travel', 'NAYAZ PASHA-TBD', 'SRI GANESH FRUIT JUI-Groceries', 'BASAVARAJU H P-TBD', 'JIOCINEMA-Fun', 'ELIOR BANKUET-Dineout', 'GOOGLE INDIA DIGITAL-TBD', 'JAYADEV V M-TBD', 'CHIKKEGOWDA-TBD', 'NIVEDITHA S-TBD', 'PAY*EAT GOOD TEC-Dineout', 'GOOGLE PLAY-TBD', 'TROPELET TECHNOLOGIE-TBD']
+2025-03-30 12:01:43,358 - INFO - transform - handleMissingTags - Updated batch 2
+2025-03-30 12:01:45,211 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['SHATRUDHAN MAHTO-Contact', 'MR MOHAN KUMAR KG-Contact', 'MANJE GOWDA S S-Contact', 'VIDYUT RAJWAR-Travel', 'BMRCL-Travel', 'VENKATESAN R-TBD', 'KRISHNA M H-Travel', 'KENGERI BUS TERMINAL-Travel', 'SYED MUBARAK-Travel', 'RAVI M-Travel', 'OAM INDUSTRIES I PVT-Travel', 'WISHVISH FOODS PRIVA-TBD', 'RANJEET KUMAR-Travel', 'M N ANKARAJU-Travel', 'SYED MASOOD-Travel', 'INDRA JIT KUMAR-Travel', 'DEVARAJ N S-Travel', 'PRABHA DEVI-Travel', 'VINAY RAY-TBD', 'PUNITH H C-Travel']
+2025-03-30 12:01:45,390 - INFO - transform - handleMissingTags - Updated batch 3
+2025-03-30 12:01:50,824 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['VIDUSHI SANJAY GANER-Contact', 'NAVEEN  S-Contact', 'MANOJ KUMAR K A-Contact', 'MALLESHA B J-Contact', 'BIERGARTEN DEVARABEE-Fun', 'PERIYANATAKI-Food', 'MADHU M R-Contact', 'SUHAS RAJASEKAR-Contact', 'AIRTEL-13/08/24-Bills', 'VIGHNESH K P-Investments', 'KAJRAKH-Fun', 'THE SOULED STORE-Shopping', 'BOOKMYSHOW-Fun', 'REDBUS INDIA PRIVATE-Travel', 'CINEPOLIS GOKULAM GA-Dineout', 'ELAN BEAUTY PARLOUR-Salon', 'SHUHAIB T P-Contact', 'MYNTRA DESIGNS PRIVA-Shopping', 'SAGAR H M-Contact', 'DECATHLON SPORTS-Fun']
+Invalid format in suggestion: AIRTEL-13/08/24-Bills
+2025-03-30 12:01:51,031 - INFO - transform - handleMissingTags - Updated batch 4
+2025-03-30 12:01:53,041 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['NYKAA-Shopping', 'MANJUNATH-Contact', 'AMAZON PAY GIFT CARD-Shopping', 'BALAKRISHNAN R-TBD', 'AAKRITI KESARWANI-TBD', 'KORRA SREEDEVIBAI-TBD', 'PAVAN M-TBD', 'APOLLO CLINIC MARATH-TBD', 'SMART BAZAAR BENGAL-Groceries', 'MAHESHA G-TBD', 'CHANDRA SHEKHAR R-TBD', 'EATGOOD TECHNOLO-TBD', 'RAJESH P-TBD', 'VAAYU INTERNATIONAL-Travel', 'ARPA BANERJEE-TBD', 'NAZEEM KHAN-TBD', 'UMARFAROOQ CHANDASHA-TBD', 'GOOGLE PLAY SER CYBS S-TBD', 'APOORVA ATUL MISHRA-TBD', 'PAARTH SWAR DAND-TBD']
+2025-03-30 12:01:53,226 - INFO - transform - handleMissingTags - Updated batch 5
+2025-03-30 12:01:55,013 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['ARUN KUMAR V-Contact', 'BALU BALU-TBD', 'APOLLO PHARMACY-Groceries', 'MANJUNATHA V-Contact', 'IB BILLPAY DR-Bills', 'AIRTEL-12/09/24-Bills', 'ZEPTO-Shopping', 'SUMAIYA-TBD', 'SWAMY SON OF MANJE G-TBD', 'XXXPGN KOTAK 811 OTP-TBD', 'AVANTIKAS FASHION MA-Shopping', 'SADIK PASHA-TBD', 'VARSHA NANDAKUMAR-TBD', 'GODADDY INDIA DOMAIN-TBD', 'IMRAN PASHA-TBD', 'BEERAPPA GARBHAGUDI-TBD', 'MADRI AJAY-TBD', 'HUNGERBOX-TBD', 'GANDHI-TBD', 'DUNZO-Travel']
+Invalid format in suggestion: AIRTEL-12/09/24-Bills
+2025-03-30 12:01:55,182 - INFO - transform - handleMissingTags - Updated batch 6
+2025-03-30 12:01:57,436 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['MANJUNATHA-Contact', 'SOMASHEKAR S-Contact', 'KUNDAN KUMAR-Travel', 'PALAK RAJESH MUNSHI-TBD', '50100442876684-TBD', 'HARISH GOWDA-Travel', 'SHRI GAJANANA JUICE-Groceries', 'PAVAN MEDICALS-Groceries', 'SHARIFF AHMED-Dineout', 'PRAKASH K N-Travel', 'CRAFTMATE-TBD', '416021XXXXXX6709 CHBLR020 BANGALORE-TBD', 'RANGANATHA-Travel', 'CHAKALA VENU-Travel', 'CHIKKEGOWDA S O THAM-Travel', 'MAGNOLIA BAKERY THE-Dineout', 'SANZEER HASSAN A-Travel', 'MR IRFAN BASHA-Travel', 'PRABHU V-Travel', 'BHAVANA S-Travel']
+2025-03-30 12:01:57,621 - INFO - transform - handleMissingTags - Updated batch 7
+2025-03-30 12:01:59,250 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['MEGHANA S M-Contact', 'WELLBEINGNUTRITION-TBD', 'AMAZON INDIA-Shopping', 'POTAFO PRIVATE LIMIT-TBD', 'AIRTEL-12/10/24-Bills', 'PARAGON VENTURES PRI-TBD', 'COCOTTEE-Food', 'B MAHAMMAD RAFEEK-Contact', 'PAVITRA HOME APPLIAN-TBD', 'PATIL CHAITANYA-Contact', 'SHANTKUMAR-Contact', 'MAUNESH-Contact', 'GANGADHARA-Contact', 'SHASHIKUMAR R KO-Contact', 'BIG BASKET-Groceries', 'RAGHAVENDRA ANAND NA-Contact', 'MUNIRAJU-Contact', 'AMARESH-Contact', 'SHANKARALING SAGANUR-Contact', 'VAIDHESWARI SELVAM-Contact']
+Invalid format in suggestion: AIRTEL-12/10/24-Bills
+2025-03-30 12:01:59,485 - INFO - transform - handleMissingTags - Updated batch 8
+2025-03-30 12:02:00,417 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['KHURSAID MIYA-Contact', 'SRI GAJANANA FRUIT J-Groceries', 'PARVATHI V-Contact', 'APPLE MEDIA SERVICES-TBD', 'MR THIRUMURUGAN A-TBD', 'HPGAS-Bills', 'DINESH-Contact', 'KALAVATI-Groceries', 'AMIT PARIYAR-TBD']
+2025-03-30 12:02:00,490 - INFO - transform - handleMissingTags - Updated batch 9
+2025-03-30 17:10:26,590 - INFO - routes - index - Request JSON: {'username': 'StoneLegend526'}
+2025-03-30 17:10:31,189 - INFO - extract - extract_data - Inside extract module
+/home/ubuntu/app/backend/etl/extract.py:12: ParserWarning: Skipping line 68: expected 7 fields, saw 8
+
+  csv_data = pd.read_csv(StringIO(file_content), on_bad_lines='warn')
+2025-03-30 17:10:31,205 - INFO - extract - extract_data - Total number of records - 353
+/home/ubuntu/app/backend/etl/extract.py:21: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  df['Debit Amount'] = pd.to_numeric(df['Debit Amount'], errors='coerce')
+2025-03-30 17:10:31,207 - INFO - extract - extract_data - Total number of debit records - 339
+2025-03-30 17:10:31,207 - INFO - transform - transform - Inside transform module
+2025-03-30 17:10:31,207 - INFO - transform - getProductAndMode - Extracting product and modes
+2025-03-30 17:10:31,210 - INFO - transform - transform - Finished product processing, starting with tags
+2025-03-30 17:10:31,210 - INFO - transform - transform - Adding distinct products to tag database
+2025-03-30 17:10:31,354 - INFO - routes - upload_file - File successfully processed and saved to the database
+2025-03-30 17:10:35,585 - INFO - extract - extract_product_data - Total number of products - 13
+2025-03-30 17:10:35,614 - INFO - routes - upload_tags - File successfully processed and saved to the product_tags database
+2025-03-30 17:10:40,217 - INFO - routes - populate_expense_data - Populating Expense Data for 44e354fdc33329350e81a8ddd318240b
+2025-03-30 17:10:40,478 - INFO - transform - ai_trigger - AI categorization is disabled by the user.
+2025-03-31 12:15:58,528 - INFO - routes - index - Request JSON: {'username': 'terra'}
+2025-03-31 12:16:07,269 - INFO - extract - extract_data - Inside extract module
+/home/ubuntu/app/backend/etl/extract.py:12: ParserWarning: Skipping line 68: expected 7 fields, saw 8
+
+  csv_data = pd.read_csv(StringIO(file_content), on_bad_lines='warn')
+2025-03-31 12:16:07,966 - INFO - extract - extract_data - Total number of records - 353
+/home/ubuntu/app/backend/etl/extract.py:21: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  df['Debit Amount'] = pd.to_numeric(df['Debit Amount'], errors='coerce')
+2025-03-31 12:16:08,196 - INFO - extract - extract_data - Total number of debit records - 339
+2025-03-31 12:16:08,198 - INFO - transform - transform - Inside transform module
+2025-03-31 12:16:08,201 - INFO - transform - getProductAndMode - Extracting product and modes
+2025-03-31 12:16:08,226 - INFO - transform - transform - Finished product processing, starting with tags
+2025-03-31 12:16:08,226 - INFO - transform - transform - Adding distinct products to tag database
+2025-03-31 12:16:08,666 - INFO - routes - upload_file - File successfully processed and saved to the database
+2025-03-31 12:16:25,057 - INFO - routes - populate_expense_data - Populating Expense Data for bea2ed1fa9aff2980e12d53300e9ce2c
+2025-03-31 12:16:25,143 - INFO - transform - ai_trigger - Using AI for missing tags
+2025-03-31 12:16:25,145 - INFO - transform - handleMissingTags - Enabling AI Categorisation
+2025-03-31 12:16:25,148 - INFO - transform - handleMissingTags - Found 174 products with missing tags.
+2025-03-31 12:16:28,269 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['RAJALAKSHMI NANDAKU-Contact', 'NANDAKUMAR V V-Contact', '50400292038639-TBD', 'AUTOPAYSI-TAD-TBD', 'K MADHAVI-TBD', 'ICCLGROWW-TBD', 'SWIGGY-Dineout', 'BUNDL TECHNOLOGIES P-Shopping', 'RAM BHADHUR-TBD', 'VAISHNAVI NANDAKUMAR-TBD', 'SWIGGY LIMITED-Dineout', 'M FAYAZ-TBD', 'PLAYO-Fun', 'RAVI-TBD', 'SPORTSARC ENTERPRISE-TBD', 'MOUNESH M-TBD', '50400329652447-TBD', 'SUBWAY BAGMANE-Dineout', 'HEALTHY HABIT DREAM-TBD', 'GROFERS INDIA PRIVAT-Groceries']
+Invalid format in suggestion: AUTOPAYSI-TAD-TBD
+2025-03-31 12:16:28,507 - INFO - transform - handleMissingTags - Updated batch 1
+2025-03-31 12:16:30,285 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['CHAI FUSION CAFE-Food', 'SHIVAKUMARA S-Contact', 'AIRTEL-12/07/24- Bills', 'SURYANARAYANA A-Travel', 'CLINTON CHAKMA-Contact', 'R NAGABUSHAN-TBD', 'TONI AND GUY BROOKFI-Salon', 'APROZONE ENTERPRISES-TBD', 'EVERSTYLISH LIFESTYL-TBD', 'N BOOKS-Shopping', 'MADHU C S-TBD', 'UBER INDIA SYSTEMS P-Travel', 'NAYAZ PASHA-TBD', 'SRI GANESH FRUIT JUI-Groceries', 'BASAVARAJU H P-TBD', 'JIOCINEMA-Entertainment', 'ELIOR BANKUET-Dineout', 'GOOGLE INDIA DIGITAL-TBD', 'JAYADEV V M-Contact', 'CHIKKEGOWDA-TBD']
+Invalid format in suggestion: AIRTEL-12/07/24- Bills
+2025-03-31 12:16:30,473 - INFO - transform - handleMissingTags - Updated batch 2
+2025-03-31 12:16:32,341 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['BLINKIT-Travel', 'NIVEDITHA S-Contact', 'PAY*EAT GOOD TEC-Food', 'GOOGLE PLAY-Fun', 'TROPELET TECHNOLOGIE-TBD', 'SHATRUDHAN MAHTO-Contact', 'MR MOHAN KUMAR KG-Contact', 'MANJE GOWDA S S-Contact', 'VIDYUT RAJWAR-Travel', 'BMRCL-Travel', 'VENKATESAN R-TBD', 'KRISHNA M H-Contact', 'KENGERI BUS TERMINAL-Travel', 'SYED MUBARAK-Contact', 'RAVI M-Contact', 'OAM INDUSTRIES I PVT-TBD', 'WISHVISH FOODS PRIVA-Groceries', 'RANJEET KUMAR-Contact', 'M N ANKARAJU-Contact', 'SYED MASOOD-Contact']
+2025-03-31 12:16:32,495 - INFO - transform - handleMissingTags - Updated batch 3
+2025-03-31 12:16:34,549 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['INDRA JIT KUMAR-Contact', 'DEVARAJ N S-Contact', 'PRABHA DEVI-Contact', 'VINAY RAY-TBD', 'PUNITH H C-Contact', 'VIDUSHI SANJAY GANER-TBD', 'NAVEEN  S-Contact', 'MANOJ KUMAR K A-Contact', 'MALLESHA B J-Contact', 'BIERGARTEN DEVARABEE-TBD', 'PERIYANATAKI-TBD', 'MADHU M R-Contact', 'SUHAS RAJASEKAR-Contact', 'AIRTEL-13/08/24-Bills', 'VIGHNESH K P-TBD', 'KAJRAKH-TBD', 'THE SOULED STORE-Shopping', 'BOOKMYSHOW-Fun', 'REDBUS INDIA PRIVATE-Travel', 'CINEPOLIS GOKULAM GA-Dineout']
+Invalid format in suggestion: AIRTEL-13/08/24-Bills
+2025-03-31 12:16:34,731 - INFO - transform - handleMissingTags - Updated batch 4
+2025-03-31 12:16:36,586 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['ELAN BEAUTY PARLOUR-Salon', 'SHUHAIB T P-Contact', 'MYNTRA DESIGNS PRIVA-Shopping', 'SAGAR H M-Contact', 'DECATHLON SPORTS-Shopping', 'NYKAA-Beauty', 'MANJUNATH-Contact', 'AMAZON PAY GIFT CARD-Shopping', 'BALAKRISHNAN R-TBD', 'AAKRITI KESARWANI-TBD', 'KORRA SREEDEVIBAI-Contact', 'PAVAN M-TBD', 'APOLLO CLINIC MARATH-Health', 'SMART BAZAAR BENGAL-Shopping', 'MAHESHA G-TBD', 'CHANDRA SHEKHAR R-Contact', 'EATGOOD TECHNOLO-TBD', 'RAJESH P-Contact', 'VAAYU INTERNATIONAL-Travel', 'ARPA BANERJEE-Contact']
+2025-03-31 12:16:36,783 - INFO - transform - handleMissingTags - Updated batch 5
+2025-03-31 12:16:38,963 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['NAZEEM KHAN-Contact', 'UMARFAROOQ CHANDASHA-Contact', 'GOOGLE PLAY SER CYBS S-TBD', 'APOORVA ATUL MISHRA-Contact', 'PAARTH SWAR DAND-TBD', 'ARUN KUMAR V-TBD', 'BALU BALU-TBD', 'APOLLO PHARMACY-Groceries', 'MANJUNATHA V-TBD', 'IB BILLPAY DR-Bills', 'AIRTEL-12/09/24-Bills', 'ZEPTO-TBD', 'SUMAIYA-Contact', 'SWAMY SON OF MANJE G-Contact', 'XXXPGN KOTAK 811 OTP-TBD', 'AVANTIKAS FASHION MA-Shopping', 'SADIK PASHA-Contact', 'VARSHA NANDAKUMAR-TBD', 'GODADDY INDIA DOMAIN-TBD', 'IMRAN PASHA-Contact']
+Invalid format in suggestion: AIRTEL-12/09/24-Bills
+2025-03-31 12:16:39,143 - INFO - transform - handleMissingTags - Updated batch 6
+2025-03-31 12:16:41,439 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['BEERAPPA GARBHAGUDI-Contact', 'MADRI  AJAY-Contact', 'HUNGERBOX-Food', 'GANDHI-Contact', 'DUNZO-Travel', 'MANJUNATHA-Travel', 'SOMASHEKAR S-Travel', 'KUNDAN KUMAR-Contact', 'PALAK RAJESH MUNSHI-TBD', '50100442876684-TBD', 'HARISH   GOWDA-Contact', 'SHRI GAJANANA JUICE-Food', 'PAVAN MEDICALS-Medical', 'SHARIFF AHMED-Contact', 'PRAKASH K N-Contact', 'CRAFTMATE-TBD', '416021XXXXXX6709 CHBLR020 BANGALORE-TBD', 'RANGANATHA-Contact', 'CHAKALA   VENU-Contact', 'CHIKKEGOWDA S O THAM-Contact']
+2025-03-31 12:16:41,631 - INFO - transform - handleMissingTags - Updated batch 7
+2025-03-31 12:16:43,838 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['MAGNOLIA BAKERY THE-Food', 'SANZEER HASSAN A-Contact', 'MR IRFAN BASHA-Contact', 'PRABHU V-Contact', 'BHAVANA S-Contact', 'MEGHANA S M-Contact', 'WELLBEINGNUTRITION-TBD', 'AMAZON INDIA-Shopping', 'POTAFO PRIVATE LIMIT-TBD', 'AIRTEL-12/10/24- Bills', 'PARAGON VENTURES PRI-TBD', 'COCOTTEE-Dineout', 'B MAHAMMAD RAFEEK-Contact', 'PAVITRA HOME APPLIAN-TBD', 'PATIL CHAITANYA-Contact', 'SHANTKUMAR-Contact', 'MAUNESH-Contact', 'GANGADHARA-Contact', 'SHASHIKUMAR R KO-Contact', 'BIG BASKET-Groceries']
+Invalid format in suggestion: AIRTEL-12/10/24- Bills
+2025-03-31 12:16:44,044 - INFO - transform - handleMissingTags - Updated batch 8
+2025-03-31 12:16:45,388 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['RAGHAVENDRA ANAND NA-Contact', 'MUNIRAJU-Contact', 'AMARESH-Travel', 'SHANKARALING SAGANUR-Travel', 'VAIDHESWARI SELVAM-Travel', 'KHURSAID MIYA-Travel', 'SRI GAJANANA FRUIT J-Groceries', 'PARVATHI V-Travel', 'APPLE MEDIA SERVICES-TBD', 'MR THIRUMURUGAN A-TBD', 'HPGAS-Bills', 'DINESH-Travel', 'KALAVATI-Groceries', 'AMIT PARIYAR-TBD']
+2025-03-31 12:16:45,514 - INFO - transform - handleMissingTags - Updated batch 9
+2025-03-31 12:23:25,503 - INFO - routes - populate_expense_data - Populating Expense Data for bea2ed1fa9aff2980e12d53300e9ce2c
+2025-03-31 12:23:25,516 - INFO - transform - ai_trigger - Using AI for missing tags
+2025-03-31 12:23:25,516 - INFO - transform - handleMissingTags - Enabling AI Categorisation
+2025-03-31 12:23:25,516 - INFO - transform - handleMissingTags - Found 174 products with missing tags.
+2025-03-31 12:23:27,846 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['RAJALAKSHMI NANDAKU-Contact', 'NANDAKUMAR V V-Contact', '50400292038639-Investments', 'AUTOPAYSI-TAD-TBD', 'K MADHAVI-TBD', 'ICCLGROWW-TBD', 'SWIGGY-Dineout', 'BUNDL TECHNOLOGIES P-Shopping', 'RAM BHADHUR-TBD', 'VAISHNAVI NANDAKUMAR-TBD', 'SWIGGY LIMITED-Dineout', 'M FAYAZ-TBD', 'PLAYO-Fun', 'RAVI-TBD', 'SPORTSARC ENTERPRISE-TBD', 'MOUNESH M-TBD', '50400329652447-Investments', 'SUBWAY BAGMANE-Dineout', 'HEALTHY HABIT DREAM-TBD', 'GROFERS INDIA PRIVAT-Groceries']
+Invalid format in suggestion: AUTOPAYSI-TAD-TBD
+2025-03-31 12:23:27,899 - INFO - transform - handleMissingTags - Updated batch 1
+2025-03-31 12:23:30,391 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['CHAI FUSION CAFE-Food', 'SHIVAKUMARA S-Contact', 'AIRTEL-12/07/24- Bills', 'SURYANARAYANA A-Travel', 'CLINTON CHAKMA-Contact', 'R NAGABUSHAN-TBD', 'TONI AND GUY BROOKFI-Salon', 'APROZONE ENTERPRISES-TBD', 'EVERSTYLISH LIFESTYL-TBD', 'N BOOKS-Shopping', 'MADHU C S-TBD', 'UBER INDIA SYSTEMS P-Travel', 'NAYAZ PASHA-TBD', 'SRI GANESH FRUIT JUI-Groceries', 'BASAVARAJU H P-TBD', 'JIOCINEMA-Entertainment', 'ELIOR BANKUET-Dineout', 'GOOGLE INDIA DIGITAL-TBD', 'JAYADEV V M-TBD', 'CHIKKEGOWDA-TBD']
+Invalid format in suggestion: AIRTEL-12/07/24- Bills
+2025-03-31 12:23:30,428 - INFO - transform - handleMissingTags - Updated batch 2
+2025-03-31 12:23:32,818 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['BLINKIT-Travel', 'NIVEDITHA S-Contact', 'PAY*EAT GOOD TEC-Food', 'GOOGLE PLAY-Fun', 'TROPELET TECHNOLOGIE-TBD', 'SHATRUDHAN MAHTO-Contact', 'MR MOHAN KUMAR KG-Contact', 'MANJE GOWDA S S-Contact', 'VIDYUT RAJWAR-Travel', 'BMRCL-Travel', 'VENKATESAN R-TBD', 'KRISHNA M H-Contact', 'KENGERI BUS TERMINAL-Travel', 'SYED MUBARAK-Contact', 'RAVI M-Contact', 'OAM INDUSTRIES I PVT-TBD', 'WISHVISH FOODS PRIVA-Groceries', 'RANJEET KUMAR-Contact', 'M N ANKARAJU-Contact', 'SYED MASOOD-Contact']
+2025-03-31 12:23:32,886 - INFO - transform - handleMissingTags - Updated batch 3
+2025-03-31 12:23:35,177 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['INDRA JIT KUMAR-Contact', 'DEVARAJ N S-Contact', 'PRABHA DEVI-Contact', 'VINAY RAY-TBD', 'PUNITH H C-Contact', 'VIDUSHI SANJAY GANER-TBD', 'NAVEEN  S-Contact', 'MANOJ KUMAR K A-Contact', 'MALLESHA B J-Contact', 'BIERGARTEN DEVARABEE-TBD', 'PERIYANATAKI-TBD', 'MADHU M R-Contact', 'SUHAS RAJASEKAR-Contact', 'AIRTEL-13/08/24-Bills', 'VIGHNESH K P-TBD', 'KAJRAKH-TBD', 'THE SOULED STORE-Shopping', 'BOOKMYSHOW-Fun', 'REDBUS INDIA PRIVATE-Travel', 'CINEPOLIS GOKULAM GA-Dineout']
+Invalid format in suggestion: AIRTEL-13/08/24-Bills
+2025-03-31 12:23:35,248 - INFO - transform - handleMissingTags - Updated batch 4
+2025-03-31 12:23:37,195 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['ELAN BEAUTY PARLOUR-Salon', 'SHUHAIB T P-Contact', 'MYNTRA DESIGNS PRIVA-Shopping', 'SAGAR H M-Contact', 'DECATHLON SPORTS-Shopping', 'NYKAA-Beauty', 'MANJUNATH-Contact', 'AMAZON PAY GIFT CARD-TBD', 'BALAKRISHNAN R-TBD', 'AAKRITI KESARWANI-TBD', 'KORRA SREEDEVIBAI-Contact', 'PAVAN M-TBD', 'APOLLO CLINIC MARATH-TBD', 'SMART BAZAAR  BENGAL-TBD', 'MAHESHA G-TBD', 'CHANDRA SHEKHAR R-Contact', 'EATGOOD TECHNOLO-TBD', 'RAJESH P-Contact', 'VAAYU INTERNATIONAL-Travel', 'ARPA  BANERJEE-Contact']
+2025-03-31 12:23:37,250 - INFO - transform - handleMissingTags - Updated batch 5
+2025-03-31 12:23:39,358 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['NAZEEM KHAN-Contact', 'UMARFAROOQ CHANDASHA-Contact', 'GOOGLE PLAY SER CYBS S-TBD', 'APOORVA ATUL MISHRA-Contact', 'PAARTH SWAR DAND-TBD', 'ARUN KUMAR V-TBD', 'BALU BALU-Groceries', 'APOLLO PHARMACY-Groceries', 'MANJUNATHA V-Groceries', 'IB BILLPAY DR-Bills', 'AIRTEL-12/09/24-Bills', 'ZEPTO-TBD', 'SUMAIYA-Contact', 'SWAMY SON OF MANJE G-Contact', 'XXXPGN KOTAK 811 OTP-TBD', 'AVANTIKAS FASHION MA-Shopping', 'SADIK PASHA-Contact', 'VARSHA NANDAKUMAR-TBD', 'GODADDY INDIA DOMAIN-TBD', 'IMRAN PASHA-Contact']
+Invalid format in suggestion: AIRTEL-12/09/24-Bills
+2025-03-31 12:23:39,393 - INFO - transform - handleMissingTags - Updated batch 6
+2025-03-31 12:23:41,361 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['BEERAPPA GARBHAGUDI-Contact', 'MADRI AJAY-Contact', 'HUNGERBOX-Groceries', 'GANDHI-Contact', 'DUNZO-Travel', 'MANJUNATHA-Travel', 'SOMASHEKAR S-Travel', 'KUNDAN KUMAR-Contact', 'PALAK RAJESH MUNSHI-TBD', '50100442876684-TBD', 'HARISH GOWDA-Contact', 'SHRI GAJANANA JUICE-Food', 'PAVAN MEDICALS-Fun', 'SHARIFF AHMED-Contact', 'PRAKASH K N-Contact', 'CRAFTMATE-TBD', '416021XXXXXX6709 CHBLR020 BANGALORE-TBD', 'RANGANATHA-Contact', 'CHAKALA VENU-Contact', 'CHIKKEGOWDA S O THAM-Contact']
+2025-03-31 12:23:41,437 - INFO - transform - handleMissingTags - Updated batch 7
+2025-03-31 12:23:43,289 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['MAGNOLIA BAKERY THE-Food', 'SANZEER HASSAN A-Contact', 'MR IRFAN BASHA-Contact', 'PRABHU V-Contact', 'BHAVANA S-Contact', 'MEGHANA S M-Contact', 'WELLBEINGNUTRITION-TBD', 'AMAZON INDIA-Shopping', 'POTAFO PRIVATE LIMIT-TBD', 'AIRTEL-12/10/24- Bills', 'PARAGON VENTURES PRI-TBD', 'COCOTTEE-Dineout', 'B MAHAMMAD RAFEEK-Contact', 'PAVITRA HOME APPLIAN-TBD', 'PATIL CHAITANYA-Contact', 'SHANTKUMAR-Contact', 'MAUNESH-Contact', 'GANGADHARA-Contact', 'SHASHIKUMAR R KO-Contact', 'BIG BASKET-Groceries']
+Invalid format in suggestion: AIRTEL-12/10/24- Bills
+2025-03-31 12:23:43,315 - INFO - transform - handleMissingTags - Updated batch 8
+2025-03-31 12:23:45,119 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['RAGHAVENDRA ANAND NA-Contact', 'MUNIRAJU-Contact', 'AMARESH-Travel', 'SHANKARALING SAGANUR-Travel', 'VAIDHESWARI SELVAM-Travel', 'KHURSAID MIYA-Travel', 'SRI GAJANANA FRUIT J-Groceries', 'PARVATHI V-Travel', 'APPLE MEDIA SERVICES-TBD', 'MR THIRUMURUGAN A-TBD', 'HPGAS-Bills', 'DINESH-Travel', 'KALAVATI-Groceries', 'AMIT PARIYAR-TBD']
+2025-03-31 12:23:45,187 - INFO - transform - handleMissingTags - Updated batch 9
+2025-03-31 12:23:45,619 - INFO - routes - index - Request JSON: {'username': 'vnk'}
+2025-03-31 12:23:45,638 - INFO - routes - index - Request JSON: {'username': 'vnk'}
+2025-03-31 12:24:03,805 - INFO - extract - extract_data - Inside extract module
+/home/ubuntu/app/backend/etl/extract.py:12: ParserWarning: Skipping line 68: expected 7 fields, saw 8
+
+  csv_data = pd.read_csv(StringIO(file_content), on_bad_lines='warn')
+2025-03-31 12:24:03,822 - INFO - extract - extract_data - Total number of records - 353
+/home/ubuntu/app/backend/etl/extract.py:21: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  df['Debit Amount'] = pd.to_numeric(df['Debit Amount'], errors='coerce')
+2025-03-31 12:24:03,824 - INFO - extract - extract_data - Total number of debit records - 339
+2025-03-31 12:24:03,824 - INFO - transform - transform - Inside transform module
+2025-03-31 12:24:03,824 - INFO - transform - getProductAndMode - Extracting product and modes
+2025-03-31 12:24:03,826 - INFO - transform - transform - Finished product processing, starting with tags
+2025-03-31 12:24:03,826 - INFO - transform - transform - Adding distinct products to tag database
+2025-03-31 12:24:03,950 - INFO - routes - upload_file - File successfully processed and saved to the database
+2025-03-31 12:24:07,754 - INFO - extract - extract_product_data - Total number of products - 13
+2025-03-31 12:24:07,880 - INFO - routes - upload_tags - File successfully processed and saved to the product_tags database
+2025-03-31 12:24:14,388 - INFO - routes - populate_expense_data - Populating Expense Data for df2a33e8a2abc48eb315878de24def54
+2025-03-31 12:24:14,541 - INFO - transform - ai_trigger - Using AI for missing tags
+2025-03-31 12:24:14,541 - INFO - transform - handleMissingTags - Enabling AI Categorisation
+2025-03-31 12:24:14,541 - INFO - transform - handleMissingTags - Found 169 products with missing tags.
+2025-03-31 12:24:16,499 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['NANDAKUMAR V V-Contact', '50400292038639-Contact', 'AUTOPAYSI-TAD-TBD', 'K MADHAVI-TBD', 'ICCLGROWW-TBD', 'BUNDL TECHNOLOGIES P-Shopping', 'VAISHNAVI NANDAKUMAR-Contact', 'SWIGGY LIMITED-Dineout', 'M FAYAZ-Food', 'PLAYO-Fun', 'RAVI-TBD', 'SPORTSARC ENTERPRISE-TBD', 'MOUNESH M-TBD', '50400329652447-TBD', 'SUBWAY BAGMANE-Dineout', 'HEALTHY HABIT DREAM-TBD', 'GROFERS INDIA PRIVAT-Groceries', 'SHIVAKUMARA S-TBD', 'AIRTEL-12/07/24-Bills', 'SURYANARAYANA A-Travel']
+Invalid format in suggestion: AUTOPAYSI-TAD-TBD
+Invalid format in suggestion: AIRTEL-12/07/24-Bills
+2025-03-31 12:24:16,670 - INFO - transform - handleMissingTags - Updated batch 1
+2025-03-31 12:24:18,706 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['CLINTON CHAKMA-Contact', 'R NAGABUSHAN-Contact', 'TONI AND GUY BROOKFI-Salon', 'APROZONE ENTERPRISES-TBD', 'EVERSTYLISH LIFESTYL-Travel', 'N BOOKS-TBD', 'MADHU C S-TBD', 'UBER INDIA SYSTEMS P-Travel', 'NAYAZ PASHA-TBD', 'SRI GANESH FRUIT JUI-Groceries', 'BASAVARAJU H P-TBD', 'JIOCINEMA-Entertainment', 'ELIOR BANKUET-Dineout', 'GOOGLE INDIA DIGITAL-TBD', 'JAYADEV V M-TBD', 'CHIKKEGOWDA-TBD', 'NIVEDITHA S-TBD', 'PAY*EAT GOOD TEC-Dineout', 'GOOGLE PLAY-TBD', 'TROPELET TECHNOLOGIE-TBD']
+2025-03-31 12:24:18,934 - INFO - transform - handleMissingTags - Updated batch 2
+2025-03-31 12:24:20,927 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['SHATRUDHAN MAHTO-Contact', 'MR MOHAN KUMAR KG-Contact', 'MANJE GOWDA S S-Contact', 'VIDYUT RAJWAR-Travel', 'BMRCL-Travel', 'VENKATESAN R-TBD', 'KRISHNA M H-Travel', 'KENGERI BUS TERMINAL-Travel', 'SYED MUBARAK-Travel', 'RAVI M-Travel', 'OAM INDUSTRIES I PVT-TBD', 'WISHVISH FOODS PRIVA-TBD', 'RANJEET KUMAR-Contact', 'M N ANKARAJU-Travel', 'SYED MASOOD-Travel', 'INDRA JIT KUMAR-Travel', 'DEVARAJ N S-Travel', 'PRABHA DEVI-Travel', 'VINAY RAY-TBD', 'PUNITH H C-Travel']
+2025-03-31 12:24:21,107 - INFO - transform - handleMissingTags - Updated batch 3
+2025-03-31 12:24:23,221 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['VIDUSHI SANJAY GANER-Contact', 'NAVEEN  S-Contact', 'MANOJ KUMAR K A-Contact', 'MALLESHA B J-Contact', 'BIERGARTEN DEVARABEE-Fun', 'PERIYANATAKI-Food', 'MADHU M R-Contact', 'SUHAS RAJASEKAR-Contact', 'AIRTEL-13/08/24-Bills', 'VIGHNESH K P-Investments', 'KAJRAKH-Fun', 'THE SOULED STORE-Shopping', 'BOOKMYSHOW-Fun', 'REDBUS INDIA PRIVATE-Travel', 'CINEPOLIS GOKULAM GA-Dineout', 'ELAN BEAUTY PARLOUR-Salon', 'SHUHAIB T P-Contact', 'MYNTRA DESIGNS PRIVA-Shopping', 'SAGAR H M-Contact', 'DECATHLON SPORTS-Fun']
+Invalid format in suggestion: AIRTEL-13/08/24-Bills
+2025-03-31 12:24:23,432 - INFO - transform - handleMissingTags - Updated batch 4
+2025-03-31 12:24:25,433 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['NYKAA-TBD', 'MANJUNATH-TBD', 'AMAZON PAY GIFT CARD-Shopping', 'BALAKRISHNAN R-TBD', 'AAKRITI KESARWANI-TBD', 'KORRA SREEDEVIBAI-TBD', 'PAVAN M-TBD', 'APOLLO CLINIC MARATH-Salon', 'SMART BAZAAR BENGAL-TBD', 'MAHESHA G-TBD', 'CHANDRA SHEKHAR R-TBD', 'EATGOOD TECHNOLO-TBD', 'RAJESH P-TBD', 'VAAYU INTERNATIONAL-Investments', 'ARPA BANERJEE-TBD', 'NAZEEM KHAN-TBD', 'UMARFAROOQ CHANDASHA-TBD', 'GOOGLE PLAY SER CYBS S-TBD', 'APOORVA ATUL MISHRA-TBD', 'PAARTH SWAR DAND-TBD']
+2025-03-31 12:24:25,605 - INFO - transform - handleMissingTags - Updated batch 5
+2025-03-31 12:24:27,454 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['ARUN KUMAR V-Contact', 'BALU  BALU-TBD', 'APOLLO PHARMACY-Groceries', 'MANJUNATHA  V-TBD', 'IB BILLPAY DR-Bills', 'AIRTEL-12/09/24-Bills', 'ZEPTO-TBD', 'SUMAIYA-TBD', 'SWAMY SON OF MANJE G-TBD', 'XXXPGN KOTAK 811 OTP-TBD', 'AVANTIKAS FASHION MA-Shopping', 'SADIK PASHA-TBD', 'VARSHA NANDAKUMAR-TBD', 'GODADDY INDIA DOMAIN-TBD', 'IMRAN  PASHA-TBD', 'BEERAPPA GARBHAGUDI-TBD', 'MADRI  AJAY-TBD', 'HUNGERBOX-Food', 'GANDHI-TBD', 'DUNZO-TBD']
+Invalid format in suggestion: AIRTEL-12/09/24-Bills
+2025-03-31 12:24:27,665 - INFO - transform - handleMissingTags - Updated batch 6
+2025-03-31 12:24:29,537 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['MANJUNATHA-Contact', 'SOMASHEKAR S-Contact', 'KUNDAN KUMAR-Travel', 'PALAK RAJESH MUNSHI-TBD', '50100442876684-TBD', 'HARISH GOWDA-Travel', 'SHRI GAJANANA JUICE-Groceries', 'PAVAN MEDICALS-Groceries', 'SHARIFF AHMED-Dineout', 'PRAKASH K N-Travel', 'CRAFTMATE-Shopping', '416021XXXXXX6709 CHBLR020 BANGALORE-TBD', 'RANGANATHA-Travel', 'CHAKALA VENU-Dineout', 'CHIKKEGOWDA S O THAM-Dineout', 'MAGNOLIA BAKERY THE-Dineout', 'SANZEER HASSAN A-Dineout', 'MR IRFAN BASHA-Travel', 'PRABHU V-Travel', 'BHAVANA S-Travel']
+2025-03-31 12:24:29,747 - INFO - transform - handleMissingTags - Updated batch 7
+2025-03-31 12:24:31,852 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['MEGHANA S M-Contact', 'WELLBEINGNUTRITION-TBD', 'AMAZON INDIA-Shopping', 'POTAFO PRIVATE LIMIT-TBD', 'AIRTEL-12/10/24-Bills', 'PARAGON VENTURES PRI-TBD', 'COCOTTEE-Food', 'B MAHAMMAD RAFEEK-Contact', 'PAVITRA HOME APPLIAN-TBD', 'PATIL CHAITANYA-Contact', 'SHANTKUMAR-Contact', 'MAUNESH-Contact', 'GANGADHARA-Contact', 'SHASHIKUMAR R KO-Contact', 'BIG BASKET-Groceries', 'RAGHAVENDRA ANAND NA-Contact', 'MUNIRAJU-Contact', 'AMARESH-Contact', 'SHANKARALING SAGANUR-Contact', 'VAIDHESWARI SELVAM-Contact']
+Invalid format in suggestion: AIRTEL-12/10/24-Bills
+2025-03-31 12:24:32,054 - INFO - transform - handleMissingTags - Updated batch 8
+2025-03-31 12:24:33,311 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['KHURSAID MIYA-Contact', 'SRI GAJANANA FRUIT J-Groceries', 'PARVATHI V-Groceries', 'APPLE MEDIA SERVICES-TBD', 'MR THIRUMURUGAN A-TBD', 'HPGAS-Bills', 'DINESH-Contact', 'KALAVATI-Groceries', 'AMIT PARIYAR-TBD']
+2025-03-31 12:24:33,409 - INFO - transform - handleMissingTags - Updated batch 9
+2025-03-31 12:31:31,283 - INFO - routes - index - Request JSON: {'username': 'RusticCaptain405'}
+2025-03-31 12:31:53,117 - INFO - routes - index - Request JSON: {'username': 'EvergreenMaster6'}
+2025-03-31 12:32:07,142 - INFO - extract - extract_data - Inside extract module
+/home/ubuntu/app/backend/etl/extract.py:12: ParserWarning: Skipping line 68: expected 7 fields, saw 8
+
+  csv_data = pd.read_csv(StringIO(file_content), on_bad_lines='warn')
+2025-03-31 12:32:07,149 - INFO - extract - extract_data - Total number of records - 353
+/home/ubuntu/app/backend/etl/extract.py:21: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  df['Debit Amount'] = pd.to_numeric(df['Debit Amount'], errors='coerce')
+2025-03-31 12:32:07,155 - INFO - extract - extract_data - Total number of debit records - 339
+2025-03-31 12:32:07,155 - INFO - transform - transform - Inside transform module
+2025-03-31 12:32:07,156 - INFO - transform - getProductAndMode - Extracting product and modes
+2025-03-31 12:32:07,157 - INFO - transform - transform - Finished product processing, starting with tags
+2025-03-31 12:32:07,157 - INFO - transform - transform - Adding distinct products to tag database
+2025-03-31 12:32:07,278 - INFO - routes - upload_file - File successfully processed and saved to the database
+2025-03-31 12:32:16,160 - INFO - routes - populate_expense_data - Populating Expense Data for f009ffc2ab7a900425ea24e044ef1fe1
+2025-03-31 12:32:16,193 - INFO - transform - ai_trigger - Using AI for missing tags
+2025-03-31 12:32:16,193 - INFO - transform - handleMissingTags - Enabling AI Categorisation
+2025-03-31 12:32:16,194 - INFO - transform - handleMissingTags - Found 174 products with missing tags.
+2025-03-31 12:32:21,036 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['RAJALAKSHMI NANDAKU-Contact', 'NANDAKUMAR V V-Contact', '50400292038639-TBD', 'AUTOPAYSI-TAD-TBD', 'K MADHAVI-TBD', 'ICCLGROWW-TBD', 'SWIGGY-Dineout', 'BUNDL TECHNOLOGIES P-Shopping', 'RAM BHADHUR-TBD', 'VAISHNAVI NANDAKUMAR-TBD', 'SWIGGY LIMITED-Dineout', 'M FAYAZ-TBD', 'PLAYO-Fun', 'RAVI-TBD', 'SPORTSARC ENTERPRISE-TBD', 'MOUNESH M-TBD', '50400329652447-TBD', 'SUBWAY BAGMANE-Dineout', 'HEALTHY HABIT DREAM-TBD', 'GROFERS INDIA PRIVAT-Groceries']
+Invalid format in suggestion: AUTOPAYSI-TAD-TBD
+2025-03-31 12:32:21,215 - INFO - transform - handleMissingTags - Updated batch 1
+2025-03-31 12:32:23,437 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['CHAI FUSION CAFE-Dineout', 'SHIVAKUMARA S-Contact', 'AIRTEL-12/07/24 - Bills', 'SURYANARAYANA A-Travel', 'CLINTON CHAKMA-Contact', 'R NAGABUSHAN-TBD', 'TONI AND GUY BROOKFI-Salon', 'APROZONE ENTERPRISES-TBD', 'EVERSTYLISH LIFESTYL-TBD', 'N BOOKS-Shopping', 'MADHU C S-TBD', 'UBER INDIA SYSTEMS P-Travel', 'NAYAZ PASHA-TBD', 'SRI GANESH FRUIT JUI-Groceries', 'BASAVARAJU H P-TBD', 'JIOCINEMA-TBD', 'ELIOR BANKUET-Dineout', 'GOOGLE INDIA DIGITAL-TBD', 'JAYADEV V M-TBD', 'CHIKKEGOWDA-TBD']
+Invalid format in suggestion: AIRTEL-12/07/24 - Bills
+2025-03-31 12:32:23,682 - INFO - transform - handleMissingTags - Updated batch 2
+2025-03-31 12:32:26,378 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['BLINKIT-Travel', 'NIVEDITHA S-Contact', 'PAY*EAT GOOD TEC-Food', 'GOOGLE PLAY-Fun', 'TROPELET TECHNOLOGIE-TBD', 'SHATRUDHAN MAHTO-Contact', 'MR MOHAN KUMAR KG-Contact', 'MANJE GOWDA S S-Contact', 'VIDYUT RAJWAR-Travel', 'BMRCL-Travel', 'VENKATESAN R-TBD', 'KRISHNA M H-Contact', 'KENGERI BUS TERMINAL-Travel', 'SYED MUBARAK-Contact', 'RAVI M-Contact', 'OAM INDUSTRIES I PVT-TBD', 'WISHVISH FOODS PRIVA-Groceries', 'RANJEET KUMAR-Contact', 'M N ANKARAJU-Contact', 'SYED MASOOD-Contact']
+2025-03-31 12:32:26,540 - INFO - transform - handleMissingTags - Updated batch 3
+2025-03-31 12:32:28,658 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['INDRA JIT KUMAR-Contact', 'DEVARAJ N S-Contact', 'PRABHA DEVI-Contact', 'VINAY RAY-TBD', 'PUNITH H C-Contact', 'VIDUSHI SANJAY GANER-TBD', 'NAVEEN  S-Contact', 'MANOJ KUMAR K A-Contact', 'MALLESHA B J-Contact', 'BIERGARTEN DEVARABEE-TBD', 'PERIYANATAKI-TBD', 'MADHU M R-Contact', 'SUHAS RAJASEKAR-Contact', 'AIRTEL-13/08/24-Bills', 'VIGHNESH K P-TBD', 'KAJRAKH-TBD', 'THE SOULED STORE-Shopping', 'BOOKMYSHOW-Fun', 'REDBUS INDIA PRIVATE-Travel', 'CINEPOLIS GOKULAM GA-Dineout']
+Invalid format in suggestion: AIRTEL-13/08/24-Bills
+2025-03-31 12:32:28,827 - INFO - transform - handleMissingTags - Updated batch 4
+2025-03-31 12:32:31,177 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['ELAN BEAUTY PARLOUR-Salon', 'SHUHAIB T P-Contact', 'MYNTRA DESIGNS PRIVA-Shopping', 'SAGAR H M-Contact', 'DECATHLON SPORTS-Shopping', 'NYKAA-Beauty', 'MANJUNATH-Contact', 'AMAZON PAY GIFT CARD-TBD', 'BALAKRISHNAN R-TBD', 'AAKRITI KESARWANI-TBD', 'KORRA SREEDEVIBAI-Contact', 'PAVAN M-TBD', 'APOLLO CLINIC MARATH-TBD', 'SMART BAZAAR  BENGAL-TBD', 'MAHESHA G-TBD', 'CHANDRA SHEKHAR R-Contact', 'EATGOOD TECHNOLO-TBD', 'RAJESH P-Contact', 'VAAYU INTERNATIONAL-Travel', 'ARPA  BANERJEE-Contact']
+2025-03-31 12:32:31,355 - INFO - transform - handleMissingTags - Updated batch 5
+2025-03-31 12:32:33,434 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['NAZEEM KHAN-Contact', 'UMARFAROOQ CHANDASHA-Contact', 'GOOGLE PLAY SER CYBS S-TBD', 'APOORVA ATUL MISHRA-Contact', 'PAARTH SWAR DAND-TBD', 'ARUN KUMAR V-TBD', 'BALU BALU-TBD', 'APOLLO PHARMACY-Groceries', 'MANJUNATHA V-TBD', 'IB BILLPAY DR-Bills', 'AIRTEL-12/09/24-Bills', 'ZEPTO-TBD', 'SUMAIYA-TBD', 'SWAMY SON OF MANJE G-Contact', 'XXXPGN KOTAK 811 OTP-TBD', 'AVANTIKAS FASHION MA-Shopping', 'SADIK PASHA-Contact', 'VARSHA NANDAKUMAR-TBD', 'GODADDY INDIA DOMAIN-TBD', 'IMRAN PASHA-Contact']
+Invalid format in suggestion: AIRTEL-12/09/24-Bills
+2025-03-31 12:32:33,585 - INFO - transform - handleMissingTags - Updated batch 6
+2025-03-31 12:32:35,899 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['BEERAPPA GARBHAGUDI-Contact', 'MADRI  AJAY-Contact', 'HUNGERBOX-Groceries', 'GANDHI-Contact', 'DUNZO-Travel', 'MANJUNATHA-Travel', 'SOMASHEKAR S-Travel', 'KUNDAN KUMAR-Contact', 'PALAK RAJESH MUNSHI-TBD', '50100442876684-TBD', 'HARISH   GOWDA-Contact', 'SHRI GAJANANA JUICE-Food', 'PAVAN MEDICALS-Groceries', 'SHARIFF AHMED-Contact', 'PRAKASH K N-Contact', 'CRAFTMATE-TBD', '416021XXXXXX6709 CHBLR020 BANGALORE-TBD', 'RANGANATHA-Contact', 'CHAKALA   VENU-Contact', 'CHIKKEGOWDA S O THAM-Contact']
+2025-03-31 12:32:36,244 - INFO - transform - handleMissingTags - Updated batch 7
+2025-03-31 12:32:38,064 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['MAGNOLIA BAKERY THE-Food', 'SANZEER HASSAN A-Contact', 'MR IRFAN BASHA-Contact', 'PRABHU V-Contact', 'BHAVANA S-Contact', 'MEGHANA S M-Contact', 'WELLBEINGNUTRITION-TBD', 'AMAZON INDIA-Shopping', 'POTAFO PRIVATE LIMIT-TBD', 'AIRTEL-12/10/24- Bills', 'PARAGON VENTURES PRI-TBD', 'COCOTTEE-Dineout', 'B MAHAMMAD RAFEEK-Contact', 'PAVITRA HOME APPLIAN-TBD', 'PATIL CHAITANYA-Contact', 'SHANTKUMAR-Contact', 'MAUNESH-Contact', 'GANGADHARA-Contact', 'SHASHIKUMAR R KO-Contact', 'BIG BASKET-Groceries']
+Invalid format in suggestion: AIRTEL-12/10/24- Bills
+2025-03-31 12:32:38,237 - INFO - transform - handleMissingTags - Updated batch 8
+2025-03-31 12:32:39,517 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['RAGHAVENDRA ANAND NA-Contact', 'MUNIRAJU-Contact', 'AMARESH-Travel', 'SHANKARALING SAGANUR-Contact', 'VAIDHESWARI SELVAM-Contact', 'KHURSAID MIYA-Contact', 'SRI GAJANANA FRUIT J-Groceries', 'PARVATHI V-Contact', 'APPLE MEDIA SERVICES-TBD', 'MR THIRUMURUGAN A-TBD', 'HPGAS-Bills', 'DINESH-Travel', 'KALAVATI-Travel', 'AMIT PARIYAR-TBD']
+2025-03-31 12:32:39,645 - INFO - transform - handleMissingTags - Updated batch 9
+2025-03-31 12:35:52,119 - INFO - routes - index - Request JSON: {'username': 'SummitTrader860'}
+2025-03-31 12:35:56,319 - INFO - extract - extract_data - Inside extract module
+/home/ubuntu/app/backend/etl/extract.py:12: ParserWarning: Skipping line 68: expected 7 fields, saw 8
+
+  csv_data = pd.read_csv(StringIO(file_content), on_bad_lines='warn')
+2025-03-31 12:35:56,323 - INFO - extract - extract_data - Total number of records - 353
+/home/ubuntu/app/backend/etl/extract.py:21: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  df['Debit Amount'] = pd.to_numeric(df['Debit Amount'], errors='coerce')
+2025-03-31 12:35:56,326 - INFO - extract - extract_data - Total number of debit records - 339
+2025-03-31 12:35:56,326 - INFO - transform - transform - Inside transform module
+2025-03-31 12:35:56,326 - INFO - transform - getProductAndMode - Extracting product and modes
+2025-03-31 12:35:56,328 - INFO - transform - transform - Finished product processing, starting with tags
+2025-03-31 12:35:56,328 - INFO - transform - transform - Adding distinct products to tag database
+2025-03-31 12:35:56,464 - INFO - routes - upload_file - File successfully processed and saved to the database
+2025-03-31 12:36:45,233 - INFO - routes - populate_expense_data - Populating Expense Data for a8ad1c182605a5c4ee42b701a598de7b
+2025-03-31 12:36:45,423 - INFO - transform - ai_trigger - Using AI for missing tags
+2025-03-31 12:36:45,423 - INFO - transform - handleMissingTags - Enabling AI Categorisation
+2025-03-31 12:36:45,424 - INFO - transform - handleMissingTags - Found 174 products with missing tags.
+2025-03-31 12:36:47,891 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['RAJALAKSHMI NANDAKU-Contact', 'NANDAKUMAR V V-Contact', '50400292038639-Investments', 'AUTOPAYSI-TAD-TBD', 'K MADHAVI-TBD', 'ICCLGROWW-TBD', 'SWIGGY-Dineout', 'BUNDL TECHNOLOGIES P-Shopping', 'RAM BHADHUR-TBD', 'VAISHNAVI NANDAKUMAR-TBD', 'SWIGGY LIMITED-Dineout', 'M FAYAZ-TBD', 'PLAYO-Fun', 'RAVI-TBD', 'SPORTSARC ENTERPRISE-TBD', 'MOUNESH M-TBD', '50400329652447-Investments', 'SUBWAY BAGMANE-Dineout', 'HEALTHY HABIT DREAM-TBD', 'GROFERS INDIA PRIVAT-Groceries']
+Invalid format in suggestion: AUTOPAYSI-TAD-TBD
+2025-03-31 12:36:48,186 - INFO - transform - handleMissingTags - Updated batch 1
+2025-03-31 12:36:50,256 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['CHAI FUSION CAFE-Food', 'SHIVAKUMARA S-Contact', 'AIRTEL-12/07/24-Bills', 'SURYANARAYANA A-Travel', 'CLINTON CHAKMA-TBD', 'R NAGABUSHAN-TBD', 'TONI AND GUY BROOKFI-Salon', 'APROZONE ENTERPRISES-TBD', 'EVERSTYLISH LIFESTYL-Travel', 'N BOOKS-TBD', 'MADHU C S-TBD', 'UBER INDIA SYSTEMS P-Travel', 'NAYAZ PASHA-TBD', 'SRI GANESH FRUIT JUI-Groceries', 'BASAVARAJU H P-TBD', 'JIOCINEMA-Entertainment', 'ELIOR BANKUET-Dineout', 'GOOGLE INDIA DIGITAL-TBD', 'JAYADEV V M-TBD', 'CHIKKEGOWDA-TBD']
+Invalid format in suggestion: AIRTEL-12/07/24-Bills
+2025-03-31 12:36:50,492 - INFO - transform - handleMissingTags - Updated batch 2
+2025-03-31 12:36:52,583 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['BLINKIT-Travel', 'NIVEDITHA S-Contact', 'PAY*EAT GOOD TEC-Dineout', 'GOOGLE PLAY-Entertainment', 'TROPELET TECHNOLOGIE-TBD', 'SHATRUDHAN MAHTO-Contact', 'MR MOHAN KUMAR KG-Contact', 'MANJE GOWDA S S-Contact', 'VIDYUT RAJWAR-Travel', 'BMRCL-Travel', 'VENKATESAN R-TBD', 'KRISHNA M H-Contact', 'KENGERI BUS TERMINAL-Travel', 'SYED MUBARAK-Contact', 'RAVI M-Contact', 'OAM INDUSTRIES I PVT-TBD', 'WISHVISH FOODS PRIVA-Groceries', 'RANJEET KUMAR-Contact', 'M N ANKARAJU-Contact', 'SYED MASOOD-Contact']
+2025-03-31 12:36:52,779 - INFO - transform - handleMissingTags - Updated batch 3
+2025-03-31 12:36:54,989 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['INDRA JIT KUMAR-Contact', 'DEVARAJ N S-Contact', 'PRABHA DEVI-Contact', 'VINAY RAY-TBD', 'PUNITH H C-Contact', 'VIDUSHI SANJAY GANER-TBD', 'NAVEEN S-Contact', 'MANOJ KUMAR K A-Contact', 'MALLESHA B J-Contact', 'BIERGARTEN DEVARABEE-TBD', 'PERIYANATAKI-Contact', 'MADHU M R-Contact', 'SUHAS RAJASEKAR-Contact', 'AIRTEL-13/08/24-Bills', 'VIGHNESH K P-TBD', 'KAJRAKH-TBD', 'THE SOULED STORE-Shopping', 'BOOKMYSHOW-Fun', 'REDBUS INDIA PRIVATE-Travel', 'CINEPOLIS GOKULAM GA-Dineout']
+Invalid format in suggestion: AIRTEL-13/08/24-Bills
+2025-03-31 12:36:55,183 - INFO - transform - handleMissingTags - Updated batch 4
+2025-03-31 12:36:58,583 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['ELAN BEAUTY PARLOUR-Salon', 'SHUHAIB T P-Contact', 'MYNTRA DESIGNS PRIVA-Shopping', 'SAGAR H M-Contact', 'DECATHLON SPORTS-Shopping', 'NYKAA-Beauty', 'MANJUNATH-Contact', 'AMAZON PAY GIFT CARD-TBD', 'BALAKRISHNAN R-TBD', 'AAKRITI KESARWANI-TBD', 'KORRA SREEDEVIBAI-Contact', 'PAVAN M-Contact', 'APOLLO CLINIC MARATH-Bills', 'SMART BAZAAR BENGAL-Shopping', 'MAHESHA G-Contact', 'CHANDRA SHEKHAR R-Contact', 'EATGOOD TECHNOLO-TBD', 'RAJESH P-Contact', 'VAAYU INTERNATIONAL-Travel', 'ARPA BANERJEE-Contact']
+2025-03-31 12:36:58,788 - INFO - transform - handleMissingTags - Updated batch 5
+2025-03-31 12:37:01,152 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['NAZEEM KHAN-Contact', 'UMARFAROOQ CHANDASHA-Contact', 'GOOGLE PLAY SER CYBS S-TBD', 'APOORVA ATUL MISHRA-Contact', 'PAARTH SWAR DAND-TBD', 'ARUN KUMAR V-TBD', 'BALU BALU-TBD', 'APOLLO PHARMACY-Groceries', 'MANJUNATHA V-TBD', 'IB BILLPAY DR-Bills', 'AIRTEL-12/09/24-Bills', 'ZEPTO-TBD', 'SUMAIYA-TBD', 'SWAMY SON OF MANJE G-Contact', 'XXXPGN KOTAK 811 OTP-TBD', 'AVANTIKAS FASHION MA-Shopping', 'SADIK PASHA-Contact', 'VARSHA NANDAKUMAR-TBD', 'GODADDY INDIA DOMAIN-TBD', 'IMRAN PASHA-Contact']
+Invalid format in suggestion: AIRTEL-12/09/24-Bills
+2025-03-31 12:37:01,387 - INFO - transform - handleMissingTags - Updated batch 6
+2025-03-31 12:37:04,359 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['BEERAPPA GARBHAGUDI-Contact', 'MADRI  AJAY-Contact', 'HUNGERBOX-Food', 'GANDHI-Contact', 'DUNZO-Travel', 'MANJUNATHA-Travel', 'SOMASHEKAR S-Travel', 'KUNDAN KUMAR-Contact', 'PALAK RAJESH MUNSHI-TBD', '50100442876684-TBD', 'HARISH   GOWDA-Contact', 'SHRI GAJANANA JUICE-Food', 'PAVAN MEDICALS-Medical', 'SHARIFF AHMED-Contact', 'PRAKASH K N-Contact', 'CRAFTMATE-TBD', '416021XXXXXX6709 CHBLR020 BANGALORE-TBD', 'RANGANATHA-Contact', 'CHAKALA   VENU-Contact', 'CHIKKEGOWDA S O THAM-Contact']
+2025-03-31 12:37:04,579 - INFO - transform - handleMissingTags - Updated batch 7
+2025-03-31 12:37:06,343 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['MAGNOLIA BAKERY THE-Food', 'SANZEER HASSAN A-Contact', 'MR IRFAN BASHA-Contact', 'PRABHU V-TBD', 'BHAVANA S-TBD', 'MEGHANA S M-TBD', 'WELLBEINGNUTRITION-TBD', 'AMAZON INDIA-Shopping', 'POTAFO PRIVATE LIMIT-TBD', 'AIRTEL-12/10/24- Bills', 'PARAGON VENTURES PRI-Investments', 'COCOTTEE-TBD', 'B MAHAMMAD RAFEEK-Contact', 'PAVITRA HOME APPLIAN-TBD', 'PATIL CHAITANYA-TBD', 'SHANTKUMAR-TBD', 'MAUNESH-TBD', 'GANGADHARA-TBD', 'SHASHIKUMAR R KO-TBD', 'BIG BASKET-Groceries']
+Invalid format in suggestion: AIRTEL-12/10/24- Bills
+2025-03-31 12:37:06,545 - INFO - transform - handleMissingTags - Updated batch 8
+2025-03-31 12:37:07,829 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['RAGHAVENDRA ANAND NA-Contact', 'MUNIRAJU-Contact', 'AMARESH-Travel', 'SHANKARALING SAGANUR-Contact', 'VAIDHESWARI SELVAM-Contact', 'KHURSAID MIYA-Contact', 'SRI GAJANANA FRUIT J-Food', 'PARVATHI V-Travel', 'APPLE MEDIA SERVICES-TBD', 'MR THIRUMURUGAN A-TBD', 'HPGAS-Bills', 'DINESH-Travel', 'KALAVATI-Groceries', 'AMIT PARIYAR-TBD']
+2025-03-31 12:37:07,956 - INFO - transform - handleMissingTags - Updated batch 9
+2025-03-31 13:03:49,624 - INFO - run - configure_logging - Logging is configured.
+2025-03-31 13:04:05,556 - INFO - routes - index - Request JSON: {'username': 'AncientMaster981'}
+2025-03-31 13:04:08,638 - INFO - extract - extract_data - Inside extract module
+/home/ubuntu/app/backend/etl/extract.py:12: ParserWarning: Skipping line 68: expected 7 fields, saw 8
+
+  csv_data = pd.read_csv(StringIO(file_content), on_bad_lines='warn')
+2025-03-31 13:04:08,664 - INFO - extract - extract_data - Total number of records - 353
+/home/ubuntu/app/backend/etl/extract.py:21: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  df['Debit Amount'] = pd.to_numeric(df['Debit Amount'], errors='coerce')
+2025-03-31 13:04:08,680 - INFO - extract - extract_data - Total number of debit records - 339
+2025-03-31 13:04:08,681 - INFO - transform - transform - Inside transform module
+2025-03-31 13:04:08,681 - INFO - transform - getProductAndMode - Extracting product and modes
+2025-03-31 13:04:08,683 - INFO - transform - transform - Finished product processing, starting with tags
+2025-03-31 13:04:08,683 - INFO - transform - transform - Adding distinct products to tag database
+2025-03-31 13:04:08,781 - INFO - routes - upload_file - File successfully processed and saved to the database
+2025-03-31 13:05:05,748 - INFO - extract - extract_product_data - Total number of products - 13
+2025-03-31 13:05:05,781 - INFO - routes - upload_tags - File successfully processed and saved to the product_tags database
+2025-03-31 13:05:14,912 - INFO - routes - populate_expense_data - Populating Expense Data for 7a163235299832e5cc2b89a145955e69
+2025-03-31 13:05:15,091 - INFO - transform - ai_trigger - AI categorization is disabled by the user.
+2025-03-31 13:05:17,440 - INFO - routes - populate_expense_data - Populating Expense Data for 7a163235299832e5cc2b89a145955e69
+2025-03-31 13:05:17,447 - INFO - transform - ai_trigger - AI categorization is disabled by the user.
+2025-03-31 13:07:57,864 - INFO - routes - index - Request JSON: {'username': 'OceanicChampion617'}
+2025-03-31 13:07:59,515 - INFO - extract - extract_data - Inside extract module
+/home/ubuntu/app/backend/etl/extract.py:12: ParserWarning: Skipping line 68: expected 7 fields, saw 8
+
+  csv_data = pd.read_csv(StringIO(file_content), on_bad_lines='warn')
+2025-03-31 13:07:59,523 - INFO - extract - extract_data - Total number of records - 353
+/home/ubuntu/app/backend/etl/extract.py:21: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  df['Debit Amount'] = pd.to_numeric(df['Debit Amount'], errors='coerce')
+2025-03-31 13:07:59,525 - INFO - extract - extract_data - Total number of debit records - 339
+2025-03-31 13:07:59,525 - INFO - transform - transform - Inside transform module
+2025-03-31 13:07:59,525 - INFO - transform - getProductAndMode - Extracting product and modes
+2025-03-31 13:07:59,532 - INFO - transform - transform - Finished product processing, starting with tags
+2025-03-31 13:07:59,537 - INFO - transform - transform - Adding distinct products to tag database
+2025-03-31 13:07:59,653 - INFO - routes - upload_file - File successfully processed and saved to the database
+2025-03-31 13:11:11,814 - INFO - routes - index - Request JSON: {'username': 'BountifulTracker934'}
+2025-03-31 13:11:12,879 - INFO - extract - extract_data - Inside extract module
+/home/ubuntu/app/backend/etl/extract.py:12: ParserWarning: Skipping line 68: expected 7 fields, saw 8
+
+  csv_data = pd.read_csv(StringIO(file_content), on_bad_lines='warn')
+2025-03-31 13:11:12,944 - INFO - extract - extract_data - Total number of records - 353
+/home/ubuntu/app/backend/etl/extract.py:21: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  df['Debit Amount'] = pd.to_numeric(df['Debit Amount'], errors='coerce')
+2025-03-31 13:11:12,970 - INFO - extract - extract_data - Total number of debit records - 339
+2025-03-31 13:11:12,970 - INFO - transform - transform - Inside transform module
+2025-03-31 13:11:12,970 - INFO - transform - getProductAndMode - Extracting product and modes
+2025-03-31 13:11:12,973 - INFO - transform - transform - Finished product processing, starting with tags
+2025-03-31 13:11:12,973 - INFO - transform - transform - Adding distinct products to tag database
+2025-03-31 13:11:13,178 - INFO - routes - upload_file - File successfully processed and saved to the database
+2025-03-31 13:12:40,353 - INFO - run - configure_logging - Logging is configured.
+2025-03-31 13:12:49,441 - INFO - routes - index - Request JSON: {'username': 'CedarPioneer233'}
+2025-03-31 13:12:51,520 - INFO - extract - extract_data - Inside extract module
+/home/ubuntu/app/backend/etl/extract.py:12: ParserWarning: Skipping line 68: expected 7 fields, saw 8
+
+  csv_data = pd.read_csv(StringIO(file_content), on_bad_lines='warn')
+2025-03-31 13:12:51,526 - INFO - extract - extract_data - Total number of records - 353
+/home/ubuntu/app/backend/etl/extract.py:21: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  df['Debit Amount'] = pd.to_numeric(df['Debit Amount'], errors='coerce')
+2025-03-31 13:12:51,528 - INFO - extract - extract_data - Total number of debit records - 339
+2025-03-31 13:12:51,528 - INFO - transform - transform - Inside transform module
+2025-03-31 13:12:51,528 - INFO - transform - getProductAndMode - Extracting product and modes
+2025-03-31 13:12:51,530 - INFO - transform - transform - Finished product processing, starting with tags
+2025-03-31 13:12:51,530 - INFO - transform - transform - Adding distinct products to tag database
+2025-03-31 13:12:51,707 - INFO - routes - upload_file - File successfully processed and saved to the database
+2025-03-31 13:15:40,306 - INFO - routes - index - Request JSON: {'username': 'StoneMerchant656'}
+2025-03-31 13:15:42,008 - INFO - extract - extract_data - Inside extract module
+/home/ubuntu/app/backend/etl/extract.py:12: ParserWarning: Skipping line 68: expected 7 fields, saw 8
+
+  csv_data = pd.read_csv(StringIO(file_content), on_bad_lines='warn')
+2025-03-31 13:15:42,083 - INFO - extract - extract_data - Total number of records - 353
+/home/ubuntu/app/backend/etl/extract.py:21: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  df['Debit Amount'] = pd.to_numeric(df['Debit Amount'], errors='coerce')
+2025-03-31 13:15:42,118 - INFO - extract - extract_data - Total number of debit records - 339
+2025-03-31 13:15:42,124 - INFO - transform - transform - Inside transform module
+2025-03-31 13:15:42,125 - INFO - transform - getProductAndMode - Extracting product and modes
+2025-03-31 13:15:42,129 - INFO - transform - transform - Finished product processing, starting with tags
+2025-03-31 13:15:42,129 - INFO - transform - transform - Adding distinct products to tag database
+2025-03-31 13:15:42,289 - INFO - routes - upload_file - File successfully processed and saved to the database
+2025-03-31 13:15:43,580 - INFO - extract - extract_product_data - Total number of products - 13
+2025-03-31 13:15:43,697 - INFO - routes - upload_tags - File successfully processed and saved to the product_tags database
+2025-03-31 13:15:56,342 - INFO - routes - index - Request JSON: {'username': 'AmberPioneer742'}
+2025-03-31 13:15:58,246 - INFO - extract - extract_data - Inside extract module
+/home/ubuntu/app/backend/etl/extract.py:12: ParserWarning: Skipping line 68: expected 7 fields, saw 8
+
+  csv_data = pd.read_csv(StringIO(file_content), on_bad_lines='warn')
+2025-03-31 13:15:58,249 - INFO - extract - extract_data - Total number of records - 353
+/home/ubuntu/app/backend/etl/extract.py:21: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  df['Debit Amount'] = pd.to_numeric(df['Debit Amount'], errors='coerce')
+2025-03-31 13:15:58,250 - INFO - extract - extract_data - Total number of debit records - 339
+2025-03-31 13:15:58,251 - INFO - transform - transform - Inside transform module
+2025-03-31 13:15:58,251 - INFO - transform - getProductAndMode - Extracting product and modes
+2025-03-31 13:15:58,252 - INFO - transform - transform - Finished product processing, starting with tags
+2025-03-31 13:15:58,252 - INFO - transform - transform - Adding distinct products to tag database
+2025-03-31 13:15:58,352 - INFO - routes - upload_file - File successfully processed and saved to the database
+2025-03-31 13:16:06,639 - INFO - routes - populate_expense_data - Populating Expense Data for cb6aa9d2ea1c4eaa25892a4f7b0fa41c
+2025-03-31 13:16:07,567 - INFO - transform - ai_trigger - Using AI for missing tags
+2025-03-31 13:16:07,567 - INFO - transform - handleMissingTags - Enabling AI Categorisation
+2025-03-31 13:16:07,567 - INFO - transform - handleMissingTags - Found 169 products with missing tags.
+2025-03-31 13:16:10,569 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['NANDAKUMAR V V-Contact', '50400292038639-Contact', 'AUTOPAYSI-TAD-TBD', 'K MADHAVI-TBD', 'ICCLGROWW-TBD', 'BUNDL TECHNOLOGIES P-Shopping', 'VAISHNAVI NANDAKUMAR-Contact', 'SWIGGY LIMITED-Dineout', 'M FAYAZ-TBD', 'PLAYO-Fun', 'RAVI-TBD', 'SPORTSARC ENTERPRISE-TBD', 'MOUNESH M-TBD', '50400329652447-Contact', 'SUBWAY BAGMANE-Dineout', 'HEALTHY HABIT DREAM-TBD', 'GROFERS INDIA PRIVAT-Groceries', 'SHIVAKUMARA S-TBD', 'AIRTEL-12/07/24-Bills', 'SURYANARAYANA A-Travel']
+Invalid format in suggestion: AUTOPAYSI-TAD-TBD
+Invalid format in suggestion: AIRTEL-12/07/24-Bills
+2025-03-31 13:16:10,802 - INFO - transform - handleMissingTags - Updated batch 1
+2025-03-31 13:16:12,816 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['CLINTON CHAKMA-Contact', 'R NAGABUSHAN-Contact', 'TONI AND GUY BROOKFI-Salon', 'APROZONE ENTERPRISES-TBD', 'EVERSTYLISH LIFESTYL-Travel', 'N BOOKS-TBD', 'MADHU C S-Contact', 'UBER INDIA SYSTEMS P-Travel', 'NAYAZ PASHA-TBD', 'SRI GANESH FRUIT JUI-Groceries', 'BASAVARAJU H P-TBD', 'JIOCINEMA-Fun', 'ELIOR BANKUET-Dineout', 'GOOGLE INDIA DIGITAL-TBD', 'JAYADEV V M-TBD', 'CHIKKEGOWDA-Contact', 'NIVEDITHA S-TBD', 'PAY*EAT GOOD TEC-Dineout', 'GOOGLE PLAY-TBD', 'TROPELET TECHNOLOGIE-TBD']
+2025-03-31 13:16:13,059 - INFO - transform - handleMissingTags - Updated batch 2
+2025-03-31 13:16:15,064 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['SHATRUDHAN MAHTO-Contact', 'MR MOHAN KUMAR KG-Contact', 'MANJE GOWDA S S-Contact', 'VIDYUT RAJWAR-Travel', 'BMRCL-Travel', 'VENKATESAN R-TBD', 'KRISHNA M H-Travel', 'KENGERI BUS TERMINAL-Travel', 'SYED MUBARAK-Travel', 'RAVI M-Travel', 'OAM INDUSTRIES I PVT-TBD', 'WISHVISH FOODS PRIVA-TBD', 'RANJEET KUMAR-Contact', 'M N ANKARAJU-Contact', 'SYED MASOOD-Contact', 'INDRA JIT KUMAR-Contact', 'DEVARAJ N S-Contact', 'PRABHA DEVI-Contact', 'VINAY RAY-TBD', 'PUNITH H C-Travel']
+2025-03-31 13:16:15,274 - INFO - transform - handleMissingTags - Updated batch 3
+2025-03-31 13:16:17,247 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['VIDUSHI SANJAY GANER-Contact', 'NAVEEN  S-Contact', 'MANOJ KUMAR K A-Contact', 'MALLESHA B J-Contact', 'BIERGARTEN DEVARABEE-Fun', 'PERIYANATAKI-Food', 'MADHU M R-Contact', 'SUHAS RAJASEKAR-Contact', 'AIRTEL-13/08/24-Bills', 'VIGHNESH K P-Investments', 'KAJRAKH-Food', 'THE SOULED STORE-Shopping', 'BOOKMYSHOW-Fun', 'REDBUS INDIA PRIVATE-Travel', 'CINEPOLIS GOKULAM GA-Dineout', 'ELAN BEAUTY PARLOUR-Salon', 'SHUHAIB T P-Contact', 'MYNTRA DESIGNS PRIVA-Shopping', 'SAGAR H M-Contact', 'DECATHLON SPORTS-Shopping']
+Invalid format in suggestion: AIRTEL-13/08/24-Bills
+2025-03-31 13:16:17,502 - INFO - transform - handleMissingTags - Updated batch 4
+2025-03-31 13:16:20,832 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['NYKAA-Beauty', 'MANJUNATH-Contact', 'AMAZON PAY GIFT CARD-Shopping', 'BALAKRISHNAN R-Groceries', 'AAKRITI KESARWANI-Salon', 'KORRA SREEDEVIBAI-Contact', 'PAVAN M-Groceries', 'APOLLO CLINIC MARATH-Medical', 'SMART BAZAAR BENGAL-Groceries', 'MAHESHA G-Groceries', 'CHANDRA SHEKHAR R-Groceries', 'EATGOOD TECHNOLO-Food', 'RAJESH P-Groceries', 'VAAYU INTERNATIONAL-Travel', 'ARPA BANERJEE-Groceries', 'NAZEEM KHAN-Groceries', 'UMARFAROOQ CHANDASHA-Investments', 'GOOGLE PLAY SER CYBS S-Groceries', 'APOORVA ATUL MISHRA-Groceries', 'PAARTH SWAR DAND-TBD']
+2025-03-31 13:16:21,094 - INFO - transform - handleMissingTags - Updated batch 5
+2025-03-31 13:16:25,301 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['ARUN KUMAR V-Contact', 'BALU  BALU-Contact', 'APOLLO PHARMACY-Groceries', 'MANJUNATHA  V-Contact', 'IB BILLPAY DR-Bills', 'AIRTEL-12/09/24-Bills', 'ZEPTO-Shopping', 'SUMAIYA-Contact', 'SWAMY SON OF MANJE G-Contact', 'XXXPGN KOTAK 811 OTP-Contact', 'AVANTIKAS FASHION MA-Shopping', 'SADIK PASHA-Contact', 'VARSHA NANDAKUMAR-Contact', 'GODADDY INDIA DOMAIN-TBD', 'IMRAN  PASHA-Contact', 'BEERAPPA GARBHAGUDI-Dineout', 'MADRI  AJAY-Contact', 'HUNGERBOX-Food', 'GANDHI-Contact', 'DUNZO-Travel']
+Invalid format in suggestion: AIRTEL-12/09/24-Bills
+2025-03-31 13:16:25,581 - INFO - transform - handleMissingTags - Updated batch 6
+2025-03-31 13:16:27,956 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['MANJUNATHA-Contact', 'SOMASHEKAR S-Contact', 'KUNDAN KUMAR-Travel', 'PALAK RAJESH MUNSHI-TBD', '50100442876684-TBD', 'HARISH GOWDA-Travel', 'SHRI GAJANANA JUICE-Groceries', 'PAVAN MEDICALS-Groceries', 'SHARIFF AHMED-Travel', 'PRAKASH K N-Travel', 'CRAFTMATE-TBD', '416021XXXXXX6709 CHBLR020 BANGALORE-TBD', 'RANGANATHA-Travel', 'CHAKALA VENU-Travel', 'CHIKKEGOWDA S O THAM-Travel', 'MAGNOLIA BAKERY THE-Food', 'SANZEER HASSAN A-Travel', 'MR IRFAN BASHA-Travel', 'PRABHU V-Travel', 'BHAVANA S-Travel']
+2025-03-31 13:16:28,183 - INFO - transform - handleMissingTags - Updated batch 7
+2025-03-31 13:16:30,147 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['MEGHANA S M-Contact', 'WELLBEINGNUTRITION-TBD', 'AMAZON INDIA-Shopping', 'POTAFO PRIVATE LIMIT-TBD', 'AIRTEL-12/10/24-Bills', 'PARAGON VENTURES PRI-TBD', 'COCOTTEE-Food', 'B MAHAMMAD RAFEEK-Contact', 'PAVITRA HOME APPLIAN-TBD', 'PATIL CHAITANYA-Contact', 'SHANTKUMAR-Contact', 'MAUNESH-Contact', 'GANGADHARA-Contact', 'SHASHIKUMAR R KO-Contact', 'BIG BASKET-Groceries', 'RAGHAVENDRA ANAND NA-Contact', 'MUNIRAJU-Contact', 'AMARESH-Contact', 'SHANKARALING SAGANUR-Contact', 'VAIDHESWARI SELVAM-Contact']
+Invalid format in suggestion: AIRTEL-12/10/24-Bills
+2025-03-31 13:16:30,375 - INFO - transform - handleMissingTags - Updated batch 8
+2025-03-31 13:16:31,666 - INFO - ai_service - get_tag_suggestions - AI classified batch: ['KHURSAID MIYA-Contact', 'SRI GAJANANA FRUIT J-Groceries', 'PARVATHI V-Contact', 'APPLE MEDIA SERVICES-TBD', 'MR THIRUMURUGAN A-TBD', 'HPGAS-Bills', 'DINESH-Contact', 'KALAVATI-Groceries', 'AMIT PARIYAR-TBD']
+2025-03-31 13:16:31,750 - INFO - transform - handleMissingTags - Updated batch 9
+2025-03-31 13:17:28,179 - INFO - routes - update_product - Updating main expense table
+2025-03-31 13:17:28,199 - INFO - routes - update_product - Creating a new product mapping with RAJI - Mother
+2025-03-31 13:17:39,838 - INFO - routes - update_product - Updating all product names from NANDAKUMAR V V to  NANDAKUMAR
+2025-03-31 15:19:40,335 - INFO - routes - index - Request JSON: {'username': 'EarthenVoyager53'}
+2025-03-31 15:19:41,539 - INFO - extract - extract_data - Inside extract module
+/home/ubuntu/app/backend/etl/extract.py:12: ParserWarning: Skipping line 68: expected 7 fields, saw 8
+
+  csv_data = pd.read_csv(StringIO(file_content), on_bad_lines='warn')
+2025-03-31 15:19:41,542 - INFO - extract - extract_data - Total number of records - 353
+/home/ubuntu/app/backend/etl/extract.py:21: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  df['Debit Amount'] = pd.to_numeric(df['Debit Amount'], errors='coerce')
+2025-03-31 15:19:41,544 - INFO - extract - extract_data - Total number of debit records - 339
+2025-03-31 15:19:41,544 - INFO - transform - transform - Inside transform module
+2025-03-31 15:19:41,544 - INFO - transform - getProductAndMode - Extracting product and modes
+2025-03-31 15:19:41,545 - INFO - transform - transform - Finished product processing, starting with tags
+2025-03-31 15:19:41,546 - INFO - transform - transform - Adding distinct products to tag database
+2025-03-31 15:19:41,649 - INFO - routes - upload_file - File successfully processed and saved to the database
+2025-03-31 15:19:42,951 - INFO - extract - extract_product_data - Total number of products - 13
+2025-03-31 15:19:42,975 - INFO - routes - upload_tags - File successfully processed and saved to the product_tags database
+2025-03-31 15:19:45,851 - INFO - routes - populate_expense_data - Populating Expense Data for dfc54e07824d790de79687c75e4b99c1
+2025-03-31 15:19:46,013 - INFO - transform - ai_trigger - AI categorization is disabled by the user.
+2025-03-31 15:20:05,695 - INFO - routes - index - Request JSON: {'username': 'WildHero409'}
+2025-03-31 15:20:07,102 - INFO - extract - extract_data - Inside extract module
+/home/ubuntu/app/backend/etl/extract.py:12: ParserWarning: Skipping line 68: expected 7 fields, saw 8
+
+  csv_data = pd.read_csv(StringIO(file_content), on_bad_lines='warn')
+2025-03-31 15:20:07,106 - INFO - extract - extract_data - Total number of records - 353
+/home/ubuntu/app/backend/etl/extract.py:21: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  df['Debit Amount'] = pd.to_numeric(df['Debit Amount'], errors='coerce')
+2025-03-31 15:20:07,111 - INFO - extract - extract_data - Total number of debit records - 339
+2025-03-31 15:20:07,112 - INFO - transform - transform - Inside transform module
+2025-03-31 15:20:07,112 - INFO - transform - getProductAndMode - Extracting product and modes
+2025-03-31 15:20:07,115 - INFO - transform - transform - Finished product processing, starting with tags
+2025-03-31 15:20:07,115 - INFO - transform - transform - Adding distinct products to tag database
+2025-03-31 15:20:07,238 - INFO - routes - upload_file - File successfully processed and saved to the database
+2025-03-31 15:20:08,893 - INFO - extract - extract_product_data - Total number of products - 13
+2025-03-31 15:20:08,920 - INFO - routes - upload_tags - File successfully processed and saved to the product_tags database
+2025-03-31 15:20:11,775 - INFO - routes - populate_expense_data - Populating Expense Data for 05e04404391544202f078220030adb0e
+2025-03-31 15:20:11,932 - INFO - transform - ai_trigger - AI categorization is disabled by the user.
+2025-03-31 15:20:44,913 - INFO - routes - index - Request JSON: {'username': 'AncientKnight31'}
+2025-03-31 15:20:46,245 - INFO - extract - extract_data - Inside extract module
+/home/ubuntu/app/backend/etl/extract.py:12: ParserWarning: Skipping line 68: expected 7 fields, saw 8
+
+  csv_data = pd.read_csv(StringIO(file_content), on_bad_lines='warn')
+2025-03-31 15:20:46,249 - INFO - extract - extract_data - Total number of records - 353
+/home/ubuntu/app/backend/etl/extract.py:21: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  df['Debit Amount'] = pd.to_numeric(df['Debit Amount'], errors='coerce')
+2025-03-31 15:20:46,251 - INFO - extract - extract_data - Total number of debit records - 339
+2025-03-31 15:20:46,251 - INFO - transform - transform - Inside transform module
+2025-03-31 15:20:46,251 - INFO - transform - getProductAndMode - Extracting product and modes
+2025-03-31 15:20:46,252 - INFO - transform - transform - Finished product processing, starting with tags
+2025-03-31 15:20:46,252 - INFO - transform - transform - Adding distinct products to tag database
+2025-03-31 15:20:46,369 - INFO - routes - upload_file - File successfully processed and saved to the database
+2025-03-31 15:20:47,458 - INFO - extract - extract_product_data - Total number of products - 13
+2025-03-31 15:20:47,501 - INFO - routes - upload_tags - File successfully processed and saved to the product_tags database
+2025-03-31 15:20:50,542 - INFO - routes - populate_expense_data - Populating Expense Data for 6fd0f4227e3cf1095598a5fb25f34c62
+2025-03-31 15:20:50,748 - INFO - transform - ai_trigger - AI categorization is disabled by the user.
+2025-03-31 15:22:13,580 - INFO - routes - index - Request JSON: {'username': 'BountifulExplorer408'}
+2025-03-31 15:22:21,027 - INFO - extract - extract_data - Inside extract module
+/home/ubuntu/app/backend/etl/extract.py:12: ParserWarning: Skipping line 68: expected 7 fields, saw 8
+
+  csv_data = pd.read_csv(StringIO(file_content), on_bad_lines='warn')
+2025-03-31 15:22:21,029 - INFO - extract - extract_data - Total number of records - 229
+/home/ubuntu/app/backend/etl/extract.py:21: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  df['Debit Amount'] = pd.to_numeric(df['Debit Amount'], errors='coerce')
+2025-03-31 15:22:21,031 - INFO - extract - extract_data - Total number of debit records - 220
+2025-03-31 15:22:21,031 - INFO - transform - transform - Inside transform module
+2025-03-31 15:22:21,031 - INFO - transform - getProductAndMode - Extracting product and modes
+2025-03-31 15:22:21,032 - INFO - transform - transform - Finished product processing, starting with tags
+2025-03-31 15:22:21,032 - INFO - transform - transform - Adding distinct products to tag database
+2025-03-31 15:22:21,122 - INFO - routes - upload_file - File successfully processed and saved to the database
+2025-03-31 15:22:22,941 - INFO - extract - extract_product_data - Total number of products - 13
+2025-03-31 15:22:22,966 - INFO - routes - upload_tags - File successfully processed and saved to the product_tags database
+2025-03-31 15:22:25,559 - INFO - routes - populate_expense_data - Populating Expense Data for c67609ea1853ce826eb896aa8ad15430
+2025-03-31 15:22:25,671 - INFO - transform - ai_trigger - AI categorization is disabled by the user.
+2025-03-31 15:23:41,391 - INFO - routes - index - Request JSON: {'username': 'GaiaHunter954'}
+2025-03-31 15:23:44,572 - INFO - extract - extract_data - Inside extract module
+2025-03-31 15:23:44,574 - INFO - extract - extract_data - Total number of records - 18
+/home/ubuntu/app/backend/etl/extract.py:21: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  df['Debit Amount'] = pd.to_numeric(df['Debit Amount'], errors='coerce')
+2025-03-31 15:23:44,576 - INFO - extract - extract_data - Total number of debit records - 18
+2025-03-31 15:23:44,576 - INFO - transform - transform - Inside transform module
+2025-03-31 15:23:44,576 - INFO - transform - getProductAndMode - Extracting product and modes
+2025-03-31 15:23:44,577 - INFO - transform - transform - Finished product processing, starting with tags
+2025-03-31 15:23:44,577 - INFO - transform - transform - Adding distinct products to tag database
+2025-03-31 15:23:44,610 - INFO - routes - upload_file - File successfully processed and saved to the database
+2025-03-31 15:23:45,913 - INFO - extract - extract_product_data - Total number of products - 13
+2025-03-31 15:23:45,933 - INFO - routes - upload_tags - File successfully processed and saved to the product_tags database
+2025-03-31 15:23:48,700 - INFO - routes - populate_expense_data - Populating Expense Data for 1a895a35380a73a96d5ca3c9a6bbdea4
+2025-03-31 15:23:48,759 - INFO - transform - ai_trigger - AI categorization is disabled by the user.
+2025-03-31 15:30:50,443 - INFO - routes - index - Request JSON: {'username': 'AmberTrader579'}
+2025-03-31 15:30:53,340 - INFO - extract - extract_data - Inside extract module
+2025-03-31 15:30:53,344 - INFO - extract - extract_data - Total number of records - 1
+/home/ubuntu/app/backend/etl/extract.py:21: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  df['Debit Amount'] = pd.to_numeric(df['Debit Amount'], errors='coerce')
+2025-03-31 15:30:53,346 - INFO - extract - extract_data - Total number of debit records - 1
+2025-03-31 15:30:53,346 - INFO - transform - transform - Inside transform module
+2025-03-31 15:30:53,346 - INFO - transform - getProductAndMode - Extracting product and modes
+2025-03-31 15:30:53,347 - INFO - transform - transform - Finished product processing, starting with tags
+2025-03-31 15:30:53,347 - INFO - transform - transform - Adding distinct products to tag database
+2025-03-31 15:30:53,374 - INFO - routes - upload_file - File successfully processed and saved to the database
+2025-03-31 15:30:58,847 - INFO - routes - populate_expense_data - Populating Expense Data for 289224aafbd98b2b0aa5dc20621034c1
+2025-03-31 15:30:58,874 - INFO - transform - ai_trigger - AI categorization is disabled by the user.

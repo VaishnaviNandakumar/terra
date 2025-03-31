@@ -86,7 +86,7 @@ export async function loadSampleData(sessionId: string): Promise<UploadResponse>
 
 export async function loadSampleTagData(sessionId: string): Promise<UploadResponse> {
   try {
-    const response = await fetch(`${API_BASE_URL}//upload_tags?sample_file=true&sessionId=${sessionId}`, {
+    const response = await fetch(`${API_BASE_URL}/upload_tags?sample_file=true&sessionId=${sessionId}`, {
       method: 'GET',
     });
     
@@ -122,12 +122,13 @@ export async function createSession(username: string) {
 
 export const uploadTagMapping = async (file: File, sessionId: string) => {
   const formData = new FormData();
-  formData.append('pdtFile', file);
+  formData.append('file', file);
   formData.append('sessionId', sessionId);
 
-  const response = await fetch(`${API_BASE_URL}/upload_tags?sample_file=true&sessionId=${sessionId}`, {
+  const response = await fetch(`${API_BASE_URL}/upload_tags`, {
     method: 'POST',
     body: formData,
+    credentials: 'include'
   });
 
   if (!response.ok) {

@@ -83,10 +83,10 @@ def upload_tags():
                 file_content = file.read()
         else:
             sessionId = request.form.get('sessionId')
-            if 'pdtFile' not in request.files:
-                current_app.logger.info('No file uploaded')
+            file = request.files['file']  # Read file from form-data
+            if not file:
+                current_app.logger.info(f"Request files: {request.files.keys()}")  # Debugging
                 return jsonify({'error': 'No File Uploaded'}), 400
-            file = request.files['pdtFile']
             error = validate_file(file)
             if error:
                 return jsonify({'error': error[0]}), error[1]
@@ -241,5 +241,6 @@ def update_product():
     except Exception as e:
         current_app.logger.info(e)
         return jsonify({'error': str(e)}), 500
+
 
 

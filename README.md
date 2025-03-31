@@ -55,7 +55,28 @@ The primary data source is bank statements formatted in CSV, structured with the
 ## Data Modeling
 <img src="https://github.com/user-attachments/assets/95becb30-13be-4c59-834e-f7341cdd6c31" alt="Terra-ER drawio" width="50%">
 
+## App Screens 
+<img width="800" alt="image" src="https://github.com/user-attachments/assets/41949ab4-cdfe-4924-8d6b-613cd9246fb4" />
+
+<img width="800" alt="image" src="https://github.com/user-attachments/assets/39f5e813-c31d-4265-86ff-6ddb1abe22e3" />
+
+<img width="800" alt="image" src="https://github.com/user-attachments/assets/dd25b897-0937-46ab-b9d3-bb710874a2d6" />
+
+<img width="800" alt="image" src="https://github.com/user-attachments/assets/29c0d4b6-9dbb-493e-9477-d8b592c97a52" />
+<img width="800" alt="image" src="https://github.com/user-attachments/assets/95820243-7e1a-48c7-b866-ed579b066fa7" />
+
+
+
 ## Data Visualisation 
+<img width="1440" alt="image" src="https://github.com/user-attachments/assets/d94c1bec-d401-43e1-8bf2-592b02f55dc3" />
+<img width="1439" alt="image" src="https://github.com/user-attachments/assets/3c99ab03-281f-473f-8c20-eadf1096becb" />
+<img width="1436" alt="image" src="https://github.com/user-attachments/assets/6db3c3cf-04d1-4702-9118-7742ed91f108" />
+<img width="1432" alt="image" src="https://github.com/user-attachments/assets/29ea344b-3e68-4dc4-af4a-59d8e883642d" />
+<img width="1439" alt="image" src="https://github.com/user-attachments/assets/e2813dca-8992-4446-b961-6c195f94569f" />
+<img width="1440" alt="image" src="https://github.com/user-attachments/assets/e4942542-8177-4c2d-a20c-a77ae9afc85d" />
+
+
+
 
 ### Schema Design
 

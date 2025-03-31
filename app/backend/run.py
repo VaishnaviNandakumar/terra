@@ -14,7 +14,7 @@ app.config.from_object(Config)
 db.init_app(app)
 
 # Register blueprint
-app.register_blueprint(main, url_prefix='/')
+app.register_blueprint(main, url_prefix='/api')
 app.secret_key = 'your_secret_key'  # Required for session handling
 CORS(app, supports_credentials=True)
 
@@ -55,4 +55,4 @@ configure_logging(app)
 
 # Run the Flask application
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=8000, debug=True)

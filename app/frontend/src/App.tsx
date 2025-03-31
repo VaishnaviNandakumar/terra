@@ -10,6 +10,7 @@ import type { UploadState } from './types';
 import { environment } from './config/environment';
 import ErrorBoundary from './components/ErrorBoundary';
 
+
 const API_BASE_URL = environment.API_BASE_URL + '/api';
 
 const STEPS = [ 
