@@ -341,7 +341,7 @@ function App() {
           username={state.username}
         />
         
-        <main className="pt-4 bg-[#000000] text-white">
+        <main className=" bg-[#000000] text-white">
           <Routes>
             <Route 
               path="/" 

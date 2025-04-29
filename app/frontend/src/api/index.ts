@@ -12,8 +12,9 @@ const API_BASE_URL = environment.API_BASE_URL + '/api';
 
 const adjectives = [
   'Verdant', 'Rustic', 'Earthen', 'Rooted', 'Wild', 'Ancient', 'Sacred', 'Bountiful',
-  'Flourishing', 'Lush', 'Fertile', 'Blooming', 'Majestic', 'Evergreen', 'Amber',
-  'Cedar', 'Clay', 'Stone', 'Mossy', 'Willow', 'Forest', 'River', 'Oceanic',
+  'Flourishing', 'Blooming', 'Majestic',   'Prime', 'Safe', 'Wise', 'True', 'Rich', 'Firm', 'Bold', 'Clear',
+  'Neat', 'Fast', 'Just', 'Fair', 'Pure', 'Smart', 'Lean',
+  'Calm', 'Sure', 'Vast', 'Real', 'Noble', 'Cedar', 'Clay', 'Stone', 'Mossy', 'Willow', 'Forest', 'River', 'Oceanic',
   'Mountain', 'Summit', 'Valley', 'Dawn', 'Dusk', 'Terra', 'Gaia'
 ];
 
