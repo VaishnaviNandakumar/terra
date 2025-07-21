@@ -1,0 +1,54 @@
+Product,Tag
+ZOMATO,Food & Dining
+SWIGGY,Food & Dining
+UBER,Transportation
+OLA,Transportation
+AMAZON,Shopping
+FLIPKART,Shopping
+NETFLIX,Entertainment
+SPOTIFY,Entertainment
+STARBUCKS,Food & Dining
+MCDONALDS,Food & Dining
+SHELL,Fuel
+HP PETROL,Fuel
+WALMART,Groceries
+BIG BAZAAR,Groceries
+PAYTM,Digital Payments
+PHONEPE,Digital Payments
+AIRTEL,Utilities
+JIO,Utilities
+HDFC BANK,Banking
+ICICI BANK,Banking
+APOLLO PHARMACY,Healthcare
+MEDPLUS,Healthcare
+DOMINOS,Food & Dining
+PIZZA HUT,Food & Dining
+BOOK MY SHOW,Entertainment
+PVR CINEMAS,Entertainment
+MYNTRA,Shopping
+AJIO,Shopping
+NYKAA,Beauty & Personal Care
+LENSKART,Shopping
+ZEPTO,Groceries
+BLINKIT,Groceries
+DUNZO,Delivery Services
+RAPIDO,Transportation
+METRO,Transportation
+IRCTC,Travel
+MAKEMYTRIP,Travel
+GOIBIBO,Travel
+HOTSTAR,Entertainment
+PRIME VIDEO,Entertainment
+YOUTUBE PREMIUM,Entertainment
+GOOGLE PLAY,Digital Services
+APP STORE,Digital Services
+STEAM,Gaming
+EPIC GAMES,Gaming
+LINKEDIN PREMIUM,Professional Services
+ZOOM,Professional Services
+MICROSOFT OFFICE,Software
+ADOBE,Software
+CANVA,Software
+GITHUB,Software
+AWS,Cloud Services
+GOOGLE CLOUD,Cloud Services
