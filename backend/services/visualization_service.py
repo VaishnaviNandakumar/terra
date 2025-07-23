@@ -3,12 +3,10 @@ import sqlite3
 import os
 import uuid
 from datetime import datetime
-import openai
-import json
-import re
+from .ai_service import ai_service
+
 
 class VisualizationService:
-
 
     def getProductAndMode(self, df):
         product_values = []
@@ -104,12 +102,11 @@ class VisualizationService:
             print(e)
             raise RuntimeError(f"Error consolidating transaction files: {e}")
 
-
-#Get transaction from every file    
-#Derive a new column product, tag, mode,
-#Get only debit values join with the existing mappings
-
-        
+    def categorize_transactions(self,empty_products=None):
+        try:
+            return ai_service.get_tag_suggestions(empty_products)
+        except Exception as e:
+            print(f"Exception - {e}")
 
 # Create global instance
 visualization_service = VisualizationService()

@@ -3,7 +3,6 @@ from db.db_handler import DatabaseService
 from flask_cors import CORS
 import os
 from werkzeug.utils import secure_filename
-from services.pdf_processor import PDFProcessor
 from services.file_loader import FileLoader
 from utils.response_helper import success_response, error_response
 import numpy as np
@@ -207,6 +206,7 @@ def save_product_mappings():
         
         # Save mappings using visualization service
         result = db_service.save_product_tags(mappings,  session_id)
+        print("RESULT ", str(result))
         return success_response({
             'message': f'Successfully saved {len(mappings)} product mappings',
             'total_saved': result['total_saved']
@@ -231,6 +231,7 @@ def consolidate_files():
         product_tag_mapping = db_service.get_product_tag_mapping(session_id)
         # Consolidate files using visualization service
         result = visualization_service.consolidate_transaction_files(files_data, product_tag_mapping, session_id)
+        db_service.save_transaction_product_tags(result['data'])
         db_service.save_transactions(result['data'])
         
         return success_response({
@@ -262,11 +263,35 @@ def download_consolidate_files():
         
         return success_response({
             'message': 'Files consolidated successfully',
-            # 'consolidated_table_id': result['table_id'],
-            # 'total_transactions': result['total_transactions'],
-            # 'files_processed': result['files_processed']
         })
         
     except Exception as e:
         return error_response(f'Failed to consolidate files: {str(e)}', 500)
+    
+@main.route('/categorize-expenses', methods=['POST'])
+def categorize_expenses():
+    """Map product tags to transaction data with optional AI categorization"""
+    try:
+        data = request.get_json()
+        
+        if not data or 'session_id' not in data:
+            return error_response('Data and session_id are required', 400)
+        
+        use_ai = data.get('use_ai', False)
+        session_id = data['session_id']
+    
+        if use_ai:
+            session_id = data['session_id']
+            empty_products = db_service.get_empty_products(session_id)
+            result = visualization_service.categorize_transactions(
+                empty_products = empty_products
+            )
+            db_service.update_product_tags_in_db(result, session_id)
+        
+        return success_response({
+            'message': 'Expense categorization completed',
+        })
+        
+    except Exception as e:
+        return error_response(f'Failed to categorize expenses: {str(e)}', 500)
 

@@ -6,11 +6,12 @@ from io import StringIO
 from typing import List
 import os
 import PyPDF2
+from config import Config
 
 class PDFProcessor:
     def __init__(self):
         # Set your API key from environment variable for security
-        openai.api_key = os.getenv('OPENAI_API_KEY', '')
+        openai.api_key = Config.OPENAI_API_KEY
 
     def load(self, file_path, password):
         extracted_blocks = self.extract_transaction_blocks(file_path, password)
@@ -109,7 +110,6 @@ class PDFProcessor:
 
         for i in range(0, len(lines), batch_size):
             batch = lines[i:i + batch_size]
-            print(f"Batch type: {type(batch)} | Contents: {batch}")
 
             prompt = f"""
             You are an assistant extracting valid bank transactions from raw text.
@@ -134,8 +134,11 @@ class PDFProcessor:
 
             If "Cr" is present, treat as Credit; else, Debit
 
-            Respond only in CSV with this header:
-            Date,Description,Debit,Credit
+            ⚠️ Do not add an extra comma at the end of any line.
+            Each line must have exactly 3 commas (4 fields total).
+
+            Respond only in CSV strictly with this header containing 4 columns:
+            Date,Narration,Debit Amount,Credit Amount
 
             Transaction lines:
             """ + "\n".join(f"{j+1}. {line}" for j, line in enumerate(batch))
@@ -147,7 +150,15 @@ class PDFProcessor:
                     temperature=0
                 )
                 result_text = response['choices'][0]['message']['content'].strip()
+                cleaned_text = []
+                for line in result_text.splitlines():
+                    if line.count(',') > 3 and line.endswith(','):
+                        cleaned_text.append(line.rstrip(','))
+                    else:
+                        cleaned_text.append(line)
 
+                result_text = "\n".join(cleaned_text)
+                
                 df = pd.read_csv(StringIO(result_text))
                 all_dataframes.append(df)
 
