@@ -154,6 +154,60 @@ class ApiService {
       }),
     });
   }
+
+
+  async getTransactions(): Promise<{ success: boolean; data?: any; error?: string }> {
+    const sessionId = sessionManager.getSessionId();
+    if (!sessionId) throw new Error("Session ID missing");
+    return this.makeRequest('/edit', {
+      method: 'POST',
+      body: JSON.stringify({ session_id: sessionId }),
+    });
+  }
+  
+  async updateTag(
+    transactionId: string,
+    newTag: string,
+    applyToAll: boolean,
+    product: string
+  ): Promise<{ success: boolean; data?: any; error?: string }> {
+    const sessionId = sessionManager.getSessionId();
+    if (!sessionId) throw new Error("Session ID missing");
+    return this.makeRequest('/update-tag', {
+      method: 'POST',
+      body: JSON.stringify({
+        sessionId,
+        transactionId,
+        newTag,
+        applyToAll,
+        product
+      }),
+    });
+  }
+  
+  async updateProduct(
+    transactionId: string,
+    oldProduct: string,
+    newProduct: string,
+    replaceAll: boolean,
+    tag: string
+  ): Promise<{ success: boolean; data?: any; error?: string }> {
+    const sessionId = sessionManager.getSessionId();
+    if (!sessionId) throw new Error("Session ID missing");
+    return this.makeRequest('/update-product', {
+      method: 'POST',
+      body: JSON.stringify({
+        sessionId,
+        transactionId,
+        oldProduct,
+        newProduct,
+        replaceAll,
+        tag
+      }),
+    });
+  }
+
 }
+
 
 export const apiService = new ApiService();

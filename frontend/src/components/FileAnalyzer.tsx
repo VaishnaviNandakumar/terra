@@ -7,6 +7,8 @@ import { CompletionView } from './CompletionView';
 import { FileWithStatus, AnalysisResult, WorkflowStep, VisualizationConfig } from '../types';
 import { apiService } from '../services/api';
 import { sessionManager } from '../utils/sessionManager';
+import { EditDashboard } from './EditDashboard';
+
 
 export const FileAnalyzer: React.FC = () => {
   const [files, setFiles] = useState<FileWithStatus[]>([]);
@@ -157,11 +159,15 @@ export const FileAnalyzer: React.FC = () => {
     setCurrentStep('visualization');
   };
 
+  const handleGoToEditDashboard = () => {
+    setCurrentStep('edit-dashboard');
+  };
+
   const handleVisualizationProceed = (config: VisualizationConfig) => {
     setVisualizationConfig(config);
     // Here you would typically send the config to backend for processing
     // For now, we'll just proceed to completion
-    setCurrentStep('completed');
+    setCurrentStep('edit-dashboard');
   };
 
   const handleReset = () => {
@@ -220,12 +226,18 @@ export const FileAnalyzer: React.FC = () => {
       )}
       
       {currentStep === 'visualization' && (
+      <div>
         <ExpenseVisualizationView 
           onBack={handleBackToPreview}
           onProceed={handleVisualizationProceed}
           files={files}
         />
-      )}
+      </div>
+    )}
+
+    {currentStep === 'edit-dashboard' && (
+      <EditDashboard sessionId={sessionManager.getSessionId()} />
+    )}
       
       {currentStep === 'completed' && (
         <CompletionView 

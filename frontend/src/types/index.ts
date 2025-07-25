@@ -36,7 +36,7 @@ export interface AnalysisResult {
   password_required?: boolean;
 }
 
-export type WorkflowStep = 'upload' | 'detection' | 'preview' | 'visualization' | 'completed';
+export type WorkflowStep = 'upload' | 'detection' | 'preview' | 'visualization' | 'completed' | 'edit-dashboard';
 
 export interface ProductTagMapping {
   id: string;
