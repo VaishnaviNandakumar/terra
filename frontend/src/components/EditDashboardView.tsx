@@ -2,6 +2,9 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Search, Filter, Edit2, Check, X, ChevronDown, ChevronUp } from 'lucide-react';
 import { format } from 'date-fns';
 import { apiService } from '../services/api';  // <-- Import our service
+import { Button } from './ui/Button';
+import { ArrowLeft, ArrowRight, Upload, Sparkles, FileText, Download, Plus } from 'lucide-react';
+import { ProductTagMapping, VisualizationConfig } from '../types';
 
 
 interface Transaction {
@@ -24,9 +27,15 @@ interface FilterState {
   [key: string]: string;
 }
 
-const API_BASE_URL = 'http://localhost:8000/api';
+interface EditDashboardViewProps {
+  onBack: () => void;
+  onProceed: () => void;
+}
 
-export function EditDashboard() {
+export const EditDashboardView: React.FC<EditDashboardViewProps> = ({
+  onBack,
+  onProceed
+}) => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [filters, setFilters] = useState<FilterState>({});
@@ -50,7 +59,7 @@ export function EditDashboard() {
 
   useEffect(() => {
     fetchTransactions();
-  }, []); // No dependency on sessionId anymore
+  }, []); 
   
   const fetchTransactions = async () => {
     try {
@@ -333,8 +342,21 @@ export function EditDashboard() {
           Next
         </button>
       </div>
+      <div className="py-4 border-t border-gray-200 flex justify-between">
+          <Button variant="secondary" onClick={onBack}>
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Back to Mapping
+          </Button>
+          
+          <Button 
+            onClick={() => onProceed()}
+          >
+            Proceed to Visualization
+            <ArrowRight className="w-4 h-4 ml-2" />
+          </Button>
+      </div>
     </div>
   );
 }
 
-export default EditDashboard;
+export default EditDashboardView;

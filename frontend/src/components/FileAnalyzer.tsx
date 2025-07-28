@@ -7,7 +7,8 @@ import { CompletionView } from './CompletionView';
 import { FileWithStatus, AnalysisResult, WorkflowStep, VisualizationConfig } from '../types';
 import { apiService } from '../services/api';
 import { sessionManager } from '../utils/sessionManager';
-import { EditDashboard } from './EditDashboard';
+import { EditDashboardView } from './EditDashboardView';
+import { AnalyticsDashboardView } from './AnalyticsDashboardView';
 
 
 export const FileAnalyzer: React.FC = () => {
@@ -165,9 +166,12 @@ export const FileAnalyzer: React.FC = () => {
 
   const handleVisualizationProceed = (config: VisualizationConfig) => {
     setVisualizationConfig(config);
-    // Here you would typically send the config to backend for processing
-    // For now, we'll just proceed to completion
     setCurrentStep('edit-dashboard');
+  };
+
+
+  const handleEditDashboardProceed = () => {
+    setCurrentStep('grafana');
   };
 
   const handleReset = () => {
@@ -190,6 +194,10 @@ export const FileAnalyzer: React.FC = () => {
 
   const handleBackToPreview = () => {
     setCurrentStep('preview');
+  };
+
+  const handleGoToGrafana = () => {
+    setCurrentStep('grafana');
   };
 
   return (
@@ -236,14 +244,23 @@ export const FileAnalyzer: React.FC = () => {
     )}
 
     {currentStep === 'edit-dashboard' && (
-      <EditDashboard sessionId={sessionManager.getSessionId()} />
+      <div>
+        <EditDashboardView 
+          onBack={handleVisualizeExpenses}
+          onProceed={handleEditDashboardProceed} />
+      </div>
+    )}
+
+    {currentStep === 'grafana' && (
+      <AnalyticsDashboardView
+        onBack={handleGoToEditDashboard} 
+      />
     )}
       
       {currentStep === 'completed' && (
         <CompletionView 
           onReset={handleReset} 
           results={analysisResults}
-          visualizationConfig={visualizationConfig}
         />
       )}
     </div>

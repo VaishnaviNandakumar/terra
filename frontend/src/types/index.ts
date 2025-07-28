@@ -1,3 +1,6 @@
+export type WorkflowStep = 'upload' | 'detection' | 'preview' | 'visualization' | 'completed' | 'edit-dashboard' | 'grafana';
+
+
 export interface FileWithStatus {
   file: File;
   id: string;
@@ -35,8 +38,6 @@ export interface AnalysisResult {
   message?: string;
   password_required?: boolean;
 }
-
-export type WorkflowStep = 'upload' | 'detection' | 'preview' | 'visualization' | 'completed' | 'edit-dashboard';
 
 export interface ProductTagMapping {
   id: string;
