@@ -315,7 +315,7 @@ export const PreviewCarousel: React.FC<PreviewCarouselProps> = ({
               Skip to Completion
             </Button>
             <Button onClick={onVisualizeExpenses || onMergeAll}>
-              Visualize Expenses
+              Product Mapping
               <ArrowRight className="w-4 h-4 ml-2" />
             </Button>
           </div>

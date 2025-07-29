@@ -237,7 +237,7 @@ export const EditDashboardView: React.FC<EditDashboardViewProps> = ({
               {['Date', 'Narration', 'Product', 'Debit Amount', 'Credit Amount', 'Tag', 'Mode', 'Actions'].map(header => (
                 <th
                   key={header}
-                  className={`px-6 py-3 text-left text-xs font-medium uppercase tracking-wider cursor-pointer hover:bg-[#111] ${
+                  className={`px-6 py-3 text-left text-xs font-medium uppercase tracking-wider cursor-pointer  ${
                     header === 'Actions' ? 'w-32' : 'min-w-[120px]'
                   }`}
                   onClick={() => header !== 'Actions' && handleSort(header.toLowerCase() as keyof Transaction)}

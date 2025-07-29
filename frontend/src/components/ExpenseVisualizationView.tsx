@@ -17,7 +17,7 @@ export const ExpenseVisualizationView: React.FC<ExpenseVisualizationViewProps> =
   files
 }) => {
   const [mappingType, setMappingType] = useState<'upload' | 'sample'>('sample');
-  const [useAI, setUseAI] = useState(true);
+  const [useAI, setUseAI] = useState(false);
   const [customMappings, setCustomMappings] = useState<ProductTagMapping[]>([]);
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [sampleMappings, setSampleMappings] = useState<ProductTagMapping[]>([]);
@@ -374,9 +374,6 @@ export const ExpenseVisualizationView: React.FC<ExpenseVisualizationViewProps> =
                   Let AI automatically categorize transactions that don't match your mapping rules. 
                   This helps capture expenses from new or unknown merchants.
                 </p>
-                <div className="mt-2 text-xs text-gray-500">
-                  ✓ Handles unknown merchants • ✓ Learns from transaction descriptions • ✓ Improves accuracy over time
-                </div>
               </div>
             </div>
           </div>
