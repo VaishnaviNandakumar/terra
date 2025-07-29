@@ -18,9 +18,9 @@ API_BASE_URL = os.getenv("API_BASE_URL", "http://localhost:8000/api")
 # Register blueprint
 
 app.register_blueprint(main, url_prefix='/api')
-# CORS(main, supports_credentials=True, origins=['http://localhost:5173'],  methods=["GET", "POST", "OPTIONS"])
 app.secret_key = 'your_secret_key'  # Required for session handling
 CORS(app, resources={
+    r"/static/*": {"origins": "http://localhost:5173"},
     rf"/api/*": {
         "origins": ["http://localhost:5173"],  # Support multiple origins from .env
         "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],

@@ -6,16 +6,19 @@ from werkzeug.utils import secure_filename
 from services.file_loader import FileLoader
 from utils.response_helper import success_response, error_response
 import numpy as np
-import PyPDF2
 from services.visualization_service import visualization_service
 import pandas as pd
+from db.models import Transactions, ProductTag
+from services.pdf_processor import PDFProcessor
+from services.excel_processor import ExcelProcessor
+
 
 main = Blueprint('main', __name__)
 db_service = DatabaseService()
 
 
 # Configuration
-UPLOAD_FOLDER = "/Users/vaishnavink/Downloads/project 5/backend/upload/"
+UPLOAD_FOLDER = "/Users/vaishnavink/Downloads/project-5/backend/upload/"
 ALLOWED_EXTENSIONS = {'pdf', 'csv', 'xlsx', 'xls', 'txt', 'doc', 'docx'}
 
 def allowed_file(filename):
@@ -32,15 +35,21 @@ def get_file_type(filename):
     else:
         return 'unsupported'
     
-def check_pdf_password_protection(file_path):
-    try:
-        with open(file_path, 'rb') as file:
-            pdf_reader = PyPDF2.PdfReader(file)
-            return pdf_reader.is_encrypted
-    except Exception as e:
-        print(f"Error: {e}")
-        return False
+pdf_processor = PDFProcessor()
+excel_processor = ExcelProcessor()
 
+def check_password_protection(file_path, file_type):
+    try:
+        if file_type == 'pdf':
+            return pdf_processor.is_password_protected(file_path)
+        elif file_type == 'excel':
+            return excel_processor.is_password_protected(file_path)
+        else:
+            return False
+    except Exception as e:
+        print(f"Password check error for {file_type}: {e}")
+        return False
+    
 @main.route('/health', methods=['GET'])
 def health_check():
     return success_response({'status': 'healthy', 'message': 'Backend is running'})
@@ -67,10 +76,7 @@ def upload_files():
                 file_size = os.path.getsize(file_path)
                 file_type = get_file_type(filename)
                 
-                # Check for password protection (only for PDFs)
-                is_password_protected = False
-                if file_type == 'pdf':
-                    is_password_protected = check_pdf_password_protection(file_path)
+                is_password_protected = check_password_protection(file_path, file_type)
                 
                 uploaded_files.append({
                     'filename': filename,
@@ -165,8 +171,6 @@ def analyze_files():
 @main.route('/download/<filename>', methods=['GET'])
 def download_results(filename):
     try:
-        # This would typically serve processed CSV files
-        # Implementation depends on your specific requirements
         return success_response({'message': 'Download endpoint ready'})
     except Exception as e:
         return error_response(f'Download failed: {str(e)}', 500)
@@ -206,7 +210,6 @@ def save_product_mappings():
         
         # Save mappings using visualization service
         result = db_service.save_product_tags(mappings,  session_id)
-        print("RESULT ", str(result))
         return success_response({
             'message': f'Successfully saved {len(mappings)} product mappings',
             'total_saved': result['total_saved']
@@ -294,4 +297,93 @@ def categorize_expenses():
         
     except Exception as e:
         return error_response(f'Failed to categorize expenses: {str(e)}', 500)
+    
+
+@main.route('/edit', methods=['POST'])
+def get_transactions():
+    try:
+        session_id = request.json.get('session_id')
+        if not session_id:
+            return jsonify({'success': False, 'error': 'Session ID is required'}), 400
+
+        transactions = Transactions.query.filter_by(session_id=session_id).all()
+
+        return jsonify({
+            'success': True,
+            'data': [{
+                'id': t.id,
+                'date': t.transaction_date.isoformat() if t.transaction_date else None,
+                'narration': t.narration,
+                'product': t.product,
+                'debit_amount': float(t.debit_amount or 0),
+                'credit_amount': float(t.credit_amount or 0),
+                'tag': t.tag,
+                'mode': t.mode
+            } for t in transactions]
+        })
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+
+
+@main.route('/update-product', methods=['POST'])
+def update_product():
+    data = request.get_json()
+    transaction_id = data.get('transactionId')
+    session_id = data.get('sessionId')
+    old_product = data.get('oldProduct')
+    new_product = data.get('newProduct')
+    replace_all = data.get('replaceAll')
+    tag = data.get('tag')
+
+    try:
+        if replace_all:
+            # Update all products in ProductTag
+            product_tags_to_update = ProductTag.query.filter_by(session_id=session_id, product=old_product).all()
+            for product_tag in product_tags_to_update:
+                product_tag.product = new_product
+
+            # Update all products in Transactions
+            expenses_to_update = Transactions.query.filter_by(session_id=session_id, product=old_product).all()
+            for expense in expenses_to_update:
+                expense.product = new_product
+        else:
+            # Add new ProductTag
+            new_product_tag = ProductTag(session_id=session_id, product=new_product, tag=tag)
+            expense = Transactions.query.filter_by(id=transaction_id).first()
+            if expense:
+                expense.product = new_product
+            db_service._commit(new_product_tag)
+
+        db_service.commit_changes()
+        return jsonify({'success': True, 'message': 'Product updated successfully'}), 200
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+
+@main.route('/update-tag', methods=['POST'])
+def update_transaction_tag():
+    try:
+        data = request.json
+        session_id = data.get('sessionId')
+        product = data.get('product')
+        new_tag = data.get('newTag')
+
+        # Update or insert ProductTag
+        existing_entry = ProductTag.query.filter_by(session_id=session_id, product=product).first()
+        if existing_entry:
+            existing_entry.tag = new_tag
+        else:
+            new_entry = ProductTag(session_id=session_id, product=product, tag=new_tag)
+            db_service._commit(new_entry)
+        
+        # Update transactions
+        expenses_to_update = Transactions.query.filter_by(session_id=session_id, product=product).all()
+        for expense in expenses_to_update:
+            expense.tag = new_tag
+
+        db_service.commit_changes()
+        return jsonify({'success': True, 'message': 'Tag updated successfully'}), 200
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
 

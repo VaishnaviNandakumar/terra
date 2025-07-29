@@ -19,9 +19,11 @@ class PDFProcessor:
         return df
     
     def is_password_protected(self,file_path):
+        print("here", file_path)
         try:
             with open(file_path, 'rb') as file:
                 pdf_reader = PyPDF2.PdfReader(file)
+                print("returning", pdf_reader.is_encrypted)
                 return pdf_reader.is_encrypted
         except Exception as e:
             print(f"Error: {e}")
