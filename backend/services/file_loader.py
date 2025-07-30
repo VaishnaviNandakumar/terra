@@ -50,15 +50,6 @@ class FileLoader:
         return df[self.STANDARD_COLUMNS]
 
 
-    def clean_special_characters(self, df):
-        """Clean special characters from object columns"""
-        for col in df.select_dtypes(include=['object']).columns:
-            df[col] = df[col].apply(lambda x: re.sub(r'[^A-Za-z0-9\s]+', '', str(x)) if isinstance(x, str) else x)
-        return df
-    
-
-    
-
     def load(self, file_path: str, password: str = None):
         if not os.path.isfile(file_path):
             raise FileNotFoundError(f"No such file: {file_path}")
@@ -78,7 +69,6 @@ class FileLoader:
             }
         df = processor.load(file_path, password)
         df = self.standardize_columns(df)
-        df = self.clean_special_characters(df)
         df['Date'] = df['Date'].apply(safe_parse_date)
         return df
 

@@ -7,6 +7,7 @@ from typing import List
 import os
 import PyPDF2
 from config import Config
+from flask import current_app
 
 class PDFProcessor:
     def __init__(self):
@@ -19,14 +20,11 @@ class PDFProcessor:
         return df
     
     def is_password_protected(self,file_path):
-        print("here", file_path)
         try:
             with open(file_path, 'rb') as file:
                 pdf_reader = PyPDF2.PdfReader(file)
-                print("returning", pdf_reader.is_encrypted)
                 return pdf_reader.is_encrypted
         except Exception as e:
-            print(f"Error: {e}")
             return False 
     
     def is_junk_line(self, line: str) -> bool:
@@ -74,11 +72,11 @@ class PDFProcessor:
                 if current_block and self.is_possibly_transaction_block(current_block):
                     blocks.append(' '.join(current_block))
 
-            print(f"Extracted {len(blocks)} potential transaction blocks")
+            current_app.logger.info(f"Extracted {len(blocks)} potential transaction blocks")
             return blocks
 
         except Exception as e:
-            print(f"Error extracting transaction blocks: {e}")
+            current_app.logger.info(f"Error extracting transaction blocks: {e}")
             raise
 
     def detect_statement_source(self, pdf_path: str, password: str = None) -> str:
@@ -102,7 +100,7 @@ class PDFProcessor:
                 return "Unknown"
 
         except Exception as e:
-            print(f"Error detecting source type: {e}")
+            current_app.logger.info(f"Error detecting source type: {e}")
             return "unknown"
 
 
@@ -165,7 +163,7 @@ class PDFProcessor:
                 all_dataframes.append(df)
 
             except Exception as e:
-                print(f"Error parsing batch starting at line {i}: {e}")
+                current_app.logger.info(f"Error parsing batch starting at line {i}: {e}")
                 continue
 
         if all_dataframes:

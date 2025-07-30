@@ -1,10 +1,7 @@
 import pandas as pd
-import sqlite3
-import os
-import uuid
 from datetime import datetime
 from .ai_service import ai_service
-
+from flask import current_app
 
 class VisualizationService:
 
@@ -61,7 +58,6 @@ class VisualizationService:
         """Consolidate all transaction files into a single table with derived columns"""
         if not session_id:
             raise ValueError("session_id is required")
-        print(files_data)
         try:
             all_transactions = []
             files_processed = 0
@@ -78,7 +74,6 @@ class VisualizationService:
                 df['Source'] = file_data.get('source', 'Unknown')
                 df['SessionID'] = session_id
             
-
                 # Derive product and mode
                 df = self.getProductAndMode(df)
                 df = self.clean_amount_columns(df)
@@ -99,14 +94,13 @@ class VisualizationService:
             }
 
         except Exception as e:
-            print(e)
             raise RuntimeError(f"Error consolidating transaction files: {e}")
 
     def categorize_transactions(self,empty_products=None):
         try:
             return ai_service.get_tag_suggestions(empty_products)
         except Exception as e:
-            print(f"Exception - {e}")
+            current_app.logger.error(f"Exception - {e}")
 
 # Create global instance
 visualization_service = VisualizationService()

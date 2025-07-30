@@ -40,7 +40,6 @@ class AIService:
                 Respond with ONLY product-tag pairs, one per line, exactly like this format:
                 ProductName-Tag
                 """
-            print("PROMPT", prompt)
             response = openai.ChatCompletion.create(
                 model="gpt-3.5-turbo",
                 messages=[{"role": "user", "content": prompt}],
@@ -50,7 +49,6 @@ class AIService:
             try:
                 # Clean and validate each suggestion
                 suggestions = response.choices[0].message.content.strip().split("\n")
-                print("SUGGESTIONS ", suggestions)
                 for suggestion in suggestions:
                     suggestion = suggestion.strip('- ').strip()  # Remove any leading/trailing dashes and spaces
                     if '-' in suggestion:

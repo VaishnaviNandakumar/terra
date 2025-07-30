@@ -45,14 +45,26 @@ export const ExpenseVisualizationView: React.FC<ExpenseVisualizationViewProps> =
 
     loadSampleMappings();
   }, []);
-
+  
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      setUploadedFile(file);
-      // In a real implementation, you'd parse the CSV file here
-      // For now, we'll just store the file reference
-    }
+    if (!file) return;
+    setUploadedFile(file);
+  
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const text = event.target?.result as string;
+      const rows = text.split('\n').slice(1); // skip header
+      const parsed = rows
+        .map(row => row.trim())
+        .filter(row => row) // remove empty rows
+        .map(row => {
+          const [product, tag] = row.split(',');
+          return { product: product?.trim(), tag: tag?.trim() };
+        });
+      setCustomMappings(parsed);
+    };
+    reader.readAsText(file);
   };
 
   const addCustomMapping = () => {
@@ -224,7 +236,7 @@ export const ExpenseVisualizationView: React.FC<ExpenseVisualizationViewProps> =
                   : 'border-gray-200 hover:border-gray-300'
               }`}
               onClick={() => setMappingType('upload')}
-            >
+            > 
               <div className="flex items-center mb-3">
                 <input
                   type="radio"

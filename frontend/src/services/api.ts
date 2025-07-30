@@ -207,6 +207,18 @@ class ApiService {
     });
   }
 
+
+async fetchSampleFile(type: 'csv' | 'excel'): Promise<File> {
+  const url = `http://localhost:8000/static/sample_data/${
+    type === 'csv' ? 'sample.csv' : 'sample.xlsx'
+  }`;
+
+  const response = await fetch(url);
+  if (!response.ok) throw new Error(`Failed to fetch ${type} sample file`);
+  const blob = await response.blob();
+  return new File([blob], `sample.${type === 'csv' ? 'csv' : 'xlsx'}`, { type: blob.type });
+}
+
 }
 
 

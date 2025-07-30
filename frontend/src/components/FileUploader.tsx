@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
-import { Upload, FileWarning, Loader2 } from 'lucide-react';
+import { Upload, FileWarning, Loader2, Download } from 'lucide-react';
+import { apiService } from '../services/api';
 
 interface FileUploaderProps {
   onFilesAdded: (files: File[]) => void;
@@ -9,12 +10,14 @@ interface FileUploaderProps {
 export const FileUploader: React.FC<FileUploaderProps> = ({ onFilesAdded, isLoading = false }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [selectedSamples, setSelectedSamples] = useState<{ csv: boolean; excel: boolean }>({
+    csv: false,
+    excel: false
+  });
 
   const handleDragOver = useCallback((e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
-    if (!isLoading) {
-      setIsDragging(true);
-    }
+    if (!isLoading) setIsDragging(true);
   }, [isLoading]);
 
   const handleDragLeave = useCallback((e: React.DragEvent<HTMLDivElement>) => {
@@ -22,7 +25,7 @@ export const FileUploader: React.FC<FileUploaderProps> = ({ onFilesAdded, isLoad
     setIsDragging(false);
   }, []);
 
-  const validateFiles = (fileList: FileList): File[] => {
+  const validateFiles = (fileList: FileList | File[]): File[] => {
     const validFiles: File[] = [];
     const maxSize = 10 * 1024 * 1024; // 10MB
     setError(null);
@@ -32,19 +35,16 @@ export const FileUploader: React.FC<FileUploaderProps> = ({ onFilesAdded, isLoad
         setError('One or more files exceed the 10MB limit.');
         return;
       }
-      
       validFiles.push(file);
     });
-    
     return validFiles;
   };
 
   const handleDrop = useCallback((e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(false);
-    
     if (isLoading) return;
-    
+
     if (e.dataTransfer.files.length > 0) {
       const validFiles = validateFiles(e.dataTransfer.files);
       if (validFiles.length > 0) {
@@ -55,17 +55,41 @@ export const FileUploader: React.FC<FileUploaderProps> = ({ onFilesAdded, isLoad
 
   const handleFileInput = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     if (isLoading) return;
-    
     if (e.target.files && e.target.files.length > 0) {
       const validFiles = validateFiles(e.target.files);
       if (validFiles.length > 0) {
         onFilesAdded(validFiles);
       }
-      
-      // Reset file input
       e.target.value = '';
     }
   }, [onFilesAdded, isLoading]);
+
+  const toggleSample = (type: 'csv' | 'excel') => {
+    setSelectedSamples(prev => ({ ...prev, [type]: !prev[type] }));
+  };
+
+  const handleSampleUpload = async () => {
+    try {
+      const filesToFetch: string[] = [];
+      if (selectedSamples.csv) filesToFetch.push('csv');
+      if (selectedSamples.excel) filesToFetch.push('excel');
+      if (filesToFetch.length === 0) {
+        setError('Please select at least one sample file.');
+        return;
+      }
+  
+      const sampleFiles: File[] = [];
+      for (let type of filesToFetch as ('csv' | 'excel')[]) {
+        const file = await apiService.fetchSampleFile(type);
+        sampleFiles.push(file);
+      }
+  
+      onFilesAdded(sampleFiles);
+    } catch (err) {
+      console.error(err);
+      setError('Failed to load sample files.');
+    }
+  };
 
   return (
     <div className="bg-white rounded-lg shadow-sm border border-gray-200">
@@ -141,6 +165,35 @@ export const FileUploader: React.FC<FileUploaderProps> = ({ onFilesAdded, isLoad
             </div>
           )}
         </div>
+      </div>
+
+      {/* Sample files section */}
+      <div className="px-6 py-4 bg-gray-50 border-t border-gray-200">
+        <h3 className="text-md font-semibold text-gray-800 mb-2">Try with sample files</h3>
+        <div className="flex flex-col gap-2 mb-3">
+          <label className="flex items-center gap-2">
+            <input
+              type="checkbox"
+              checked={selectedSamples.csv}
+              onChange={() => toggleSample('csv')}
+            />
+            Sample CSV
+          </label>
+          <label className="flex items-center gap-2">
+            <input
+              type="checkbox"
+              checked={selectedSamples.excel}
+              onChange={() => toggleSample('excel')}
+            />
+            Sample Excel <span className="text-xs text-gray-500">(Password: <strong>demo123</strong>)</span>
+          </label>
+        </div>
+        <button
+          onClick={handleSampleUpload}
+          className="flex items-center gap-2 py-2 px-4 bg-gray-200 rounded hover:bg-gray-300 transition"
+        >
+          <Download className="w-4 h-4" /> Upload Selected Samples
+        </button>
       </div>
     </div>
   );

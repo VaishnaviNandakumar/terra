@@ -1,4 +1,4 @@
-from flask import Blueprint, Flask, request, jsonify
+from flask import Blueprint, Flask, request, jsonify,  current_app
 from db.db_handler import DatabaseService
 from flask_cors import CORS
 import os
@@ -11,6 +11,7 @@ import pandas as pd
 from db.models import Transactions, ProductTag
 from services.pdf_processor import PDFProcessor
 from services.excel_processor import ExcelProcessor
+from config import Config
 
 
 main = Blueprint('main', __name__)
@@ -18,8 +19,7 @@ db_service = DatabaseService()
 
 
 # Configuration
-UPLOAD_FOLDER = "/Users/vaishnavink/Downloads/project-5/backend/upload/"
-ALLOWED_EXTENSIONS = {'pdf', 'csv', 'xlsx', 'xls', 'txt', 'doc', 'docx'}
+ALLOWED_EXTENSIONS = {'pdf', 'csv', 'xlsx', 'xls'}
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -39,6 +39,7 @@ pdf_processor = PDFProcessor()
 excel_processor = ExcelProcessor()
 
 def check_password_protection(file_path, file_type):
+    current_app.logger.info("Checking if the file is password protected")
     try:
         if file_type == 'pdf':
             return pdf_processor.is_password_protected(file_path)
@@ -47,7 +48,7 @@ def check_password_protection(file_path, file_type):
         else:
             return False
     except Exception as e:
-        print(f"Password check error for {file_type}: {e}")
+        current_app.logger.error(f"Password check error for {file_type}: {e}")
         return False
     
 @main.route('/health', methods=['GET'])
@@ -69,15 +70,16 @@ def upload_files():
         for file in files:
             if file and file.filename:
                 filename = secure_filename(file.filename)
-                file_path = os.path.join(UPLOAD_FOLDER, filename)
+                print("UPLOAD ", Config.UPLOAD_FOLDER)
+                file_path = os.path.join(Config.UPLOAD_FOLDER, filename)
                 file.save(file_path)
-                
+                current_app.logger.info("File saved into Uploads")
                 # Get file info
                 file_size = os.path.getsize(file_path)
                 file_type = get_file_type(filename)
                 
                 is_password_protected = check_password_protection(file_path, file_type)
-                
+                current_app.logger.info(f"Password protection : {is_password_protected}")
                 uploaded_files.append({
                     'filename': filename,
                     'file_path': file_path,
@@ -97,6 +99,7 @@ def upload_files():
         })
         
     except Exception as e:
+        current_app.logger.error(f'Upload failed: {str(e)}')
         return error_response(f'Upload failed: {str(e)}', 500)
 
 @main.route('/analyze', methods=['POST'])
@@ -133,7 +136,8 @@ def analyze_files():
                 # Convert DataFrame to dict for JSON response
                 df.replace({np.nan: None, np.inf: None, -np.inf: None}, inplace=True)
                 transactions = df.to_dict('records')
-                
+                current_app.logger.info(f'Transactions processed successfully')
+
                 results.append({
                     'filename': filename,
                     'status': 'success',
@@ -166,6 +170,7 @@ def analyze_files():
         })
         
     except Exception as e:
+        current_app.logger.error(f'Upload failed: {str(e)}')
         return error_response(f'Analysis failed: {str(e)}', 500)
 
 @main.route('/download/<filename>', methods=['GET'])
@@ -179,7 +184,7 @@ def download_results(filename):
 def get_sample_mappings():
     """Get sample product-category mappings from CSV file"""
     try:
-        sample_file_path = os.path.join(os.path.dirname(__file__), 'sample_data', 'product_mappings.csv')
+        sample_file_path = os.path.join(Config.STATIC_FOLDER, 'sample_data', 'product_mappings.csv')
         
         if not os.path.exists(sample_file_path):
             return error_response('Sample mappings file not found', 404)
@@ -194,6 +199,7 @@ def get_sample_mappings():
         })
         
     except Exception as e:
+        current_app.logger.error(f'Failed to load sample mappings : {str(e)}')
         return error_response(f'Failed to load sample mappings: {str(e)}', 500)
     
 @main.route('/save-product-mappings', methods=['POST'])
@@ -210,12 +216,15 @@ def save_product_mappings():
         
         # Save mappings using visualization service
         result = db_service.save_product_tags(mappings,  session_id)
+        current_app.logger.info('Saved product mappings')
+
         return success_response({
             'message': f'Successfully saved {len(mappings)} product mappings',
             'total_saved': result['total_saved']
         })
         
     except Exception as e:
+        current_app.logger.error(f'Failed to save mappings: {str(e)}')
         return error_response(f'Failed to save mappings: {str(e)}', 500)
     
 
@@ -236,7 +245,8 @@ def consolidate_files():
         result = visualization_service.consolidate_transaction_files(files_data, product_tag_mapping, session_id)
         db_service.save_transaction_product_tags(result['data'])
         db_service.save_transactions(result['data'])
-        
+        current_app.logger.info(f'Saved {result['total_transactions']} transactions')
+
         return success_response({
             'message': 'Files consolidated successfully',
             'total_transactions': result['total_transactions'],
@@ -244,7 +254,7 @@ def consolidate_files():
         })
         
     except Exception as e:
-        print(e)
+        current_app.logger.error(f'Failed to consolidate files: {str(e)}')
         return error_response(f'Failed to consolidate files: {str(e)}', 500)
 
 
@@ -252,23 +262,21 @@ def consolidate_files():
 def download_consolidate_files():
     try:
         data = request.get_json()
-        
-        
         if not data or 'files_data' not in data or 'session_id' not in data:
             return error_response('Files data and session_id are required', 400)
         
         files_data = data['files_data']
-        print(files_data)
         session_id = data['session_id']
         
         # Consolidate files using visualization service
-        # result = visualization_service.consolidate_transaction_files(files_data, session_id)
+        visualization_service.consolidate_transaction_files(files_data, session_id)
         
         return success_response({
             'message': 'Files consolidated successfully',
         })
         
     except Exception as e:
+        current_app.logger.error(f'Failed to consolidate files: {str(e)}')
         return error_response(f'Failed to consolidate files: {str(e)}', 500)
     
 @main.route('/categorize-expenses', methods=['POST'])
@@ -284,6 +292,7 @@ def categorize_expenses():
         session_id = data['session_id']
     
         if use_ai:
+            current_app.logger.info(f'Use AI set to : {str(use_ai)}')
             session_id = data['session_id']
             empty_products = db_service.get_empty_products(session_id)
             result = visualization_service.categorize_transactions(
@@ -296,6 +305,7 @@ def categorize_expenses():
         })
         
     except Exception as e:
+        current_app.logger.error(f'Failed to categorize expenses: {str(e)}')
         return error_response(f'Failed to categorize expenses: {str(e)}', 500)
     
 
@@ -322,6 +332,7 @@ def get_transactions():
             } for t in transactions]
         })
     except Exception as e:
+        current_app.logger.error(f'Failed to edit: {str(e)}')
         return jsonify({'success': False, 'error': str(e)}), 500
 
 
@@ -358,6 +369,7 @@ def update_product():
         db_service.commit_changes()
         return jsonify({'success': True, 'message': 'Product updated successfully'}), 200
     except Exception as e:
+        current_app.logger.error(f'Error in product update: {str(e)}')
         return jsonify({'success': False, 'error': str(e)}), 500
 
 
@@ -385,5 +397,6 @@ def update_transaction_tag():
         db_service.commit_changes()
         return jsonify({'success': True, 'message': 'Tag updated successfully'}), 200
     except Exception as e:
+        current_app.logger.error(f'Error in tag update : {str(e)}')
         return jsonify({'success': False, 'error': str(e)}), 500
 
