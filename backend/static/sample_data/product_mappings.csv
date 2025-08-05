@@ -1,54 +1,57 @@
 Product,Tag
-ZOMATO,Food & Dining
-SWIGGY,Food & Dining
-UBER,Transportation
-OLA,Transportation
+ZOMATO,Food
+SWIGGY,Food
+UBER,Travel
+OLA,Travel
+BLINKIT,Groceries
+GROFFERS,Groceries
+RESTAURANT,Food
 AMAZON,Shopping
 FLIPKART,Shopping
-NETFLIX,Entertainment
-SPOTIFY,Entertainment
-STARBUCKS,Food & Dining
-MCDONALDS,Food & Dining
-SHELL,Fuel
-HP PETROL,Fuel
+NETFLIX,Fun
+SPOTIFY,Fun
+STARBUCKS,Food
+MCDONALDS,Food
+SHELL,Bills
+HP PETROL,Bills
 WALMART,Groceries
 BIG BAZAAR,Groceries
-PAYTM,Digital Payments
-PHONEPE,Digital Payments
-AIRTEL,Utilities
-JIO,Utilities
-HDFC BANK,Banking
-ICICI BANK,Banking
-APOLLO PHARMACY,Healthcare
-MEDPLUS,Healthcare
-DOMINOS,Food & Dining
-PIZZA HUT,Food & Dining
-BOOK MY SHOW,Entertainment
-PVR CINEMAS,Entertainment
+PAYTM,Services
+PHONEPE,Services
+AIRTEL,Bills
+JIO,Bills
+HDFC BANK,Services
+ICICI BANK,Services
+APOLLO PHARMACY,Services
+MEDPLUS,Services
+DOMINOS,Food
+PIZZA HUT,Food
+BOOK MY SHOW,Fun
+PVR CINEMAS,Fun
 MYNTRA,Shopping
 AJIO,Shopping
-NYKAA,Beauty & Personal Care
+NYKAA,Shopping
 LENSKART,Shopping
 ZEPTO,Groceries
 BLINKIT,Groceries
-DUNZO,Delivery Services
-RAPIDO,Transportation
-METRO,Transportation
+DUNZO,Services
+RAPIDO,Travel
+METRO,Travel
 IRCTC,Travel
 MAKEMYTRIP,Travel
 GOIBIBO,Travel
-HOTSTAR,Entertainment
-PRIME VIDEO,Entertainment
-YOUTUBE PREMIUM,Entertainment
-GOOGLE PLAY,Digital Services
-APP STORE,Digital Services
-STEAM,Gaming
-EPIC GAMES,Gaming
-LINKEDIN PREMIUM,Professional Services
-ZOOM,Professional Services
-MICROSOFT OFFICE,Software
-ADOBE,Software
-CANVA,Software
-GITHUB,Software
-AWS,Cloud Services
-GOOGLE CLOUD,Cloud Services
+HOTSTAR,Fun
+PRIME VIDEO,Fun
+YOUTUBE PREMIUM,Fun
+GOOGLE PLAY,Services
+APP STORE,Services
+STEAM,Fun
+EPIC GAMES,Fun
+LINKEDIN PREMIUM,Services
+ZOOM,Services
+MICROSOFT OFFICE,Services
+ADOBE,Services
+CANVA,Services
+GITHUB,Services
+AWS,Services
+GOOGLE CLOUD,Services

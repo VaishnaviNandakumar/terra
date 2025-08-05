@@ -8,10 +8,32 @@ import numpy as np
 from flask import current_app
 
 from sqlalchemy import text
+from uuid import uuid4
+from datetime import datetime, timedelta
 
 class DatabaseService:
     def __init__(self):
         self.logger = logging.getLogger(__name__)
+    
+    def save_session_if_not_exists(self, session_id, expires_in_minutes=60):
+        """Save session to DB if it doesn't already exist."""
+        try:
+            existing_session = Session.query.filter_by(session_id=session_id).first()
+            if not existing_session:
+                new_session = Session(
+                    session_id=session_id,
+                    created_at=datetime.utcnow(),
+                    expires_at=datetime.utcnow() + timedelta(minutes=expires_in_minutes)
+                )
+                db.session.add(new_session)
+                self.commit_changes()
+                current_app.logger.info(f"Session saved: {session_id}")
+            else:
+                current_app.logger.info(f"Session already exists: {session_id}")
+        except Exception as e:
+            db.session.rollback()
+            current_app.logger.error(f"Error saving session: {e}")
+            raise
     
     def execute_query(self, query, params=None):
         """Execute a raw SQL query using SQLAlchemy."""
@@ -56,14 +78,14 @@ class DatabaseService:
             if new_entries:
                 db.session.bulk_save_objects(new_entries)
                 db.session.commit()
-                print(f"Inserted {len(new_entries)} new tags.")
+                current_app.logger.info(f"Inserted {len(new_entries)} new tags.")
             else:
                 self.logger.info("No new product tags to insert or update.")
             return {
                 'total_saved': len(new_entries)
             }
         except Exception as e:
-            print(f"Error saving product tags: {e}")
+            current_app.logger.info(f"Error saving product tags: {e}")
             db.session.rollback()
 
     def save_transaction_product_tags(self, transactions_data: pd.DataFrame) -> None:
@@ -95,10 +117,10 @@ class DatabaseService:
             # Bulk insert
             db.session.bulk_save_objects(product_tags)
             self.commit_changes()
-            print("Product tags successfully written.")
+            current_app.logger.info("Product tags successfully written.")
 
         except Exception as e:
-            print(f"Error writing product tags: {e}")
+            current_app.logger.info(f"Error writing product tags: {e}")
             db.session.rollback()
 
 
@@ -138,10 +160,10 @@ class DatabaseService:
 
             db.session.bulk_save_objects(transactions)
             self.commit_changes()
-            print("Transactions successfully written.")
+            current_app.logger.info("Transactions successfully written.")
 
         except Exception as e:
-            print(f"Error writing transactions: {e}")
+            current_app.logger.info(f"Error writing transactions: {e}")
             db.session.rollback()
 
 
@@ -158,7 +180,7 @@ class DatabaseService:
             columns = ['Product', 'Tag']
             df = pd.DataFrame(data, columns=columns)
         except Exception as e:
-            print(f"Exception: {e}")
+            current_app.logger.info(f"Exception: {e}")
         
         return df
 
@@ -177,7 +199,7 @@ class DatabaseService:
             data = [{"product": row[0], "avg_spend": row[1]} for row in rows]
             return data
         except Exception as e:
-            print(f"Exception: {e}") 
+            current_app.logger.info(f"Exception: {e}") 
 
     
     def update_product_tags_in_db(self, batch_suggestions, sessionId):
@@ -185,11 +207,11 @@ class DatabaseService:
         for suggestion in batch_suggestions:
             parts = suggestion.split("-")
             if len(parts) != 2:
-                print(f"Invalid format in suggestion: {suggestion}")
+                current_app.logger.info(f"Invalid format in suggestion: {suggestion}")
                 continue
 
             product_name, tag = parts
             query = "UPDATE product_tags SET tag = :tag WHERE product = :product and session_id = :session_id"
             self.execute_query(query, {"tag": tag, "product": product_name, "session_id": sessionId}) 
-        print("Successfully executed product tag update")     
+        current_app.logger.info("Successfully executed product tag update")     
 

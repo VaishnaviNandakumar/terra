@@ -11,7 +11,6 @@ class Config:
         f"mysql+pymysql://{os.environ.get('DB_USERNAME')}:{os.environ.get('DB_PASSWORD')}"
         f"@{os.environ.get('DB_HOST')}:{os.environ.get('DB_PORT')}/{os.environ.get('DB_NAME')}"
     )
-    print("SQL = " + SQLALCHEMY_DATABASE_URI)
     OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
     LOG_TO_STDOUT = os.environ.get('LOG_TO_STDOUT')
     ALLOWED_EXTENSIONS = {'csv'}  # Allowed file extensions for uploads
@@ -20,7 +19,8 @@ class Config:
     ENABLE_AI=os.environ.get('ENABLE_AI')
     USE_CHATGPT=os.environ.get('USE_CHATGPT')
     BATCH_SIZE=os.environ.get('BATCH_SIZE')
-    UPLOADS_FOLDER=os.environ.get('UPLOADS_FOLDER')
+    UPLOAD_FOLDER=os.environ.get('UPLOAD_FOLDER')
+    STATIC_FOLDER=os.environ.get('STATIC_FOLDER')
 
 class ProductionConfig(Config):
     DEBUG = False

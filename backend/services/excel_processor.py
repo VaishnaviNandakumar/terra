@@ -30,7 +30,7 @@ class ExcelProcessor:
             decrypted.seek(0)
             self.decrypted_stream = decrypted
 
-    def find_data_start(self, df, min_consecutive_rows=4, min_non_empty_cols=4):
+    def find_data_start(self, df, min_consecutive_rows=3, min_non_empty_cols=4):
         for i in range(len(df) - min_consecutive_rows):
             block = df.iloc[i:i+min_consecutive_rows]
             valid_rows = block.apply(lambda row: row.count() >= min_non_empty_cols, axis=1)

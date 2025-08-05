@@ -27,7 +27,7 @@ class AIService:
 
             prompt = f"""
                 Task: Categorize each product into one of these tags:
-                Rent, Bills, Groceries, Salon, Shopping, Contact, Investments, Travel, Dineout, Food, Fun, TBD.
+                Rent, Bills, Groceries, Services, Shopping, Contact, Investments, Travel, Dineout, Food, Fun, TBD.
 
                 Rules:
                 - If the amount is between 80 and 350, classify as 'Travel'

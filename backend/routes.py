@@ -70,7 +70,6 @@ def upload_files():
         for file in files:
             if file and file.filename:
                 filename = secure_filename(file.filename)
-                print("UPLOAD ", Config.UPLOAD_FOLDER)
                 file_path = os.path.join(Config.UPLOAD_FOLDER, filename)
                 file.save(file_path)
                 current_app.logger.info("File saved into Uploads")
@@ -111,6 +110,9 @@ def analyze_files():
             return error_response('No files data provided', 400)
         
         files_data = data['files']
+        session_id = data['session_id']
+        db_service.save_session_if_not_exists(session_id)  # <-- Add here
+
         results = []
         
         for file_info in files_data:
@@ -185,7 +187,6 @@ def get_sample_mappings():
     """Get sample product-category mappings from CSV file"""
     try:
         sample_file_path = os.path.join(Config.STATIC_FOLDER, 'sample_data', 'product_mappings.csv')
-        
         if not os.path.exists(sample_file_path):
             return error_response('Sample mappings file not found', 404)
         
