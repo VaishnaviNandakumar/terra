@@ -2,6 +2,7 @@ import pandas as pd
 from datetime import datetime
 from .ai_service import ai_service
 from flask import current_app
+import re
 
 class VisualizationService:
 
@@ -34,10 +35,14 @@ class VisualizationService:
             elif 'CC' in narration:
                 pdt = "".join(narration.split(' ')[2:]).strip()
                 mode = "Credit Card"
+            elif 'INSTALLMENT' in narration:
+                pdt = narration.split('-')[1]
+                mode = "AUTOPAY"
             else:
                 pdt = narration.split('-')[0].strip()
                 mode = "Other"
-        
+
+            pdt = re.split(r'@', pdt)[0].strip()
             product_values.append(pdt)
             mode_values.append(mode)
 
