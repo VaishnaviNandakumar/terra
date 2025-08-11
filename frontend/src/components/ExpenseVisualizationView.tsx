@@ -414,7 +414,7 @@ export const ExpenseVisualizationView: React.FC<ExpenseVisualizationViewProps> =
             onClick={handleProceed}
             disabled={!canProceed}
           >
-            {loading ? 'Processing...' : 'Proceed to Visualization'}
+            {loading ? 'Processing...' : 'Proceed to Transaction Dashboard'}
             {!loading && <ArrowRight className="w-4 h-4 ml-2" />}
           </Button>
         </div>

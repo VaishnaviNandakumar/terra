@@ -262,13 +262,17 @@ export const EditDashboardView: React.FC<EditDashboardViewProps> = ({
                 <td className="px-6 py-4 text-sm text-black-300 max-w-[200px]">
                   {editingId === transaction.id ? (
                     <input
-                      type="text"
-                      className="w-full max-w-[200px] border border-[#333] rounded px-2 py-1 text-sm bg-gray-100 text-black focus:border-green-500 focus:ring-green-500"
-                      value={editedProduct}
-                      onChange={(e) => setEditedProduct(e.target.value)}
-                      disabled={editMode === 'tag'}
-                      onClick={() => setEditMode('product')}
-                    />
+                    type="text"
+                    className={`w-full max-w-[200px] border ${
+                      editMode === 'product' ? 'border-green-500' : 'border-gray-300'
+                    } rounded px-2 py-1 text-sm bg-gray-100 text-black focus:border-green-500 focus:ring-green-500 cursor-pointer`}
+                    value={editedProduct}
+                    readOnly={editMode !== 'product'}
+                    onClick={() => setEditMode('product')}
+                    onChange={(e) => {
+                      if (editMode === 'product') setEditedProduct(e.target.value);
+                    }}
+                  />
                   ) : (
                     transaction.product
                   )}
@@ -282,13 +286,17 @@ export const EditDashboardView: React.FC<EditDashboardViewProps> = ({
                 <td className="px-6 py-4 text-sm text-black-300 max-w-[200px]">
                   {editingId === transaction.id ? (
                     <input
-                      type="text"
-                      className="w-full max-w-[200px] border border-[#333] rounded px-2 py-1 text-sm bg-gray-100 text-black focus:border-green-500 focus:ring-green-500"
-                      value={editedTag}
-                      onChange={(e) => setEditedTag(e.target.value)}
-                      disabled={editMode === 'product'}
-                      onClick={() => setEditMode('tag')}
-                    />
+                    type="text"
+                    className={`w-full max-w-[200px] border ${
+                      editMode === 'tag' ? 'border-green-500' : 'border-gray-300'
+                    } rounded px-2 py-1 text-sm bg-gray-100 text-black focus:border-green-500 focus:ring-green-500 cursor-pointer`}
+                    value={editedTag}
+                    readOnly={editMode !== 'tag'}
+                    onClick={() => setEditMode('tag')}
+                    onChange={(e) => {
+                      if (editMode === 'tag') setEditedTag(e.target.value);
+                    }}
+                  />
                   ) : (
                     transaction.tag
                   )}
