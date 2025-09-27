@@ -12,14 +12,25 @@ from db.models import Transactions, ProductTag
 from services.pdf_processor import PDFProcessor
 from services.excel_processor import ExcelProcessor
 from config import Config
-
+import boto3
+from io import BytesIO
 
 main = Blueprint('main', __name__)
 db_service = DatabaseService()
 
+MAX_FILE_SIZE = 5 * 1024 * 1024  # 5 MB
 
 # Configuration
 ALLOWED_EXTENSIONS = {'pdf', 'csv', 'xlsx', 'xls'}
+
+s3_client = boto3.client(
+    "s3",
+    aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"),
+    aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY"),
+    region_name="eu-north-1",
+    endpoint_url="https://s3.eu-north-1.amazonaws.com" 
+)
+
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -38,13 +49,13 @@ def get_file_type(filename):
 pdf_processor = PDFProcessor()
 excel_processor = ExcelProcessor()
 
-def check_password_protection(file_path, file_type):
+def check_password_protection(file_obj, file_type):
     current_app.logger.info("Checking if the file is password protected")
     try:
         if file_type == 'pdf':
-            return pdf_processor.is_password_protected(file_path)
+            return pdf_processor.is_password_protected(file_obj)
         elif file_type == 'excel':
-            return excel_processor.is_password_protected(file_path)
+            return excel_processor.is_password_protected(file_obj)
         else:
             return False
     except Exception as e:
@@ -55,90 +66,49 @@ def check_password_protection(file_path, file_type):
 def health_check():
     return success_response({'status': 'healthy', 'message': 'Backend is running'})
 
-@main.route('/upload', methods=['POST'])
-def upload_files():
-    try:
-        if 'files' not in request.files:
-            return error_response('No files provided', 400)
-        
-        files = request.files.getlist('files')
-        if not files or all(file.filename == '' for file in files):
-            return error_response('No files selected', 400)
-        
-        uploaded_files = []
-        
-        for file in files:
-            if file and file.filename:
-                filename = secure_filename(file.filename)
-                file_path = os.path.join(Config.UPLOAD_FOLDER, filename)
-                file.save(file_path)
-                current_app.logger.info("File saved into Uploads")
-                # Get file info
-                file_size = os.path.getsize(file_path)
-                file_type = get_file_type(filename)
-                
-                is_password_protected = check_password_protection(file_path, file_type)
-                current_app.logger.info(f"Password protection : {is_password_protected}")
-                uploaded_files.append({
-                    'filename': filename,
-                    'file_path': file_path,
-                    'size': file_size,
-                    'type': file_type,
-                    'supported': file_type in ['pdf', 'csv', 'excel'],
-                    'is_password_protected': is_password_protected,
-                    'password_required': is_password_protected
-                })
-        
-        if not uploaded_files:
-            return error_response('No valid files uploaded', 400)
-        
-        return success_response({
-            'message': f'Successfully uploaded {len(uploaded_files)} files',
-            'files': uploaded_files
-        })
-        
-    except Exception as e:
-        current_app.logger.error(f'Upload failed: {str(e)}')
-        return error_response(f'Upload failed: {str(e)}', 500)
 
 @main.route('/analyze', methods=['POST'])
 def analyze_files():
     try:
         data = request.get_json()
-        
         if not data or 'files' not in data:
             return error_response('No files data provided', 400)
         
         files_data = data['files']
         session_id = data['session_id']
-        db_service.save_session_if_not_exists(session_id)  # <-- Add here
+        db_service.save_session_if_not_exists(session_id)
 
         results = []
-        
+
         for file_info in files_data:
-            file_path = file_info.get('file_path')
+            s3_key = file_info.get('file_path')  # now file_path is the S3 key
             classification = file_info.get('classification', 'Unknown')
             filename = file_info.get('filename')
             password = file_info.get('password')
-            
-            if not file_path or not os.path.exists(file_path):
+
+            if not s3_key:
                 results.append({
                     'filename': filename,
                     'status': 'error',
-                    'message': 'File not found'
+                    'message': 'S3 key not provided'
                 })
                 continue
-            
+
             try:
+                # Download file from S3 into memory
+                file_obj = BytesIO()
+                s3_client.download_fileobj(BUCKET_NAME, s3_key, file_obj)
+                file_obj.seek(0)  # reset pointer to start
+
                 # Process based on file type
                 file_loader = FileLoader()
-                df = file_loader.load(file_path, password)
-                df['Source'] = classification                    
-                
+                df = file_loader.load(file_obj, password, filename)
+                df['Source'] = classification
+
                 # Convert DataFrame to dict for JSON response
                 df.replace({np.nan: None, np.inf: None, -np.inf: None}, inplace=True)
                 transactions = df.to_dict('records')
-                current_app.logger.info(f'Transactions processed successfully')
+                current_app.logger.info(f"Transactions processed successfully")
 
                 results.append({
                     'filename': filename,
@@ -148,10 +118,9 @@ def analyze_files():
                     'transactions': transactions,
                     'total_transactions': len(transactions)
                 })
-                
+
             except Exception as file_error:
                 error_message = str(file_error)
-                # Check if it's a password-related error
                 if 'password' in error_message.lower() or 'encrypted' in error_message.lower():
                     results.append({
                         'filename': filename,
@@ -165,14 +134,14 @@ def analyze_files():
                         'status': 'error',
                         'message': error_message
                     })
-        
+
         return success_response({
             'message': 'Analysis completed',
             'results': results
         })
-        
+
     except Exception as e:
-        current_app.logger.error(f'Upload failed: {str(e)}')
+        current_app.logger.error(f'Analysis failed: {str(e)}')
         return error_response(f'Analysis failed: {str(e)}', 500)
 
 @main.route('/download/<filename>', methods=['GET'])
@@ -337,7 +306,6 @@ def get_transactions():
         return jsonify({'success': False, 'error': str(e)}), 500
 
 
-
 @main.route('/update-product', methods=['POST'])
 def update_product():
     data = request.get_json()
@@ -401,3 +369,69 @@ def update_transaction_tag():
         current_app.logger.error(f'Error in tag update : {str(e)}')
         return jsonify({'success': False, 'error': str(e)}), 500
 
+BUCKET_NAME = "terra-upload"
+ALLOWED_EXTENSIONS = {"csv", "pdf", "xls", "xlsx"}
+MAX_FILE_SIZE = 5 * 1024 * 1024  # 5 MB
+MAX_FILES = 4
+
+
+@main.route("/generate_upload_urls", methods=["POST"])
+def generate_upload_urls():
+    uploaded_files = []
+    files = request.json.get("files")  # Expect [{ filename, size }, ...]
+    if not files:
+        return jsonify({"error": "No files provided"}), 400
+
+    if len(files) > MAX_FILES:
+        return jsonify({"error": f"Max {MAX_FILES} files allowed"}), 400
+
+    presigned_urls = []
+
+    for file in files:
+        filename = file.get("filename")
+        size = file.get("size")
+
+        if not filename or not allowed_file(filename):
+            return jsonify({"error": f"File type not allowed: {filename}"}), 400
+
+        if size and size > MAX_FILE_SIZE:
+            return jsonify({"error": f"File too large: {filename}"}), 400
+
+        content_type = "application/octet-stream"
+        ext = filename.rsplit(".", 1)[1].lower()
+        if ext == "csv":
+            content_type = "text/csv"
+            file_type = "csv"
+        elif ext in ["xls", "xlsx"]:
+            content_type = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            file_type = "excel"
+        elif ext == "pdf":
+            content_type = "application/pdf"
+            file_type = "pdf"
+        else:
+            file_type = "other"
+
+        url = s3_client.generate_presigned_url(
+            "put_object",
+            Params={
+                "Bucket": BUCKET_NAME,
+                "Key": filename,
+                "ContentType": content_type,
+            },
+            ExpiresIn=900,  # 15 minutes
+        )
+
+        # 2. After client uploads, we can fetch back for password protection check
+        # (Optional step - might be better as a separate /check_password route)
+        try:
+            obj = s3_client.get_object(Bucket=BUCKET_NAME, Key=filename)
+            file_bytes = obj["Body"].read()
+            is_protected = check_password_protection(file_bytes, file_type)
+            current_app.logger.info(f"Password protection : {is_protected}")
+        except Exception as e:
+            current_app.logger.error(f"Could not check password protection for {filename}: {e}")
+            is_protected = False
+
+        presigned_urls.append({"filename": filename, "upload_url": url, "s3_key": filename, "is_password_protected": is_protected})
+
+    return jsonify({"urls": presigned_urls})

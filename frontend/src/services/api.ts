@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:8000/api';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 import { sessionManager } from '../utils/sessionManager';
 
 export interface UploadResponse {
@@ -73,19 +73,52 @@ class ApiService {
   }
 
   async uploadFiles(files: File[]): Promise<UploadResponse> {
-    const formData = new FormData();
-    files.forEach(file => {
-      formData.append('files', file);
+    // Request presigned URLs from backend
+    const response = await fetch(`${API_BASE_URL}/generate_upload_urls`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        files: files.map(file => ({ filename: file.name, size: file.size })),
+      }),
     });
-
-    const response = await fetch(`${API_BASE_URL}/upload`, {
-      method: 'POST',
-      body: formData,
-    });
-
-    return response.json();
+  
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || "Failed to get presigned URLs");
+  
+    const urls = data.urls;
+  
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      const { upload_url } = urls[i];
+  
+      const putRes = await fetch(upload_url, {
+        method: "PUT",
+        body: file,
+        headers: {
+          "Content-Type": file.type || "application/octet-stream",
+        },
+      });
+  
+      if (!putRes.ok) {
+        throw new Error(`Failed to upload ${file.name}`);
+      }
+    }
+  
+    return {
+      success: true,
+      data: {
+        message: `Successfully uploaded ${files.length} file(s)`,
+        files: urls.map((u, i) => ({
+          filename: u.filename,
+          file_path: u.s3_key,
+          size: files[i].size,
+          is_password_protected: u.is_password_protected
+        })),
+      },
+    };
+    
   }
-
+  
   async analyzeFiles(filesData: Array<{
     filename: string;
     file_path: string;
@@ -131,6 +164,7 @@ class ApiService {
     });
   }
 
+  
   async consolidateFiles(filesData: any[]): Promise<{ success: boolean; data?: any; error?: string }> {
     const sessionId = sessionManager.getSessionId();
     return this.makeRequest('/consolidate-files', {
@@ -209,7 +243,7 @@ class ApiService {
 
 
 async fetchSampleFile(type: 'csv' | 'excel'): Promise<File> {
-  const url = `http://localhost:8000/static/sample_data/${
+  const url = `${API_BASE_URL}/static/sample_data/${
     type === 'csv' ? 'sample.csv' : 'sample.xlsx'
   }`;
 
