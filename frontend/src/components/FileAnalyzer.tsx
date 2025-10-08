@@ -9,6 +9,8 @@ import { apiService } from '../services/api';
 import { sessionManager } from '../utils/sessionManager';
 import { EditDashboardView } from './EditDashboardView';
 import { AnalyticsDashboardView } from './AnalyticsDashboardView';
+import { v4 as uuidv4 } from 'uuid';
+
 
 
 export const FileAnalyzer: React.FC = () => {
@@ -35,7 +37,7 @@ export const FileAnalyzer: React.FC = () => {
       // Create FileWithStatus objects with backend data
       const filesWithStatus = uploadResponse.data!.files.map((backendFile, index) => ({
         file: newFiles[index],
-        id: crypto.randomUUID(),
+        id: uuidv4(),
         classification: 'unknown' as const,
         type: getFileType(newFiles[index]),
         file_path: backendFile.file_path,

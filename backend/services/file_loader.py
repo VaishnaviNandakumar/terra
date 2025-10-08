@@ -8,10 +8,10 @@ import re
 class FileLoader:
     def __init__(self):
         self.processors = {
-            '.pdf': PDFProcessor(),
-            '.xls': ExcelProcessor(),
-            '.xlsx': ExcelProcessor(),
-            '.csv': CSVProcessor(),
+            'pdf': PDFProcessor(),
+            'xls': ExcelProcessor(),
+            'xlsx': ExcelProcessor(),
+            'csv': CSVProcessor(),
         }
 
         self.HEADER_SYNONYMS = {
@@ -50,24 +50,15 @@ class FileLoader:
         return df[self.STANDARD_COLUMNS]
 
 
-    def load(self, file_path: str, password: str = None):
-        if not os.path.isfile(file_path):
-            raise FileNotFoundError(f"No such file: {file_path}")
+    def load(self, file_obj: str, password: str = None, filename: str = None):
         
-        ext = os.path.splitext(file_path)[1].lower()
+        ext = filename.lower().split('.')[-1]
         if ext not in self.processors:
             raise ValueError(f"Unsupported file type: {ext}")
         
 
         processor = self.processors[ext]
-
-        if processor.is_password_protected(file_path) and not password:
-            return {
-                'status': 'error',
-                'message': 'Password required for this file',
-                'password_required': True
-            }
-        df = processor.load(file_path, password)
+        df = processor.load(file_obj.getvalue(), password)
         df = self.standardize_columns(df)
         df['Date'] = df['Date'].apply(safe_parse_date)
         return df

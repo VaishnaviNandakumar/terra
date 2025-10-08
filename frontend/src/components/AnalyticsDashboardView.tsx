@@ -1,21 +1,19 @@
 import React from 'react';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from './ui/Button';
+import { sessionManager } from '../utils/sessionManager';
 
 interface AnalyticsDashboardProps {
   sessionId: string | null;
   onBack: () => void;
 }
 
-const GRAFANA_SERVER = "http://127.0.0.1:3000"
-const GRAFANA_DASHBOARD = "ee1qpf9d1jgn4d/expense-tracker";
-
-import { sessionManager } from '../utils/sessionManager';
+const GRAFANA_SERVER = import.meta.env.VITE_GRAFANA_URL;
+const GRAFANA_DASHBOARD = import.meta.env.VITE_GRAFANA_DASHBOARD;
 
 export const AnalyticsDashboardView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
   const sessionId = sessionManager.getSessionId();
   console.log("Session ID:", sessionId);
-
 
   if (!sessionId) {
     return (
@@ -43,13 +41,12 @@ export const AnalyticsDashboardView: React.FC<{ onBack: () => void }> = ({ onBac
 
       <div className="flex-1">
         <iframe
-          src={`http://127.0.0.1:3000/d/ee1qpf9d1jgn4d/expense-tracker?from=now-1y&to=now&timezone=browser&var-session_id=${sessionId}`}
+          src={`${GRAFANA_SERVER}/d/${GRAFANA_DASHBOARD}?from=now-1y&to=now&timezone=browser&var-session_id=${sessionId}`}
           className="w-full h-full border-0"
         ></iframe>
       </div>
     </div>
   );
 };
-
 
 export default AnalyticsDashboardView;

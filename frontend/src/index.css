@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+
+html {
+  font-size: 14px; /* Default is 16px, this reduces all rem-based sizes */
+}
+
 body {
-    font-family: 'IBM Plex Sans', sans-serif;
-  }
+  transform: scale(0.95);
+  font-family: 'IBM Plex Sans', sans-serif;
+  transform-origin: top center;
+}

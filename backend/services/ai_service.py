@@ -16,8 +16,10 @@ class AIService:
         results = []
         unmatched_products = []
 
+        limited_products = products_with_amounts[:100]
+
         # Directly process batched input
-        for item in products_with_amounts:
+        for item in limited_products:
             product = item["product"]
             amount = item["avg_spend"]
             unmatched_products.append((product, amount))

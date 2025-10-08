@@ -8,24 +8,28 @@ from db.db_handler import DatabaseService
 from db.models import db
 from routes import main
 from flask_cors import CORS
+import boto3
 
-app = Flask(__name__)
+
+app = Flask(__name__, static_url_path="/api/static", static_folder="static")
 app.config.from_object(Config)
 db.init_app(app)
 
-API_BASE_URL = os.getenv("API_BASE_URL", "http://localhost:8000/api")
 app.register_blueprint(main, url_prefix='/api')
-app.secret_key = 'your_secret_key'
+
+API_BASE_URL = os.getenv("API_BASE_URL", "http://localhost:8000/api")
+FRONTEND_URL = os.getenv("FRONTEND_ORIGIN", "http://localhost:5173")
 
 CORS(app, resources={
-    r"/static/*": {"origins": "http://localhost:5173"},
+    r"/static/*": {"origins": FRONTEND_URL},
     rf"/api/*": {
-        "origins": ["http://localhost:5173"],
+        "origins": [FRONTEND_URL],
         "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
         "allow_headers": ["Content-Type", "Authorization"],
         "supports_credentials": True
     }
 })
+
 
 # ---------- Console Logging Setup ----------
 console_handler = logging.StreamHandler()
@@ -39,11 +43,9 @@ if app.logger.hasHandlers():
 
 app.logger.addHandler(console_handler)
 app.logger.setLevel(logging.DEBUG)
-
 app.logger.info("Flask application started with console logging.")
-
-
 
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=8000)
+    
