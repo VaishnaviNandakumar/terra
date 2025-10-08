@@ -1,6 +1,15 @@
-# PDF Analysis Tool
+# Expense Tracker Project - Technical Documentation
 
-A full-stack application for analyzing PDF bank statements, CSV files, and Excel spreadsheets to extract transaction data using AI.
+> **Note**: This is an ongoing personal project, and contributions are welcome.
+
+## Project Overview
+
+### Purpose
+Expense tracking is essential, especially in high-cost urban areas like Bangalore. This project aims to automate the tracking process by categorizing and visualizing expenses without repeated manual input. It promotes financial awareness and supports healthy spending habits by simplifying expense management.
+
+### Scope
+Starting with a single data source (bank statements in CSV format), this project extracts, transforms, and visualizes spending data. It employs intelligent categorization with options for manual corrections in a user-friendly interface.
+
 
 ## Project Structure
 
@@ -25,10 +34,33 @@ A full-stack application for analyzing PDF bank statements, CSV files, and Excel
 
 - **File Upload**: Drag-and-drop interface for PDF, CSV, and Excel files
 - **AI-Powered Analysis**: Uses OpenAI GPT-4 to extract transaction data from PDFs
-- **File Classification**: Automatic detection of credit vs debit statements
+- **Data Consilidation, Reconciliation & Validation**: Regardless of the source format, the data is cleaned and consolidated into a uniform output that is mapped to its source and easily understood by the user
 - **Real-time Processing**: Progress tracking with status updates
 - **Data Export**: Download processed results as CSV
 - **Responsive Design**: Works on desktop and mobile devices
+
+## Data Sources
+
+The primary data source is bank statements formatted in CSV, structured with the following fields:
+
+| Date      | Narration                             | Value Date | Debit Amount | Credit Amount | Chq/Ref Number | Closing Balance |
+|-----------|--------------------------------------|------------|--------------|---------------|----------------|-----------------|
+| 31/12/23  | UPI-ZOMATO-ZOMATOUPI@HDFC-FOOD ORDER | 01/01/24   | 150.00       | 0.00          | 123456789012   | 50000.00        |
+| 31/12/23  | UPI-RAPIDO-FAST@SBI-TRAVEL           | 01/01/24   | 89.00        | 0.00          | 987654321098   | 49911.00        |
+
+---
+
+## Data Pipeline Architecture
+
+### Pipeline Stages
+
+- **Ingestion**: Users upload CSV files (max size: 10MB). Data frames process CSV content, ignoring bad records. Only debit transactions are processed.
+  
+- **Transformation**: Filters and categorizes the `Date`, `Narration`, and `Debit Amount` fields. Using OpenAI’s API, transactions are assigned to categories (e.g., Rent, Bills, Groceries) or marked as "TBD" if uncategorized.
+
+- **Loading**: Transformed data is loaded into a database for visualization. Processed data is stored in a SQL database and visualized using Grafana. Users can explore monthly spending patterns with custom filters.
+
+---
 
 ## Setup Instructions
 
@@ -61,7 +93,6 @@ A full-stack application for analyzing PDF bank statements, CSV files, and Excel
    python run.py
    ```
 
-The backend will be available at `http://localhost:5000`
 
 ### Frontend Setup
 
@@ -74,29 +105,6 @@ The backend will be available at `http://localhost:5000`
    ```bash
    npm run dev
    ```
-
-The frontend will be available at `http://localhost:5173`
-
-## API Endpoints
-
-- `GET /api/health` - Health check
-- `POST /api/upload` - Upload files
-- `POST /api/analyze` - Analyze uploaded files
-- `GET /api/download/<filename>` - Download results
-
-## Development
-
-### Running Both Servers
-
-You can run both frontend and backend simultaneously:
-
-```bash
-# Terminal 1 - Frontend
-npm run dev
-
-# Terminal 2 - Backend
-npm run backend
-```
 
 ### Adding New Features
 
@@ -118,15 +126,3 @@ The modular structure makes it easy to add new features:
 
 ## Technologies Used
 
-### Frontend
-- React 18 with TypeScript
-- Tailwind CSS for styling
-- Lucide React for icons
-- Vite for build tooling
-
-### Backend
-- Flask web framework
-- OpenAI GPT-4 for AI processing
-- pdfplumber for PDF text extraction
-- pandas for data manipulation
-- Flask-CORS for cross-origin requests
