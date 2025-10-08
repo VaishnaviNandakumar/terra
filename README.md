@@ -63,6 +63,29 @@ The primary data source is bank statements formatted in CSV, structured with the
 
 ---
 
+## App Screens 
+
+
+<img width="1600" height="922" alt="image" src="https://github.com/user-attachments/assets/6ead072a-9719-46a0-912d-d62ef2796a65" />
+<img width="1600" height="822" alt="image" src="https://github.com/user-attachments/assets/848ed8d2-e374-490f-bd54-1c7f771ae2ab" />
+<img width="1600" height="1041" alt="image" src="https://github.com/user-attachments/assets/550cdca6-fb98-4c77-b8b3-ad3607f5d3f8" />
+<img width="1600" height="1176" alt="image" src="https://github.com/user-attachments/assets/fb613081-c97e-4863-88c4-828774d76612" />
+<img width="1600" height="1155" alt="image" src="https://github.com/user-attachments/assets/cb5488b8-063b-49ee-adbc-d519e20c3ed1" />
+<img width="1600" height="1254" alt="image" src="https://github.com/user-attachments/assets/cb7fb124-d0d4-450d-be76-b9510dbe610e" />
+
+
+## Data Visualisation 
+<img width="1440" alt="image" src="https://github.com/user-attachments/assets/d94c1bec-d401-43e1-8bf2-592b02f55dc3" />
+<img width="1439" alt="image" src="https://github.com/user-attachments/assets/3c99ab03-281f-473f-8c20-eadf1096becb" />
+<img width="1436" alt="image" src="https://github.com/user-attachments/assets/6db3c3cf-04d1-4702-9118-7742ed91f108" />
+<img width="1432" alt="image" src="https://github.com/user-attachments/assets/29ea344b-3e68-4dc4-af4a-59d8e883642d" />
+<img width="1439" alt="image" src="https://github.com/user-attachments/assets/e2813dca-8992-4446-b961-6c195f94569f" />
+<img width="1440" alt="image" src="https://github.com/user-attachments/assets/e4942542-8177-4c2d-a20c-a77ae9afc85d" />
+
+
+
+
+
 ## Setup Instructions
 
 ### Backend Setup
