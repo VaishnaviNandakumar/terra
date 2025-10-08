@@ -1,6 +1,7 @@
 # Expense Tracker Project - Technical Documentation
 
 > **Note**: This is an ongoing personal project, and contributions are welcome.
+> https://terra.vaishnavinandakumar.com/
 
 ## Project Overview
 
@@ -114,15 +115,4 @@ The modular structure makes it easy to add new features:
 2. **New services**: Create in `backend/services/`
 3. **New components**: Add to `src/components/`
 4. **New pages**: Create route components in `src/components/`
-
-## Future Enhancements
-
-- User authentication and file management
-- Analysis dashboard with charts and insights
-- Support for more file formats
-- Batch processing capabilities
-- Data visualization components
-- Export to multiple formats (JSON, Excel)
-
-## Technologies Used
 
