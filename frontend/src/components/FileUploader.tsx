@@ -197,7 +197,7 @@ export const FileUploader: React.FC<FileUploaderProps> = ({
           onClick={handleSampleUpload}
           className="flex items-center gap-2 py-2 px-4 bg-gray-200 rounded hover:bg-gray-300 transition"
         >
-          <Download className="w-4 h-4" /> Use selected samples (S3)
+          <Download className="w-4 h-4" /> Use Selected Samples
         </button>
       </div>
     </div>
