@@ -1,6 +1,6 @@
 # Expense Tracker Project - Technical Documentation
 
-> **Note**: This is an ongoing personal project, and contributions are welcome.
+> **Note**: This is an ongoing personal project, and contributions are welcome. <br>
 > https://terra-steel.vercel.app/
 
 ## Project Overview
