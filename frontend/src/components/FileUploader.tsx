@@ -1,13 +1,18 @@
 import React, { useCallback, useState } from 'react';
 import { Upload, FileWarning, Loader2, Download } from 'lucide-react';
-import { apiService } from '../services/api';
+import { apiService, type SampleFileRef } from '../services/api';
 
 interface FileUploaderProps {
   onFilesAdded: (files: File[]) => void;
+  onSampleFilesAdded: (samples: SampleFileRef[]) => void;
   isLoading?: boolean;
 }
 
-export const FileUploader: React.FC<FileUploaderProps> = ({ onFilesAdded, isLoading = false }) => {
+export const FileUploader: React.FC<FileUploaderProps> = ({
+  onFilesAdded,
+  onSampleFilesAdded,
+  isLoading = false,
+}) => {
   const [isDragging, setIsDragging] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [selectedSamples, setSelectedSamples] = useState<{ csv: boolean; excel: boolean }>({
@@ -70,21 +75,21 @@ export const FileUploader: React.FC<FileUploaderProps> = ({ onFilesAdded, isLoad
 
   const handleSampleUpload = async () => {
     try {
-      const filesToFetch: string[] = [];
-      if (selectedSamples.csv) filesToFetch.push('csv');
-      if (selectedSamples.excel) filesToFetch.push('excel');
-      if (filesToFetch.length === 0) {
+      setError(null);
+      const types: Array<'csv' | 'excel'> = [];
+      if (selectedSamples.csv) types.push('csv');
+      if (selectedSamples.excel) types.push('excel');
+      if (types.length === 0) {
         setError('Please select at least one sample file.');
         return;
       }
-  
-      const sampleFiles: File[] = [];
-      for (let type of filesToFetch as ('csv' | 'excel')[]) {
-        const file = await apiService.fetchSampleFile(type);
-        sampleFiles.push(file);
+
+      const res = await apiService.getSampleFileRefs(types);
+      if (!res.success || !res.data?.files?.length) {
+        throw new Error(res.error || 'Failed to resolve sample files');
       }
-  
-      onFilesAdded(sampleFiles);
+
+      onSampleFilesAdded(res.data.files);
     } catch (err) {
       console.error(err);
       setError('Failed to load sample files.');
@@ -192,7 +197,7 @@ export const FileUploader: React.FC<FileUploaderProps> = ({ onFilesAdded, isLoad
           onClick={handleSampleUpload}
           className="flex items-center gap-2 py-2 px-4 bg-gray-200 rounded hover:bg-gray-300 transition"
         >
-          <Download className="w-4 h-4" /> Upload Selected Samples
+          <Download className="w-4 h-4" /> Use selected samples (S3)
         </button>
       </div>
     </div>

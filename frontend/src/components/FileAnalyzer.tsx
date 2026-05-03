@@ -5,7 +5,7 @@ import { PreviewCarousel } from './PreviewCarousel';
 import { ExpenseVisualizationView } from './ExpenseVisualizationView';
 import { CompletionView } from './CompletionView';
 import { FileWithStatus, AnalysisResult, WorkflowStep, VisualizationConfig } from '../types';
-import { apiService } from '../services/api';
+import { apiService, type SampleFileRef } from '../services/api';
 import { sessionManager } from '../utils/sessionManager';
 import { EditDashboardView } from './EditDashboardView';
 import { AnalyticsDashboardView } from './AnalyticsDashboardView';
@@ -21,12 +21,31 @@ export const FileAnalyzer: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [visualizationConfig, setVisualizationConfig] = useState<VisualizationConfig | null>(null);
 
+  const handleSampleFilesAdded = (samples: SampleFileRef[]) => {
+    setError(null);
+    const filesWithStatus: FileWithStatus[] = samples.map((s) => {
+      const placeholder = new File([], s.filename);
+      return {
+        file: placeholder,
+        id: uuidv4(),
+        classification: 'unknown' as const,
+        type: getFileType(placeholder),
+        file_path: s.s3_key,
+        backend_filename: s.filename,
+        is_password_protected: s.is_password_protected,
+        password_required: false,
+      };
+    });
+    setFiles(filesWithStatus);
+    setCurrentStep('detection');
+  };
+
   const handleFilesAdded = async (newFiles: File[]) => {
     try {
       setError(null);
       setIsLoading(true);
       
-      // Upload files to backend
+      // Upload files to backend (user files only; samples use S3 keys directly)
       const uploadResponse = await apiService.uploadFiles(newFiles);
       
       if (!uploadResponse.success) {
@@ -211,7 +230,11 @@ export const FileAnalyzer: React.FC = () => {
       )}
       
       {currentStep === 'upload' && (
-        <FileUploader onFilesAdded={handleFilesAdded} isLoading={isLoading} />
+        <FileUploader
+          onFilesAdded={handleFilesAdded}
+          onSampleFilesAdded={handleSampleFilesAdded}
+          isLoading={isLoading}
+        />
       )}
       
       {currentStep === 'detection' && (

@@ -11,7 +11,7 @@ from flask_cors import CORS
 import boto3
 
 
-app = Flask(__name__, static_url_path="/api/static", static_folder="static")
+app = Flask(__name__, static_folder=None)
 app.config.from_object(Config)
 db.init_app(app)
 
@@ -21,8 +21,7 @@ API_BASE_URL = os.getenv("API_BASE_URL", "http://localhost:8000/api")
 FRONTEND_URL = os.getenv("FRONTEND_ORIGIN", "http://localhost:5173")
 
 CORS(app, resources={
-    r"/static/*": {"origins": FRONTEND_URL},
-    rf"/api/*": {
+    r"/api/.*": {
         "origins": [FRONTEND_URL],
         "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
         "allow_headers": ["Content-Type", "Authorization"],

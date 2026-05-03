@@ -1,5 +1,31 @@
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 import { sessionManager } from '../utils/sessionManager';
+
+/** Must match Flask blueprint prefix in backend/run.py (`url_prefix='/api'`). */
+const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL as string | undefined)?.replace(/\/$/, '') ?? '';
+
+function assertApiBase(): void {
+  if (!API_BASE_URL) {
+    throw new Error(
+      'VITE_API_BASE_URL is not set. Create frontend/.env with e.g. VITE_API_BASE_URL=http://localhost:8000/api (include the /api segment).'
+    );
+  }
+}
+
+async function parseJsonBody<T>(response: Response): Promise<T> {
+  const text = await response.text();
+  if (!text.trim()) {
+    throw new Error(
+      `Empty response from server (${response.status} ${response.statusText}). Check VITE_API_BASE_URL, that the Flask app is running, and the URL includes /api.`
+    );
+  }
+  try {
+    return JSON.parse(text) as T;
+  } catch {
+    throw new Error(
+      `Server did not return JSON (${response.status}): ${text.slice(0, 200)}${text.length > 200 ? '…' : ''}`
+    );
+  }
+}
 
 export interface UploadResponse {
   success: boolean;
@@ -9,7 +35,7 @@ export interface UploadResponse {
       filename: string;
       file_path: string;
       size: number;
-      type: string;
+      type?: string;
       is_password_protected?: boolean;
       password_required?: boolean;
     }>;
@@ -44,11 +70,19 @@ export interface SampleMappingsResponse {
   error?: string;
 }
 
+/** Pre-existing demo files in S3 under sample_data/ (no client upload). */
+export interface SampleFileRef {
+  filename: string;
+  s3_key: string;
+  is_password_protected: boolean;
+}
+
 class ApiService {
   private async makeRequest<T>(
     endpoint: string,
     options: RequestInit = {}
   ): Promise<T> {
+    assertApiBase();
     const url = `${API_BASE_URL}${endpoint}`;
     
     const response = await fetch(url, {
@@ -64,7 +98,7 @@ class ApiService {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    return response.json();
+    return parseJsonBody<T>(response);
   }
 
   async healthCheck(): Promise<{ status: string; message: string }> {
@@ -73,6 +107,7 @@ class ApiService {
   }
 
   async uploadFiles(files: File[]): Promise<UploadResponse> {
+    assertApiBase();
     // Request presigned URLs from backend
     const response = await fetch(`${API_BASE_URL}/generate_upload_urls`, {
       method: "POST",
@@ -82,10 +117,15 @@ class ApiService {
       }),
     });
   
-    const data = await response.json();
+    const data = await parseJsonBody<{ error?: string; urls?: Array<{
+      filename: string;
+      upload_url: string;
+      s3_key: string;
+      is_password_protected?: boolean;
+    }> }>(response);
     if (!response.ok) throw new Error(data.error || "Failed to get presigned URLs");
   
-    const urls = data.urls;
+    const urls = data.urls!;
   
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
@@ -112,6 +152,7 @@ class ApiService {
           filename: u.filename,
           file_path: u.s3_key,
           size: files[i].size,
+          type: files[i].type || 'application/octet-stream',
           is_password_protected: u.is_password_protected
         })),
       },
@@ -140,7 +181,14 @@ class ApiService {
     return response.blob();
   }
 
+  async getSampleFileRefs(types: Array<'csv' | 'excel'>): Promise<{ success: boolean; data?: { files: SampleFileRef[] }; error?: string }> {
+    assertApiBase();
+    const q = types.map(encodeURIComponent).join(',');
+    return this.makeRequest(`/sample-files?types=${q}`);
+  }
+
   async getSampleMappings(): Promise<SampleMappingsResponse> {
+    assertApiBase();
     const response = await fetch(`${API_BASE_URL}/sample-mappings`, {
       method: 'GET',
       headers: {
@@ -149,7 +197,7 @@ class ApiService {
       credentials: 'include', // Only if you're using cookies/session-based auth
     });
   
-    return response.json();
+    return parseJsonBody<SampleMappingsResponse>(response);
   }
 
   async saveProductMappings(mappings: any[], mappingType: string): Promise<{ success: boolean; data?: any; error?: string }> {
@@ -241,17 +289,6 @@ class ApiService {
     });
   }
 
-
-async fetchSampleFile(type: 'csv' | 'excel'): Promise<File> {
-  const url = `${API_BASE_URL}/static/sample_data/${
-    type === 'csv' ? 'sample.csv' : 'sample.xlsx'
-  }`;
-
-  const response = await fetch(url);
-  if (!response.ok) throw new Error(`Failed to fetch ${type} sample file`);
-  const blob = await response.blob();
-  return new File([blob], `sample.${type === 'csv' ? 'csv' : 'xlsx'}`, { type: blob.type });
-}
 
 }
 

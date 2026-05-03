@@ -2,6 +2,7 @@ from flask import Blueprint, Flask, request, jsonify,  current_app
 from db.db_handler import DatabaseService
 from flask_cors import CORS
 import os
+from uuid import uuid4
 from werkzeug.utils import secure_filename
 from services.file_loader import FileLoader
 from utils.response_helper import success_response, error_response
@@ -19,9 +20,14 @@ main = Blueprint('main', __name__)
 db_service = DatabaseService()
 
 MAX_FILE_SIZE = 5 * 1024 * 1024  # 5 MB
+MAX_FILES = 4
 
 # Configuration
 ALLOWED_EXTENSIONS = {'pdf', 'csv', 'xlsx', 'xls'}
+
+BUCKET_NAME = Config.S3_BUCKET_NAME
+S3_UPLOAD_PREFIX = Config.S3_UPLOAD_PREFIX
+S3_SAMPLE_PREFIX = Config.S3_SAMPLE_PREFIX
 
 s3_client = boto3.client(
     "s3",
@@ -30,6 +36,38 @@ s3_client = boto3.client(
     region_name="eu-north-1",
     endpoint_url="https://s3.eu-north-1.amazonaws.com" 
 )
+
+_product_mappings_df_cache = None
+
+
+def _sample_data_key(filename: str) -> str:
+    return f"{S3_SAMPLE_PREFIX}/{filename.lstrip('/')}"
+
+
+def _sample_file_catalog():
+    return {
+        "csv": {
+            "filename": "sample.csv",
+            "s3_key": _sample_data_key("sample.csv"),
+            "is_password_protected": False,
+        },
+        "excel": {
+            "filename": "sample.xlsx",
+            "s3_key": _sample_data_key("sample.xlsx"),
+            "is_password_protected": True,
+        },
+    }
+
+
+def load_product_mappings_df_from_s3():
+    global _product_mappings_df_cache
+    if _product_mappings_df_cache is not None:
+        return _product_mappings_df_cache
+    key = _sample_data_key("product_mappings.csv")
+    obj = s3_client.get_object(Bucket=BUCKET_NAME, Key=key)
+    df = pd.read_csv(BytesIO(obj["Body"].read()))
+    _product_mappings_df_cache = df
+    return df
 
 
 def allowed_file(filename):
@@ -153,24 +191,37 @@ def download_results(filename):
 
 @main.route('/sample-mappings', methods=['GET'])
 def get_sample_mappings():
-    """Get sample product-category mappings from CSV file"""
+    """Get sample product-category mappings from S3 (sample_data/product_mappings.csv)."""
     try:
-        sample_file_path = os.path.join(Config.STATIC_FOLDER, 'sample_data', 'product_mappings.csv')
-        if not os.path.exists(sample_file_path):
-            return error_response('Sample mappings file not found', 404)
-        
-        # Read CSV file
-        df = pd.read_csv(sample_file_path)
+        df = load_product_mappings_df_from_s3()
         mappings = df.to_dict('records')
-        
         return success_response({
             'mappings': mappings,
             'total_count': len(mappings)
         })
-        
     except Exception as e:
         current_app.logger.error(f'Failed to load sample mappings : {str(e)}')
         return error_response(f'Failed to load sample mappings: {str(e)}', 500)
+
+
+@main.route('/sample-files', methods=['GET'])
+def get_sample_files():
+    """S3 keys for demo transaction files (no presigned upload)."""
+    try:
+        raw = request.args.get('types', '')
+        types = [t.strip().lower() for t in raw.split(',') if t.strip()]
+        if not types:
+            return error_response('Query param types is required (e.g. types=csv,excel)', 400)
+        catalog = _sample_file_catalog()
+        files = []
+        for t in types:
+            if t not in catalog:
+                return error_response(f'Unknown sample type: {t}', 400)
+            files.append(catalog[t])
+        return success_response({'files': files})
+    except Exception as e:
+        current_app.logger.error(f'Failed to resolve sample files: {str(e)}')
+        return error_response(f'Failed to resolve sample files: {str(e)}', 500)
     
 @main.route('/save-product-mappings', methods=['POST'])
 def save_product_mappings():
@@ -215,7 +266,7 @@ def consolidate_files():
         result = visualization_service.consolidate_transaction_files(files_data, product_tag_mapping, session_id)
         db_service.save_transaction_product_tags(result['data'])
         db_service.save_transactions(result['data'])
-        current_app.logger.info(f'Saved {result['total_transactions']} transactions')
+        current_app.logger.info(f"Saved {result['total_transactions']} transactions")
 
         return success_response({
             'message': 'Files consolidated successfully',
@@ -369,15 +420,8 @@ def update_transaction_tag():
         current_app.logger.error(f'Error in tag update : {str(e)}')
         return jsonify({'success': False, 'error': str(e)}), 500
 
-BUCKET_NAME = "terra-upload"
-ALLOWED_EXTENSIONS = {"csv", "pdf", "xls", "xlsx"}
-MAX_FILE_SIZE = 5 * 1024 * 1024  # 5 MB
-MAX_FILES = 4
-
-
 @main.route("/generate_upload_urls", methods=["POST"])
 def generate_upload_urls():
-    uploaded_files = []
     files = request.json.get("files")  # Expect [{ filename, size }, ...]
     if not files:
         return jsonify({"error": "No files provided"}), 400
@@ -401,37 +445,29 @@ def generate_upload_urls():
         ext = filename.rsplit(".", 1)[1].lower()
         if ext == "csv":
             content_type = "text/csv"
-            file_type = "csv"
         elif ext in ["xls", "xlsx"]:
             content_type = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-            file_type = "excel"
         elif ext == "pdf":
             content_type = "application/pdf"
-            file_type = "pdf"
-        else:
-            file_type = "other"
+
+        safe_name = secure_filename(filename) or "upload"
+        s3_key = f"{S3_UPLOAD_PREFIX}/{uuid4().hex}_{safe_name}"
 
         url = s3_client.generate_presigned_url(
             "put_object",
             Params={
                 "Bucket": BUCKET_NAME,
-                "Key": filename,
+                "Key": s3_key,
                 "ContentType": content_type,
             },
             ExpiresIn=900,  # 15 minutes
         )
 
-        # 2. After client uploads, we can fetch back for password protection check
-        # (Optional step - might be better as a separate /check_password route)
-        try:
-            obj = s3_client.get_object(Bucket=BUCKET_NAME, Key=filename)
-            file_bytes = obj["Body"].read()
-            is_protected = check_password_protection(file_bytes, file_type)
-            current_app.logger.info(f"Password protection : {is_protected}")
-        except Exception as e:
-            current_app.logger.error(f"Could not check password protection for {filename}: {e}")
-            is_protected = False
-
-        presigned_urls.append({"filename": filename, "upload_url": url, "s3_key": filename, "is_password_protected": is_protected})
+        presigned_urls.append({
+            "filename": filename,
+            "upload_url": url,
+            "s3_key": s3_key,
+            "is_password_protected": False,
+        })
 
     return jsonify({"urls": presigned_urls})

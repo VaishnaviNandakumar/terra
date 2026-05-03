@@ -20,7 +20,9 @@ class Config:
     USE_CHATGPT=os.environ.get('USE_CHATGPT')
     BATCH_SIZE=os.environ.get('BATCH_SIZE')
     UPLOAD_FOLDER=os.environ.get('UPLOAD_FOLDER')
-    STATIC_FOLDER=os.environ.get('STATIC_FOLDER')
+    S3_BUCKET_NAME = os.environ.get('S3_BUCKET_NAME', 'terra-upload')
+    S3_UPLOAD_PREFIX = os.environ.get('S3_UPLOAD_PREFIX', 'uploads').strip('/')
+    S3_SAMPLE_PREFIX = os.environ.get('S3_SAMPLE_PREFIX', 'sample_data').strip('/')
 
 class ProductionConfig(Config):
     DEBUG = False
